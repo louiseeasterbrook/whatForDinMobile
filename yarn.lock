@@ -1696,6 +1696,11 @@
   dependencies:
     plist "^3.1.0"
 
+"@react-native-firebase/database@^19.1.2":
+  version "19.1.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-19.1.2.tgz#96741967f0447d21369ffb3263fc8c88f868325e"
+  integrity sha512-PlI54lERcTU+6ewLuGoKVcEh8tr3qhfSvd2NaCPDlU1OaqMC6FAgx8zT6hFxp215bpDs05PYM+AmkqlhlK2NNA==
+
 "@react-native/assets-registry@0.73.1":
   version "0.73.1"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.73.1.tgz#e2a6b73b16c183a270f338dc69c36039b3946e85"

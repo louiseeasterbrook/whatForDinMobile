@@ -14,6 +14,9 @@ PODS:
     - FirebaseAuth (~> 10.23.0)
   - Firebase/CoreOnly (10.23.1):
     - FirebaseCore (= 10.23.1)
+  - Firebase/Database (10.23.1):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 10.23.0)
   - FirebaseAppCheckInterop (10.23.0)
   - FirebaseAuth (10.23.0):
     - FirebaseAppCheckInterop (~> 10.17)
@@ -28,6 +31,12 @@ PODS:
     - GoogleUtilities/Logger (~> 7.12)
   - FirebaseCoreInternal (10.23.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseDatabase (10.23.0):
+    - FirebaseAppCheckInterop (~> 10.17)
+    - FirebaseCore (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseSharedSwift (10.23.0)
   - fmt (6.2.1)
   - glog (0.3.5)
   - GoogleUtilities/AppDelegateSwizzler (7.13.0):
@@ -56,6 +65,7 @@ PODS:
   - hermes-engine (0.73.6):
     - hermes-engine/Pre-built (= 0.73.6)
   - hermes-engine/Pre-built (0.73.6)
+  - leveldb-library (1.22.4)
   - libevent (2.1.12)
   - PromisesObjC (2.4.0)
   - RCT-Folly (2022.05.16.00):
@@ -1104,6 +1114,10 @@ PODS:
     - Firebase/Auth (= 10.23.1)
     - React-Core
     - RNFBApp
+  - RNFBDatabase (19.1.2):
+    - Firebase/Database (= 10.23.1)
+    - React-Core
+    - RNFBApp
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
 
@@ -1160,6 +1174,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
+  - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1169,9 +1184,12 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreInternal
+    - FirebaseDatabase
+    - FirebaseSharedSwift
     - fmt
     - GoogleUtilities
     - GTMSessionFetcher
+    - leveldb-library
     - libevent
     - PromisesObjC
     - RecaptchaInterop
@@ -1277,6 +1295,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
+  RNFBDatabase:
+    :path: "../node_modules/@react-native-firebase/database"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1290,11 +1310,14 @@ SPEC CHECKSUMS:
   FirebaseAuth: 22eb85d3853141de7062bfabc131aa7d6335cade
   FirebaseCore: c43f9f0437b50a965e930cac4ad243200d12a984
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
+  FirebaseDatabase: 50f243af7bbf3c7d50faf355b963b1502049d5c5
+  FirebaseSharedSwift: c92645b392db3c41a83a0aa967de16f8bad25568
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   hermes-engine: 9cecf9953a681df7556b8cc9c74905de8f3293c0
+  leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
@@ -1341,6 +1364,7 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNFBApp: 7b51b55651e3b84a4d14869f1e7eee40d69ffd15
   RNFBAuth: 954c5c29d938473baed88a64b545fb690d6173a5
+  RNFBDatabase: 62dac711518ad68eb7b06a55a1b33e5c90828a51
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61
 
