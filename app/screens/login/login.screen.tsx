@@ -3,30 +3,11 @@ import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Button, Text, TextInput, Divider, Chip} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {useStores} from '../../store/mainStore';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
 export const LoginScreen = ({navigation}): ReactNode => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [recipeList, setRecipeList] = useState<Recipe[]>([]);
-  const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
-  const [searchInput, setSearchInput] = useState<string>('');
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  const hello = useStores();
-
-  const navToTabs = (): void => {
-    navigation.navigate('Tabs');
-  };
-
   useEffect(() => {
-    console.log(
-      process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
-      ' ',
-      process.env.SECRET,
-    );
     GoogleSignin.configure({
       webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
     });

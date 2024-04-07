@@ -14,3 +14,7 @@ export interface RecipeUser {
   DateCreated: string;
   Favourites: number[];
 }
+
+export interface UserFavourites {
+  Favourites: number[];
+}

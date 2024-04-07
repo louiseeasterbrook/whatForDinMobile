@@ -1,16 +1,14 @@
-import {ReactNode, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe} from '../../models/searchResults';
+import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
-import {firebase} from '@react-native-firebase/database';
 
 import {observer} from 'mobx-react-lite';
+import {UpdateUserFavourites} from '../../services/database.service';
 
 const DBURL = '';
 
@@ -30,7 +28,7 @@ export const ViewRecipeScreen = observer(
       navigation.goBack();
     };
 
-    const favToggle = (): void => {
+    const favToggle = async (): Promise<void> => {
       const newFavList = isFav ? removeFav() : addFav();
       updateFav(newFavList);
     };
@@ -45,12 +43,11 @@ export const ViewRecipeScreen = observer(
       );
     };
 
-    const updateFav = (newFavList: number[]) => {
-      const initUserData = {
+    const updateFav = async (newFavList: number[]): Promise<void> => {
+      const initUserData: UserFavourites = {
         Favourites: newFavList,
       };
-      const reference = firebase.app().database(DBURL);
-      reference.ref(`/users/${userStore.uid}`).set(initUserData);
+      await UpdateUserFavourites(userStore.uid, initUserData);
       userStore.setFavourites(newFavList);
     };
 

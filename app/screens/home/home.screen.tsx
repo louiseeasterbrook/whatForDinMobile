@@ -3,10 +3,9 @@ import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Text, Searchbar} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
-
-import {firebase} from '@react-native-firebase/database';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {AddNewUser, GetDataBaseByRef} from '../../services/database.service';
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
@@ -17,73 +16,61 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   const userStore = useStores();
 
-  const DBURL = '';
-
-  const getRecipes = (): void => {
-    setLoading(true);
-    const reference = firebase.app().database(DBURL);
-
-    reference
-      .ref('recipes')
-      .once('value')
-      .then(response => {
-        setRecipeList(response.val());
-        setFilteredRecipeList(response.val());
-        setLoading(false);
-      });
+  const getRecipes = async (): Promise<void> => {
+    const res = await GetDataBaseByRef('recipes');
+    if (res) {
+      setRecipeList(res);
+      setFilteredRecipeList(res);
+    }
   };
 
-  const getCategories = (): void => {
-    const reference = firebase.app().database(DBURL);
-
-    reference
-      .ref('categories')
-      .once('value')
-      .then(Response => {
-        const res = Response.val();
-        const noNullRes = res.filter((x: string) => x !== null);
-        setCategories(noNullRes);
-      });
+  const getCategories = async (): Promise<void> => {
+    const res = await GetDataBaseByRef('categories');
+    if (res) {
+      const noNullRes = res.filter((x: string) => x !== null);
+      setCategories(noNullRes);
+    }
   };
 
-  const getUsers = (): void => {
+  const getUsers = async (): Promise<void> => {
     if (!userStore.uid) {
       return;
     }
-    const reference = firebase.app().database(DBURL);
 
-    reference
-      .ref(`users/${userStore.uid}`)
-      .once('value')
-      .then(response => {
-        console.log(`users/${userStore.uid}`, response);
-        processUserResult(response.val());
-      });
+    const ref = `users/${userStore.uid}`;
+    const res = await GetDataBaseByRef(ref);
+    if (res) {
+      await processUserResult(res);
+    }
   };
 
-  const processUserResult = (response: RecipeUser) => {
+  const processUserResult = async (response: RecipeUser): Promise<void> => {
     if (!response) {
-      addNewUser();
+      await addNewUser();
       return;
     }
     userStore.setFavourites(response.Favourites);
   };
 
-  const addNewUser = () => {
+  const addNewUser = async (): Promise<void> => {
     const currentDate = new Date();
 
     const initUserData: RecipeUser = {
       DateCreated: currentDate.toString(),
       Favourites: [],
     };
-    const reference = firebase.app().database(DBURL);
-    reference.ref(`/users/${userStore.uid}`).set(initUserData);
+
+    await AddNewUser(userStore.uid, initUserData);
   };
 
   useEffect(() => {
-    getUsers();
-    getRecipes();
-    getCategories();
+    setLoading(true);
+    (async function () {
+      await getRecipes();
+      await getCategories();
+      await getUsers();
+    })();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -157,46 +144,45 @@ export const HomeScreen = ({navigation}): ReactNode => {
         {loading ? (
           <ActivityIndicator animating={true} />
         ) : (
-          <></>
-          // <View style={styles.flex}>
-          //   {/* <View style={styles.categoryContainer}>
-          //     <FlatList
-          //       keyExtractor={(item, index) => index.toString()}
-          //       horizontal={true}
-          //       data={categories}
-          //       renderItem={({item}) => (
-          //         <TouchableOpacity onPress={() => categorySelect(item)}>
-          //           <Chip
-          //             style={{marginLeft: 8, marginRight: 4}}
-          //             selected={isSelectedCategory(item)}>
-          //             {item}
-          //           </Chip>
-          //         </TouchableOpacity>
-          //       )}
-          //     />
-          //   </View> */}
-          //   <View style={styles.contentPadding}>
-          //     {filteredRecipeList.length > 0 ? (
-          //       <FlatList
-          //         style={styles.flex}
-          //         keyExtractor={(item, index) => index.toString()}
-          //         ItemSeparatorComponent={() => (
-          //           <View style={{marginBottom: 10}} />
-          //         )}
-          //         data={filteredRecipeList}
-          //         renderItem={({item}) => (
-          //           <SearchResultCard
-          //             recipe={item}
-          //             category={categories[item.Category]}
-          //             onPress={item => navToRecipeScreen(item)}
-          //           />
-          //         )}
-          //       />
-          //     ) : (
-          //       <Text>no result</Text>
-          //     )}
-          //   </View>
-          // </View>
+          <View style={styles.flex}>
+            {/* <View style={styles.categoryContainer}>
+              <FlatList
+                keyExtractor={(item, index) => index.toString()}
+                horizontal={true}
+                data={categories}
+                renderItem={({item}) => (
+                  <TouchableOpacity onPress={() => categorySelect(item)}>
+                    <Chip
+                      style={{marginLeft: 8, marginRight: 4}}
+                      selected={isSelectedCategory(item)}>
+                      {item}
+                    </Chip>
+                  </TouchableOpacity>
+                )}
+              />
+            </View> */}
+            <View style={styles.contentPadding}>
+              {filteredRecipeList.length > 0 ? (
+                <FlatList
+                  style={styles.flex}
+                  keyExtractor={(item, index) => index.toString()}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginBottom: 10}} />
+                  )}
+                  data={filteredRecipeList}
+                  renderItem={({item}) => (
+                    <SearchResultCard
+                      recipe={item}
+                      category={categories[item.Category]}
+                      onPress={item => navToRecipeScreen(item)}
+                    />
+                  )}
+                />
+              ) : (
+                <Text>no result</Text>
+              )}
+            </View>
+          </View>
         )}
       </View>
     </BaseScreen>
