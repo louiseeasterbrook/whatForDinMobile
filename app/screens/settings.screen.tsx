@@ -43,10 +43,10 @@ export const SettingsScreen = (): ReactNode => {
           </View>
           <Divider />
 
-          <List.Section>
+          {/* <List.Section>
             <List.Subheader>Settings</List.Subheader>
             <List.Item title="Dark mode" right={ToggleButton} />
-          </List.Section>
+          </List.Section> */}
         </View>
         <View>
           <Text style={styles.version}>Version 1.0.0</Text>

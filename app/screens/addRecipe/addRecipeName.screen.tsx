@@ -1,32 +1,33 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
-import {useStores} from '../../store/mainStore';
-
+import {
+  Avatar,
+  Button,
+  Card,
+  Text,
+  Appbar,
+  FAB,
+  TextInput,
+} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
+import {useAddRecipe} from './addRecipeProvider';
 
-type AddRecipeScreenProps = {
+type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
-export const AddRecipeScreen = observer(
-  ({navigation}: AddRecipeScreenProps) => {
-    const userStore = useStores();
+export const AddRecipeNameScreen = observer(
+  ({navigation}: AddRecipeNameScreenProps) => {
+    const {name, setName} = useAddRecipe();
 
     const goBack = () => {
       navigation.goBack();
     };
 
-    const updateFav = async (newFavList: number[]): Promise<void> => {
-      const initUserData: UserFavourites = {
-        Favourites: newFavList,
-      };
-      await UpdateUserFavourites(userStore.uid, initUserData);
-      userStore.setFavourites(newFavList);
+    const navToIngedientScreen = () => {
+      navigation.navigate('AddIngredients');
     };
 
     return (
@@ -34,11 +35,17 @@ export const AddRecipeScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action icon="pencil" onPress={() => console.log('edit')} />
         </Appbar.Header>
 
         <ScrollView style={styles.main}>
-          <></>
+          <TextInput
+            label="Name"
+            value={name}
+            onChangeText={(text: string) => setName(text)}
+          />
+          <Button mode="contained" onPress={navToIngedientScreen}>
+            Next
+          </Button>
         </ScrollView>
       </>
     );

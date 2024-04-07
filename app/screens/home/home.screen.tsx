@@ -109,7 +109,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   const navToAddRecipeScreen = (): void => {
-    navigation.navigate('AddRecipe');
+    navigation.navigate('AddRecipe', {screen: 'AddName'});
   };
 
   const categorySelect = (category: string): void => {

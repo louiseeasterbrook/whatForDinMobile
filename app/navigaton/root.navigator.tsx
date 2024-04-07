@@ -6,7 +6,7 @@ import LoginNavigator from './login.navigator';
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../store/mainStore';
-import {AddRecipeScreen} from '../screens/addRecipe/addRecipe.screen';
+import {AddRecipeStack} from './addRecipe.navigator';
 
 const Stack = createStackNavigator();
 
@@ -49,7 +49,7 @@ export const LoggedInStack = () => {
       />
       <Stack.Screen
         name="AddRecipe"
-        component={AddRecipeScreen}
+        component={AddRecipeStack}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
