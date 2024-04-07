@@ -15,6 +15,7 @@
 		5A3BB252E4AF5EED6225EB8D /* Pods_whatsForDin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 912E0DB55CF2C89A05BBAE99 /* Pods_whatsForDin.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B7127AC92BC247D50054CE12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7127AC82BC247D50054CE12 /* GoogleService-Info.plist */; };
+		B7127ACB2BC26CC70054CE12 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = B7127ACA2BC26CC70054CE12 /* Fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-whatsForDin-whatsForDinTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whatsForDin-whatsForDinTests.release.xcconfig"; path = "Target Support Files/Pods-whatsForDin-whatsForDinTests/Pods-whatsForDin-whatsForDinTests.release.xcconfig"; sourceTree = "<group>"; };
 		912E0DB55CF2C89A05BBAE99 /* Pods_whatsForDin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsForDin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7127AC82BC247D50054CE12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B7127ACA2BC26CC70054CE12 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		E7EF8F01E0DD069D43FE5FA5 /* Pods_whatsForDin_whatsForDinTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whatsForDin_whatsForDinTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 		13B07FAE1A68108700A75B9A /* whatsForDin */ = {
 			isa = PBXGroup;
 			children = (
+				B7127ACA2BC26CC70054CE12 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -248,6 +251,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B7127AC92BC247D50054CE12 /* GoogleService-Info.plist in Resources */,
+				B7127ACB2BC26CC70054CE12 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,10 +613,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -691,10 +692,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
