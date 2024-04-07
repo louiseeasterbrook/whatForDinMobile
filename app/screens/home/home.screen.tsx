@@ -1,11 +1,12 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Text, Searchbar} from 'react-native-paper';
+import {Text, Searchbar, FAB} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {AddNewUser, GetDataBaseByRef} from '../../services/database.service';
+
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
@@ -107,6 +108,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
     });
   };
 
+  const navToAddRecipeScreen = (): void => {
+    navigation.navigate('AddRecipe');
+  };
+
   const categorySelect = (category: string): void => {
     const newCategories: string[] = isSelectedCategory(category)
       ? removeSelectedCategory(category)
@@ -185,6 +190,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
           </View>
         )}
       </View>
+      <FAB icon="plus" style={styles.fab} onPress={navToAddRecipeScreen} />
     </BaseScreen>
   );
 };
@@ -209,5 +215,11 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     paddingBottom: 20,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 4,
+    bottom: 4,
   },
 });

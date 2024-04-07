@@ -10,8 +10,6 @@ import {useStores} from '../../store/mainStore';
 import {observer} from 'mobx-react-lite';
 import {UpdateUserFavourites} from '../../services/database.service';
 
-const DBURL = '';
-
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
   route: Recipe;
@@ -56,6 +54,7 @@ export const ViewRecipeScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={recipe.Name} />
+          <Appbar.Action icon="pencil" onPress={() => console.log('edit')} />
           <Appbar.Action
             icon={isFav ? 'heart' : 'heart-outline'}
             onPress={favToggle}
@@ -87,13 +86,6 @@ export const ViewRecipeScreen = observer(
             </>
           )}
         </ScrollView>
-        {hasRecipe && (
-          <FAB
-            icon="pencil"
-            style={styles.fab}
-            onPress={() => console.log('Pressed')}
-          />
-        )}
       </>
     );
   },
@@ -106,11 +98,5 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     paddingVertical: 10,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 4,
-    bottom: 20,
   },
 });
