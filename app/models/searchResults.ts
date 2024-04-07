@@ -3,6 +3,8 @@ export interface Recipe {
   Category: number;
   Ingredients: ListWithTitle[];
   Method: ListWithTitle[];
+  Id: string;
+  UserId: string;
 }
 
 export interface ListWithTitle {

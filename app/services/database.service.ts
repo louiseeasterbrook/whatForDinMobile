@@ -1,5 +1,5 @@
 import {firebase} from '@react-native-firebase/database';
-import {RecipeUser, UserFavourites} from '../models/searchResults';
+import {Recipe, RecipeUser, UserFavourites} from '../models/searchResults';
 
 const reference = firebase.app().database(process.env.DB_URL);
 
@@ -26,4 +26,11 @@ export async function UpdateUserFavourites(
     return;
   }
   await reference.ref(`/users/${userId}`).set(data);
+}
+
+export async function AddNewRecipe(data: Recipe): Promise<void> {
+  if (!data) {
+    return;
+  }
+  await reference.ref(`/recipes/${data.Id}`).set(data);
 }

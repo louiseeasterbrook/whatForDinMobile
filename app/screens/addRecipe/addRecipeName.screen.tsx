@@ -1,7 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Avatar,
   Button,
@@ -12,7 +11,7 @@ import {
   TextInput,
 } from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
-import {useAddRecipe} from './addRecipeProvider';
+import {useAddRecipe} from './context/addRecipeProvider';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -27,6 +26,9 @@ export const AddRecipeNameScreen = observer(
     };
 
     const navToIngedientScreen = () => {
+      if (!name) {
+        return;
+      }
       navigation.navigate('AddIngredients');
     };
 

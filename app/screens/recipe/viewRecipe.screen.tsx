@@ -77,11 +77,9 @@ export const ViewRecipeScreen = observer(
                   orderedList={true}
                   listArray={recipe.Method}></DisplayListWithTitle>
               </View>
-              <Text>{userStore.favourites}</Text>
             </>
           ) : (
             <>
-              <Icon name="home" size={20} color={'black'} />
               <Text>Recipe coming soon</Text>
             </>
           )}

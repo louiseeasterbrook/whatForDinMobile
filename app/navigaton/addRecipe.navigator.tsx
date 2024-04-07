@@ -2,7 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {AddRecipeNameScreen} from '../screens/addRecipe/addRecipeName.screen';
 import {AddRecipeIngredientsScreen} from '../screens/addRecipe/addRecipeIngredients.screen';
 import {AddRecipeStepsScreen} from '../screens/addRecipe/addRecipeSteps.screen';
-import {AddRecipeProvider} from '../screens/addRecipe/addRecipeContext';
+import {AddRecipeProvider} from '../screens/addRecipe/context/addRecipeContext';
 
 const Stack = createStackNavigator();
 

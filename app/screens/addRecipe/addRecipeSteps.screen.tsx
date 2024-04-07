@@ -1,7 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Avatar,
   Button,
@@ -9,9 +8,11 @@ import {
   Text,
   Appbar,
   TextInput,
+  Icon,
 } from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
-import {useAddRecipe} from './addRecipeProvider';
+import {useAddRecipe} from './context/addRecipeProvider';
+import {useRef, useState} from 'react';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -19,10 +20,36 @@ type AddRecipeStepsScreenProps = {
 
 export const AddRecipeStepsScreen = observer(
   ({navigation}: AddRecipeStepsScreenProps) => {
-    const {steps, setSteps} = useAddRecipe();
+    const {ingredients, setSteps} = useAddRecipe();
+
+    const [text, setText] = useState<string>('');
+    const [numInputs, setNumInputs] = useState<number>(1);
+    const refInputs = useRef<string[]>([text]);
+
+    const setInputValue = (index: number, value: string) => {
+      const inputs = refInputs.current;
+      inputs[index] = value;
+      setText(value);
+    };
+
+    const addInput = () => {
+      refInputs.current.push('');
+      setNumInputs(value => value + 1);
+    };
+
+    const removeInput = (i: number) => {
+      refInputs.current.splice(i, 1)[0];
+      setNumInputs(value => value - 1);
+    };
 
     const goBack = () => {
       navigation.goBack();
+    };
+
+    const navToStepsScreen = () => {
+      console.log(refInputs.current);
+      setSteps(refInputs.current);
+      navigation.navigate('Tabs');
     };
 
     return (
@@ -33,17 +60,28 @@ export const AddRecipeStepsScreen = observer(
         </Appbar.Header>
 
         <ScrollView style={styles.main}>
-          <TextInput
-            label="Steps"
-            value={steps}
-            onChangeText={(text: string) => setSteps(text)}
-          />
-          <Button
-            mode="contained"
-            onPress={() => {
-              navigation.navigate('Tabs');
-              console.log('save');
-            }}>
+          <>
+            {[...Array(numInputs)].map((e, i) => (
+              <View key={i} style={styles.inputButtonContainer}>
+                <TextInput
+                  style={styles.input}
+                  value={refInputs.current[i]}
+                  onChangeText={(currentValue: string) =>
+                    setInputValue(i, currentValue)
+                  }
+                />
+                <TouchableOpacity
+                  style={styles.inputRemoveButton}
+                  onPress={() => removeInput(i)}>
+                  <Icon source="minus-circle-outline" size={20} />
+                </TouchableOpacity>
+              </View>
+            ))}
+          </>
+          <Button mode="contained" onPress={addInput}>
+            Add Step
+          </Button>
+          <Button mode="contained" onPress={navToStepsScreen}>
             Save Recipe
           </Button>
         </ScrollView>
@@ -59,5 +97,18 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     paddingVertical: 10,
+  },
+  inputButtonContainer: {
+    flexDirection: 'row',
+    paddingTop: 10,
+  },
+  input: {
+    width: '90%',
+  },
+  inputRemoveButton: {
+    width: '10%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

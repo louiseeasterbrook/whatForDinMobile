@@ -3,9 +3,9 @@ import {createContext, useContext} from 'react';
 export interface AddRecipeContextValue {
   name: string;
   setName: Function;
-  ingredients: string;
+  ingredients: string[];
   setIngredients: Function;
-  steps: string;
+  steps: string[];
   setSteps: Function;
 }
 
