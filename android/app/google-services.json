@@ -12,7 +12,20 @@
           "package_name": "com.whatsfordin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "770166546922-lm4u70bvddn86563oecq36i9ke813ef5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.whatsfordin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCJ1tLM7XD_-lIYWlzFAw6cO2U_0P5bavo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "770166546922-p3t2sibrks605saaq9pcsnhf8548roqv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.whatsfordin"
+              }
+            }
+          ]
         }
       }
     }
