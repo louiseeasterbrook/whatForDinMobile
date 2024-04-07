@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "770166546922",
+    "project_id": "whats-for-din-83615",
+    "storage_bucket": "whats-for-din-83615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770166546922:android:fa7cb461756010e832d293",
+        "android_client_info": {
+          "package_name": "com.whatsfordin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ1tLM7XD_-lIYWlzFAw6cO2U_0P5bavo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
