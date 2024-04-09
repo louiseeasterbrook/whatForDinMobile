@@ -29,8 +29,10 @@ export async function UpdateUserFavourites(
 }
 
 export async function AddNewRecipe(data: Recipe): Promise<void> {
-  if (!data) {
-    return;
-  }
-  await reference.ref(`/recipes/${data.Id}`).set(data);
+  // if (!data) {
+  //   return;
+  // }
+  const recipeRef = reference.ref('recipes');
+  const newRecipeRef = recipeRef.push();
+  await newRecipeRef.set(data);
 }

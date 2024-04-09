@@ -20,10 +20,24 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const getRecipes = async (): Promise<void> => {
     const res = await GetDataBaseByRef('recipes');
     if (res) {
-      setRecipeList(res);
-      setFilteredRecipeList(res);
+      const formattedArray = convertRecipeObjectToArray(res);
+      setRecipeList(formattedArray);
+      setFilteredRecipeList(formattedArray);
     }
   };
+
+  const convertRecipeObjectToArray = (res: any): Recipe[] => {
+    return Object.keys(res).map(key => {
+      return {
+        ...res[key],
+        Id: key,
+      };
+    });
+  };
+
+  useEffect(() => {
+    // console.log('RECives ', recipeList);
+  });
 
   const getCategories = async (): Promise<void> => {
     const res = await GetDataBaseByRef('categories');

@@ -7,6 +7,8 @@ export interface AddRecipeContextValue {
   setIngredients: Function;
   steps: string[];
   setSteps: Function;
+  saveRecipe: Function;
+  formatElementWithList: Function;
 }
 
 export const AddRecipeContext = createContext<AddRecipeContextValue>(null);

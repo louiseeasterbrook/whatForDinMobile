@@ -3,6 +3,7 @@ import {AddRecipeNameScreen} from '../screens/addRecipe/addRecipeName.screen';
 import {AddRecipeIngredientsScreen} from '../screens/addRecipe/addRecipeIngredients.screen';
 import {AddRecipeStepsScreen} from '../screens/addRecipe/addRecipeSteps.screen';
 import {AddRecipeProvider} from '../screens/addRecipe/context/addRecipeContext';
+import {AddRecipeReviewScreen} from '../screens/addRecipe/addRecipeReview.screen';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,11 @@ export const AddRecipeStack = () => {
         <Stack.Screen
           name="AddSteps"
           component={AddRecipeStepsScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Review"
+          component={AddRecipeReviewScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

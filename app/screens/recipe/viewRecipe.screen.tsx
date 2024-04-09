@@ -3,7 +3,6 @@ import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
@@ -31,17 +30,17 @@ export const ViewRecipeScreen = observer(
       updateFav(newFavList);
     };
 
-    const addFav = (): number[] => {
+    const addFav = (): string[] => {
       return [...userStore.favourites, recipe.Id];
     };
 
-    const removeFav = (): number[] => {
+    const removeFav = (): string[] => {
       return userStore.favourites.filter(
-        (favId: number) => favId !== recipe.Id,
+        (favId: string) => favId !== recipe.Id,
       );
     };
 
-    const updateFav = async (newFavList: number[]): Promise<void> => {
+    const updateFav = async (newFavList: string[]): Promise<void> => {
       const initUserData: UserFavourites = {
         Favourites: newFavList,
       };

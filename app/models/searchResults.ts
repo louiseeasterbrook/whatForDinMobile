@@ -14,9 +14,9 @@ export interface ListWithTitle {
 
 export interface RecipeUser {
   DateCreated: string;
-  Favourites: number[];
+  Favourites: string[];
 }
 
 export interface UserFavourites {
-  Favourites: number[];
+  Favourites: string[];
 }

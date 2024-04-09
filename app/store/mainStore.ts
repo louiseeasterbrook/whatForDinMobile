@@ -9,7 +9,7 @@ export const MainStore = types
   .props({
     name: types.optional(types.string, 'yello mello'),
     uid: types.optional(types.string, ''),
-    favourites: types.array(types.number),
+    favourites: types.array(types.string),
   })
 
   .actions(self => ({
@@ -17,7 +17,7 @@ export const MainStore = types
       self.name = name;
       self.uid = uid;
     },
-    setFavourites: (fav: number[]) => {
+    setFavourites: (fav: string[]) => {
       self.favourites = cast(fav);
     },
   }));
