@@ -77,11 +77,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
   useEffect(() => {
     setLoading(true);
     (async function () {
-      await getRecipes();
-      await getCategories();
-      await getUsers();
+      await Promise.all([getRecipes(), getCategories(), getUsers()]).then(() =>
+        setLoading(false),
+      );
     })();
-    setLoading(false);
   }, []);
 
   useEffect(() => {

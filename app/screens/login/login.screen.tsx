@@ -29,7 +29,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
   return (
     <BaseScreen>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>What for din</Text>
+        <Text style={styles.title}>Whats for din</Text>
       </View>
       <Button mode="contained" onPress={onGoogleButtonPress}>
         Google Sign In
