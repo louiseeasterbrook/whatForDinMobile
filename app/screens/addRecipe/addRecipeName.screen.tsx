@@ -21,6 +21,7 @@ type AddRecipeNameScreenProps = {
 export const AddRecipeNameScreen = observer(
   ({navigation}: AddRecipeNameScreenProps) => {
     const {name, setName} = useAddRecipe();
+    const buttonDisabled = name?.length <= 0;
 
     const goBack = () => {
       navigation.goBack();
@@ -53,7 +54,10 @@ export const AddRecipeNameScreen = observer(
               onChangeText={(text: string) => setName(text)}
             />
           </View>
-          <Button mode="contained" onPress={navToIngedientScreen}>
+          <Button
+            mode="contained"
+            onPress={navToIngedientScreen}
+            disabled={buttonDisabled}>
             Next
           </Button>
         </View>

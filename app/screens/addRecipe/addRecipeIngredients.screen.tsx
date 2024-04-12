@@ -27,6 +27,9 @@ export const AddRecipeIngredientsScreen = observer(
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
     const refInputs = useRef<string[]>([text]);
+    const buttonDisabled = Boolean(
+      refInputs.current?.length && refInputs.current[0].length <= 0,
+    );
 
     const setInputValue = (index: number, value: string) => {
       const inputs = refInputs.current;
@@ -94,7 +97,10 @@ export const AddRecipeIngredientsScreen = observer(
               Add Ingredient
             </Button>
           </View>
-          <Button mode="contained" onPress={navToStepsScreen}>
+          <Button
+            mode="contained"
+            onPress={navToStepsScreen}
+            disabled={buttonDisabled}>
             Next
           </Button>
         </View>

@@ -21,7 +21,7 @@ type AddRecipeReviewScreenProps = {
 
 export const AddRecipeReviewScreen = observer(
   ({navigation}: AddRecipeReviewScreenProps) => {
-    const {saveRecipe, formatElementWithList, steps, ingredients} =
+    const {saveRecipe, formatElementWithList, steps, ingredients, name} =
       useAddRecipe();
 
     const goBack = () => {
@@ -44,6 +44,7 @@ export const AddRecipeReviewScreen = observer(
         <View style={styles.main}>
           <ScrollView>
             <>
+              <Text variant="headlineSmall">{name}</Text>
               <View style={styles.cardContainer}>
                 <DisplayListWithTitle
                   title="Ingredients"
