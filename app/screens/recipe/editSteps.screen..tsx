@@ -1,7 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
-import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Avatar,
@@ -16,7 +14,6 @@ import {
 import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {useRef, useState} from 'react';
 
@@ -27,13 +24,15 @@ type EditStepsScreenProps = {
 
 export const EditStepsScreen = observer(
   ({navigation, route}: EditStepsScreenProps) => {
-    const {setSteps, saveRecipe, steps} = useEditRecipe();
+    const {setSteps, steps} = useEditRecipe();
+
+    const initInput = steps?.length ? steps : [];
 
     const [text, setText] = useState<string>('');
-    const [numInputs, setNumInputs] = useState<number>(steps?.length || 0);
-    const refInputs = useRef<string[]>(steps);
-    const buttonDisabled = Boolean(
-      refInputs.current?.length && refInputs.current[0].length <= 0,
+    const [numInputs, setNumInputs] = useState<number>(steps?.length || 1);
+    const refInputs = useRef<string[]>(initInput);
+    const buttonDisabled = !(
+      refInputs.current?.length > 0 && refInputs.current[0]?.length > 0
     );
 
     const setInputValue = (index: number, value: string) => {
@@ -57,7 +56,6 @@ export const EditStepsScreen = observer(
     };
 
     const navToStepsScreen = async () => {
-      console.log(refInputs.current);
       setSteps(refInputs.current);
       goBack();
     };

@@ -1,13 +1,11 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
 import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
-import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
+import {useEditRecipe} from './context/editRecipeProvider';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -16,10 +14,16 @@ type ReviewEditScreenProps = {
 
 export const ReviewEditScreen = observer(
   ({navigation, route}: ReviewEditScreenProps) => {
-    const userStore = useStores();
+    const {formatElementWithList, name, steps, ingredients, updateRecipe} =
+      useEditRecipe();
 
     const goBack = () => {
       navigation.goBack();
+    };
+
+    const save = () => {
+      updateRecipe();
+      navigation.popToTop();
     };
 
     return (
@@ -29,13 +33,33 @@ export const ReviewEditScreen = observer(
           <Appbar.Content title={'Review Recipe'} />
         </Appbar.Header>
 
-        <ScrollView style={styles.main}>
-          <>
-            <Button mode="contained" onPress={() => navigation.popToTop()}>
-              Save Changes
-            </Button>
-          </>
-        </ScrollView>
+        <View style={styles.main}>
+          <ScrollView>
+            <>
+              <Text variant="headlineSmall">{name}</Text>
+              <View style={styles.cardContainer}>
+                <DisplayListWithTitle
+                  title="Ingredients"
+                  orderedList={false}
+                  listArray={[
+                    formatElementWithList(ingredients),
+                  ]}></DisplayListWithTitle>
+              </View>
+
+              <View style={styles.cardContainer}>
+                <DisplayListWithTitle
+                  title="Method"
+                  orderedList={true}
+                  listArray={[
+                    formatElementWithList(steps),
+                  ]}></DisplayListWithTitle>
+              </View>
+            </>
+          </ScrollView>
+          <Button mode="contained" onPress={save}>
+            Save Recipe
+          </Button>
+        </View>
       </>
     );
   },

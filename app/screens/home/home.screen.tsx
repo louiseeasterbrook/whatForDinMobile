@@ -35,10 +35,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
     });
   };
 
-  useEffect(() => {
-    // console.log('RECives ', recipeList);
-  });
-
   const getCategories = async (): Promise<void> => {
     const res = await GetDataBaseByRef('categories');
     if (res) {

@@ -1,12 +1,13 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {EditRecipeContext, EditRecipeContextValue} from './editRecipeProvider';
 import {ListWithTitle, Recipe} from '../../../models/searchResults';
-import {AddNewRecipe} from '../../../services/database.service';
+import {UpdateRecipe} from '../../../services/database.service';
 
 export function EditRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
+  const [recipe, setRecipe] = useState<Recipe>();
 
   const formatElementWithList = (list: string[]): ListWithTitle => {
     return {
@@ -15,28 +16,27 @@ export function EditRecipeProvider({children}: any): ReactNode {
     };
   };
 
-  const initRecipe = (recipe: Recipe) => {
+  useEffect(() => {
+    if (!recipe) {
+      return;
+    }
     setName(recipe.Name);
     setIngredients(recipe.Ingredients[0].List);
     setSteps(recipe.Method[0].List);
-  };
+  }, [recipe]);
 
-  const saveRecipe = async () => {
+  const updateRecipe = async () => {
     console.log('SAVING ', steps);
     const ingredientData: ListWithTitle = formatElementWithList(ingredients);
     const StepsData: ListWithTitle = formatElementWithList(steps);
 
-    const formattedRecipe: Recipe = {
-      Name: name,
-      Category: 0,
-      Ingredients: [ingredientData],
-      Method: [StepsData],
-      Id: '',
-      UserId: '',
-    };
+    recipe.Name = name;
+    recipe.Ingredients = [ingredientData];
+    recipe.Method = [StepsData];
 
     console.log('READY FOR SAVE ', steps);
-    await AddNewRecipe(formattedRecipe);
+
+    await UpdateRecipe(recipe, recipe?.Id);
   };
 
   const addRecipeState: EditRecipeContextValue = {
@@ -46,9 +46,9 @@ export function EditRecipeProvider({children}: any): ReactNode {
     setIngredients,
     steps,
     setSteps,
-    saveRecipe,
+    updateRecipe,
     formatElementWithList,
-    initRecipe,
+    setRecipe,
   };
 
   return (

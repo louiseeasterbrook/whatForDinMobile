@@ -28,14 +28,15 @@ type EditIngredientsScreenProps = {
 export const EditIngredientsScreen = observer(
   ({navigation, route}: EditIngredientsScreenProps) => {
     const {setIngredients, ingredients} = useEditRecipe();
+    const initInput = ingredients?.length ? ingredients : [];
 
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(
-      ingredients?.length || 0,
+      ingredients?.length || 1,
     );
-    const refInputs = useRef<string[]>(ingredients);
-    const buttonDisabled = Boolean(
-      refInputs.current?.length && refInputs.current[0].length <= 0,
+    const refInputs = useRef<string[]>(initInput);
+    const buttonDisabled = !(
+      refInputs.current?.length > 0 && refInputs.current[0]?.length > 0
     );
 
     const setInputValue = (index: number, value: string) => {

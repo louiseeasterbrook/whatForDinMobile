@@ -21,7 +21,7 @@ export const ViewRecipeScreen = observer(
     const {recipe} = route.params;
     const hasRecipe = recipe?.Ingredients && recipe?.Method;
     const isFav = userStore.favourites.includes(recipe.Id);
-    const {initRecipe} = useEditRecipe();
+    const {setRecipe} = useEditRecipe();
 
     const goBack = () => {
       navigation.goBack();
@@ -52,7 +52,7 @@ export const ViewRecipeScreen = observer(
 
     const goToEditMenu = () => {
       console.log('go');
-      initRecipe(recipe);
+      setRecipe(recipe);
       navigation.navigate('EditMenu');
     };
 

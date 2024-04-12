@@ -36,3 +36,15 @@ export async function AddNewRecipe(data: Recipe): Promise<void> {
   const newRecipeRef = recipeRef.push();
   await newRecipeRef.set(data);
 }
+
+export async function UpdateRecipe(
+  data: Recipe,
+  recipeId: string,
+): Promise<void> {
+  // if (!data) {
+  //   return;
+  // }
+  console.log(data, ' ', recipeId);
+  const recipeRef = reference.ref(`recipes/${recipeId}`);
+  await recipeRef.set(data);
+}
