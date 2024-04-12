@@ -118,7 +118,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {
-      recipe: selectedRecipe,
+      screen: 'View',
+      params: {
+        recipe: selectedRecipe,
+      },
     });
   };
 

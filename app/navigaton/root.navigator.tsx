@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../store/mainStore';
 import {AddRecipeStack} from './addRecipe.navigator';
+import {EditRecipeStack} from './editRecipe.navigator';
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,7 @@ export const LoggedInStack = () => {
       />
       <Stack.Screen
         name="ViewRecipe"
-        component={ViewRecipeScreen}
+        component={EditRecipeStack}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -61,7 +61,13 @@ export const AddRecipeStepsScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action icon="close" onPress={() => navigation.popToTop()} />
+          <Appbar.Action
+            icon="close"
+            onPress={() => {
+              navigation.popToTop();
+              navigation.goBack();
+            }}
+          />
         </Appbar.Header>
 
         <View style={styles.main}>

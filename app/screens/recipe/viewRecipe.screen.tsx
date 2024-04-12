@@ -8,10 +8,11 @@ import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
 import {UpdateUserFavourites} from '../../services/database.service';
+import {useEditRecipe} from './context/editRecipeProvider';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
-  route: Recipe;
+  route: any;
 };
 
 export const ViewRecipeScreen = observer(
@@ -20,6 +21,7 @@ export const ViewRecipeScreen = observer(
     const {recipe} = route.params;
     const hasRecipe = recipe?.Ingredients && recipe?.Method;
     const isFav = userStore.favourites.includes(recipe.Id);
+    const {initRecipe} = useEditRecipe();
 
     const goBack = () => {
       navigation.goBack();
@@ -48,12 +50,18 @@ export const ViewRecipeScreen = observer(
       userStore.setFavourites(newFavList);
     };
 
+    const goToEditMenu = () => {
+      console.log('go');
+      initRecipe(recipe);
+      navigation.navigate('EditMenu');
+    };
+
     return (
       <>
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={recipe.Name} />
-          <Appbar.Action icon="pencil" onPress={() => console.log('edit')} />
+          <Appbar.Action icon="pencil" onPress={goToEditMenu} />
           <Appbar.Action
             icon={isFav ? 'heart' : 'heart-outline'}
             onPress={favToggle}

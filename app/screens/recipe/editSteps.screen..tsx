@@ -1,5 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
+import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
+import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Avatar,
@@ -10,23 +12,26 @@ import {
   FAB,
   TextInput,
   Icon,
-  ProgressBar,
 } from 'react-native-paper';
+import {useStores} from '../../store/mainStore';
+
 import {observer} from 'mobx-react-lite';
-import {useAddRecipe} from './context/addRecipeProvider';
+import {UpdateUserFavourites} from '../../services/database.service';
+import {useEditRecipe} from './context/editRecipeProvider';
 import {useRef, useState} from 'react';
 
-type AddRecipeIngredientsScreenProps = {
+type EditStepsScreenProps = {
   navigation: NavigationProp<any, any>;
+  route: any;
 };
 
-export const AddRecipeIngredientsScreen = observer(
-  ({navigation}: AddRecipeIngredientsScreenProps) => {
-    const {ingredients, setIngredients} = useAddRecipe();
+export const EditStepsScreen = observer(
+  ({navigation, route}: EditStepsScreenProps) => {
+    const {setSteps, saveRecipe, steps} = useEditRecipe();
 
     const [text, setText] = useState<string>('');
-    const [numInputs, setNumInputs] = useState<number>(1);
-    const refInputs = useRef<string[]>([text]);
+    const [numInputs, setNumInputs] = useState<number>(steps?.length || 0);
+    const refInputs = useRef<string[]>(steps);
     const buttonDisabled = Boolean(
       refInputs.current?.length && refInputs.current[0].length <= 0,
     );
@@ -51,37 +56,25 @@ export const AddRecipeIngredientsScreen = observer(
       navigation.goBack();
     };
 
-    const navToStepsScreen = () => {
+    const navToStepsScreen = async () => {
       console.log(refInputs.current);
-      const ingredientArray = refInputs.current;
-      const ingredientsNoNull = ingredientArray.filter(
-        (ingredient: string) => ingredient !== null || ingredient !== '',
-      );
-      if (ingredientsNoNull.length > 0) {
-        setIngredients(ingredientsNoNull);
-        navigation.navigate('AddSteps');
-      }
+      setSteps(refInputs.current);
+      goBack();
     };
 
     return (
       <>
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action
-            icon="close"
-            onPress={() => {
-              navigation.popToTop();
-              navigation.goBack();
-            }}
-          />
+          <Appbar.Content title={'Edit Steps'} />
         </Appbar.Header>
+
         <View style={styles.main}>
-          <View>
-            <View style={styles.header}>
-              <Text variant="headlineSmall">What are your Ingredients?</Text>
-            </View>
+          <ScrollView>
             <>
+              <View style={styles.header}>
+                <Text variant="headlineSmall">What are your Steps?</Text>
+              </View>
               {[...Array(numInputs)].map((e, i) => (
                 <View key={i} style={styles.inputButtonContainer}>
                   <TextInput
@@ -100,14 +93,14 @@ export const AddRecipeIngredientsScreen = observer(
               ))}
             </>
             <Button mode="contained" onPress={addInput}>
-              Add Ingredient
+              Add Step
             </Button>
-          </View>
+          </ScrollView>
           <Button
             mode="contained"
             onPress={navToStepsScreen}
             disabled={buttonDisabled}>
-            Next
+            Done
           </Button>
         </View>
       </>
@@ -142,5 +135,6 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
+    fontWeight: '700',
   },
 });
