@@ -1,7 +1,8 @@
 import {ReactNode} from 'react';
-import {Card, Text} from 'react-native-paper';
+import {Text, Divider} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {StyleSheet, View} from 'react-native';
 
 type SearchResultCardProps = {
   recipe: Recipe;
@@ -16,12 +17,17 @@ export const SearchResultCard = ({
 }: SearchResultCardProps): ReactNode => {
   return (
     <TouchableOpacity onPress={() => onPress(recipe)}>
-      <Card>
-        <Card.Content>
-          <Text>{recipe.Name}</Text>
-          <Text variant="bodyMedium">{category}</Text>
-        </Card.Content>
-      </Card>
+      <View style={styles.main}>
+        <Text>{recipe.Name}</Text>
+        <Text variant="bodyMedium">{category}</Text>
+      </View>
+      <Divider></Divider>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  main: {
+    paddingVertical: 10,
+  },
+});
