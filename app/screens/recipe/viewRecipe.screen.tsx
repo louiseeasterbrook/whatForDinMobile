@@ -7,7 +7,7 @@ import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
+import {UpdateUser} from '../../services/database.service';
 import {useEditRecipe} from './context/editRecipeProvider';
 
 type ViewRecipeScreenProps = {
@@ -46,12 +46,11 @@ export const ViewRecipeScreen = observer(
       const initUserData: UserFavourites = {
         Favourites: newFavList,
       };
-      await UpdateUserFavourites(userStore.uid, initUserData);
+      await UpdateUser(userStore.uid, initUserData);
       userStore.setFavourites(newFavList);
     };
 
     const goToEditMenu = () => {
-      console.log('go');
       setRecipe(recipe);
       navigation.navigate('EditMenu');
     };

@@ -10,6 +10,13 @@ export async function GetDataBaseByRef(ref: string): Promise<any> {
   return res.val();
 }
 
+export async function GetUser(userId: string): Promise<any> {
+  if (!userId) {
+    return;
+  }
+  return await firestore().collection('users').doc(userId).get();
+}
+
 export async function AddNewUser(
   userId: string,
   data: RecipeUser,
@@ -17,17 +24,14 @@ export async function AddNewUser(
   if (!userId) {
     return;
   }
-  await reference.ref(`/users/${userId}`).set(data);
+  await firestore().collection('users').doc(userId).set(data);
 }
 
-export async function UpdateUserFavourites(
-  userId: string,
-  data: UserFavourites,
-): Promise<void> {
+export async function UpdateUser(userId: string, data: any): Promise<void> {
   if (!userId) {
     return;
   }
-  await reference.ref(`/users/${userId}`).set(data);
+  await firestore().collection('users').doc(userId).set(data);
 }
 
 export async function AddNewRecipe(data: Recipe): Promise<void> {
@@ -54,20 +58,7 @@ export async function UpdateRecipe(
 //////////////////
 
 export async function getRecipeCollection(): Promise<any> {
-  const recipeData = await firestore()
-    .collection('recipes')
-    // .doc('TSPZMnXuiKzWnCGv57qr')
-    .get();
-
-  console.log('...S..E..E.EEEEEEE ', recipeData);
-
-  // const collectionRef = await firestore().collection('recipes');
-  // const snapshot = await collectionRef.get();
-  // const hello = snapshot.docs;
-  // const docNames = snapshot.docs.map(doc =>
-  //   console.log('DOC... ', doc.id, ' ', doc),
-  // );
-  // console.log('docnames ', hello);
+  const recipeData = await firestore().collection('recipes').get();
 
   return filterRecipeResponse(recipeData);
 }
@@ -80,22 +71,11 @@ const filterRecipeResponse = recipeData => {
 };
 
 export async function AddRecipeToCollection(recipeData: Recipe): Promise<any> {
-  const req = await firestore()
-    .collection('recipes')
-    // .doc('TSPZMnXuiKzWnCGv57qr')
-    .add(recipeData)
-    .then(x => console.log('ADD RWPOMCE ', x));
-
-  // return filterRecipeResponse(recipeData);
+  await firestore().collection('recipes').add(recipeData);
 }
 
 export async function UpdateRecipeInCollection(
   recipeData: Recipe,
 ): Promise<any> {
-  const req = await firestore()
-    .collection('recipes')
-    .doc(recipeData.Id)
-    .set(recipeData);
-
-  // return filterRecipeResponse(recipeData);
+  await firestore().collection('recipes').doc(recipeData.Id).set(recipeData);
 }

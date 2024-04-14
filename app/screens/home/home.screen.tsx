@@ -8,6 +8,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {
   AddNewUser,
   GetDataBaseByRef,
+  GetUser,
   getRecipeCollection,
 } from '../../services/database.service';
 
@@ -42,12 +43,8 @@ export const HomeScreen = ({navigation}): ReactNode => {
     if (!userStore.uid) {
       return;
     }
-
-    const ref = `users/${userStore.uid}`;
-    const res = await GetDataBaseByRef(ref);
-    if (res) {
-      await processUserResult(res);
-    }
+    const res = await GetUser(userStore.uid);
+    await processUserResult(res._data);
   };
 
   const processUserResult = async (response: RecipeUser): Promise<void> => {
