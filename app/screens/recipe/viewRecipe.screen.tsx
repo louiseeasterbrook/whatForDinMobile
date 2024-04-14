@@ -20,6 +20,7 @@ export const ViewRecipeScreen = observer(
     const userStore = useStores();
     const {recipe} = route.params;
     const hasRecipe = recipe?.Ingredients && recipe?.Method;
+    const isOwnRecipe = recipe.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe.Id);
     const {setRecipe} = useEditRecipe();
 
@@ -60,11 +61,15 @@ export const ViewRecipeScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={recipe.Name} />
-          <Appbar.Action icon="pencil" onPress={goToEditMenu} />
-          <Appbar.Action
-            icon={isFav ? 'heart' : 'heart-outline'}
-            onPress={favToggle}
-          />
+          {isOwnRecipe && (
+            <Appbar.Action icon="pencil" onPress={goToEditMenu} />
+          )}
+          {!isOwnRecipe && (
+            <Appbar.Action
+              icon={isFav ? 'bookmark' : 'bookmark-outline'}
+              onPress={favToggle}
+            />
+          )}
         </Appbar.Header>
 
         <ScrollView style={styles.main}>

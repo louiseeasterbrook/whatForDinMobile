@@ -4,6 +4,7 @@ import {BottomNavigation} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SettingsScreen} from '../screens/settings.screen';
 import {HomeScreen} from '../screens/home/home.screen';
+import {SearchScreen} from '../screens/search/search.screen';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,12 +48,22 @@ export default function TabNavigator() {
         />
       )}>
       <Tab.Screen
-        name="Home"
+        name="Recipe book"
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon name="book" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({color, size}) => {
+            return <Icon name="magnify" size={size} color={color} />;
           },
         }}
       />

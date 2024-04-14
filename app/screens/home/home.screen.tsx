@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Text, Searchbar, FAB} from 'react-native-paper';
+import {Text, Searchbar, FAB, SegmentedButtons} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
@@ -9,6 +9,8 @@ import {
   AddNewUser,
   GetDataBaseByRef,
   GetUser,
+  GetUserRecipeCollection,
+  GetUsersByName,
   getRecipeCollection,
 } from '../../services/database.service';
 
@@ -19,11 +21,13 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [segmentValue, setSegmentValue] = useState<string>('mine');
 
   const userStore = useStores();
 
   const getRecipes = async (): Promise<void> => {
-    const res = await getRecipeCollection();
+    await GetUsersByName('Louise');
+    const res = await GetUserRecipeCollection(userStore.uid);
 
     if (res) {
       setRecipeList(res);
@@ -59,6 +63,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     const currentDate = new Date();
 
     const initUserData: RecipeUser = {
+      Name: userStore.name,
       DateCreated: currentDate.toString(),
       Favourites: [],
     };
@@ -149,6 +154,20 @@ export const HomeScreen = ({navigation}): ReactNode => {
             value={searchInput}
             style={styles.searchBar}
           />
+          <SegmentedButtons
+            value={segmentValue}
+            onValueChange={setSegmentValue}
+            buttons={[
+              {
+                value: 'mine',
+                label: 'My Recipes',
+              },
+              {
+                value: 'saved',
+                label: 'Saved Reciped',
+              },
+            ]}
+          />
         </View>
 
         {loading ? (
@@ -203,6 +222,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
+    paddingBottom: 18,
   },
   contentPadding: {
     paddingHorizontal: 18,

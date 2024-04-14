@@ -59,7 +59,6 @@ export async function UpdateRecipe(
 
 export async function getRecipeCollection(): Promise<any> {
   const recipeData = await firestore().collection('recipes').get();
-
   return filterRecipeResponse(recipeData);
 }
 
@@ -70,6 +69,15 @@ const filterRecipeResponse = recipeData => {
   }));
 };
 
+export async function GetUserRecipeCollection(userId: string): Promise<any> {
+  const recipeData = await firestore()
+    .collection('recipes')
+    .where('UserId', '==', userId)
+    .get();
+
+  return filterRecipeResponse(recipeData);
+}
+
 export async function AddRecipeToCollection(recipeData: Recipe): Promise<any> {
   await firestore().collection('recipes').add(recipeData);
 }
@@ -78,4 +86,10 @@ export async function UpdateRecipeInCollection(
   recipeData: Recipe,
 ): Promise<any> {
   await firestore().collection('recipes').doc(recipeData.Id).set(recipeData);
+}
+
+export async function GetUsers(): Promise<any> {
+  const recipeData = await firestore().collection('users').get();
+
+  console.log(recipeData);
 }

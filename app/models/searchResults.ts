@@ -13,6 +13,7 @@ export interface ListWithTitle {
 }
 
 export interface RecipeUser {
+  Name: string;
   DateCreated: string;
   Favourites: string[];
 }

@@ -2,11 +2,14 @@ import {ReactNode, useState} from 'react';
 import {AddRecipeContext, AddRecipeContextValue} from './addRecipeProvider';
 import {Recipe} from '../../../models/searchResults';
 import {AddRecipeToCollection} from '../../../services/database.service';
+import {useStores} from '../../../store/mainStore';
 
 export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
+
+  const userStore = useStores();
 
   const saveRecipe = async () => {
     console.log('SAVING ', steps);
@@ -16,12 +19,10 @@ export function AddRecipeProvider({children}: any): ReactNode {
       Category: 0,
       Ingredients: ingredients,
       Method: steps,
-      Id: '',
-      UserId: '',
+      UserId: userStore.uid,
+      Id: '', //gets set up db
     };
-
-    console.log('READY FOR SAVE ', formattedRecipe);
-    // await AddNewRecipe(formattedRecipe);
+    console.log('===== REAYD FOR AVE ', formattedRecipe);
     await AddRecipeToCollection(formattedRecipe);
   };
 
