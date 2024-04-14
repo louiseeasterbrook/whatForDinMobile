@@ -6,30 +6,34 @@ import {FlatList} from 'react-native-gesture-handler';
 import {ListSection} from './ListSection.component';
 import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+import {ListRow} from './ListRow.component';
 
 type DisplayListWithTitleProps = {
   title: string;
   orderedList: boolean;
-  listArray: ListWithTitle[];
+  listSteps: string[];
 };
 
 export const DisplayListWithTitle = ({
   title,
   orderedList,
-  listArray,
+  listSteps,
 }: DisplayListWithTitleProps): ReactNode => {
+  console.log('DisplayListWithTitle ', listSteps);
   return (
     <>
       <Card>
         <Card.Title title={title}></Card.Title>
         <Card.Content>
           {/* <Text style={styles.mainTitle}>{title}</Text> */}
-          {listArray.map((list: ListWithTitle, index: number) => (
-            <ListSection
-              key={index}
-              listTitleArray={list}
-              orderedList={orderedList}></ListSection>
-          ))}
+          {listSteps?.length &&
+            listSteps.map((text: string, index: number) => (
+              <ListRow
+                key={index}
+                text={text}
+                orderedList={orderedList}
+                index={index}></ListRow>
+            ))}
         </Card.Content>
       </Card>
     </>

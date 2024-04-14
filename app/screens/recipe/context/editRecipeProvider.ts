@@ -8,7 +8,6 @@ export interface EditRecipeContextValue {
   steps: string[];
   setSteps: Function;
   updateRecipe: Function;
-  formatElementWithList: Function;
   setRecipe: Function;
 }
 

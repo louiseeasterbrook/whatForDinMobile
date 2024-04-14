@@ -14,8 +14,7 @@ type ReviewEditScreenProps = {
 
 export const ReviewEditScreen = observer(
   ({navigation, route}: ReviewEditScreenProps) => {
-    const {formatElementWithList, name, steps, ingredients, updateRecipe} =
-      useEditRecipe();
+    const {name, steps, ingredients, updateRecipe} = useEditRecipe();
 
     const goBack = () => {
       navigation.goBack();
@@ -41,18 +40,14 @@ export const ReviewEditScreen = observer(
                 <DisplayListWithTitle
                   title="Ingredients"
                   orderedList={false}
-                  listArray={[
-                    formatElementWithList(ingredients),
-                  ]}></DisplayListWithTitle>
+                  listSteps={ingredients}></DisplayListWithTitle>
               </View>
 
               <View style={styles.cardContainer}>
                 <DisplayListWithTitle
                   title="Method"
                   orderedList={true}
-                  listArray={[
-                    formatElementWithList(steps),
-                  ]}></DisplayListWithTitle>
+                  listSteps={steps}></DisplayListWithTitle>
               </View>
             </>
           </ScrollView>

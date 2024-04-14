@@ -1,8 +1,8 @@
 export interface Recipe {
   Name: string;
   Category: number;
-  Ingredients: ListWithTitle[];
-  Method: ListWithTitle[];
+  Ingredients: string[];
+  Method: string[];
   Id: string;
   UserId: string;
 }

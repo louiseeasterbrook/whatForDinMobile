@@ -5,7 +5,11 @@ import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {AddNewUser, GetDataBaseByRef} from '../../services/database.service';
+import {
+  AddNewUser,
+  GetDataBaseByRef,
+  getRecipeCollection,
+} from '../../services/database.service';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,21 +22,12 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
 
   const getRecipes = async (): Promise<void> => {
-    const res = await GetDataBaseByRef('recipes');
-    if (res) {
-      const formattedArray = convertRecipeObjectToArray(res);
-      setRecipeList(formattedArray);
-      setFilteredRecipeList(formattedArray);
-    }
-  };
+    const res = await getRecipeCollection();
 
-  const convertRecipeObjectToArray = (res: any): Recipe[] => {
-    return Object.keys(res).map(key => {
-      return {
-        ...res[key],
-        Id: key,
-      };
-    });
+    if (res) {
+      setRecipeList(res);
+      setFilteredRecipeList(res);
+    }
   };
 
   const getCategories = async (): Promise<void> => {
@@ -77,6 +72,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   useEffect(() => {
     setLoading(true);
     (async function () {
+      getRecipeCollection();
       await Promise.all([getRecipes(), getCategories(), getUsers()]).then(() =>
         setLoading(false),
       );

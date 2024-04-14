@@ -75,14 +75,14 @@ export const ViewRecipeScreen = observer(
                 <DisplayListWithTitle
                   title="Ingredients"
                   orderedList={false}
-                  listArray={recipe.Ingredients}></DisplayListWithTitle>
+                  listSteps={recipe.Ingredients}></DisplayListWithTitle>
               </View>
 
               <View style={styles.cardContainer}>
                 <DisplayListWithTitle
                   title="Method"
                   orderedList={true}
-                  listArray={recipe.Method}></DisplayListWithTitle>
+                  listSteps={recipe.Method}></DisplayListWithTitle>
               </View>
             </>
           ) : (

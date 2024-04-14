@@ -8,7 +8,6 @@ export interface AddRecipeContextValue {
   steps: string[];
   setSteps: Function;
   saveRecipe: Function;
-  formatElementWithList: Function;
 }
 
 export const AddRecipeContext = createContext<AddRecipeContextValue>(null);

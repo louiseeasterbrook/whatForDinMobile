@@ -1,36 +1,28 @@
-import {ReactNode, useEffect, useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {AddRecipeContext, AddRecipeContextValue} from './addRecipeProvider';
-import {ListWithTitle, Recipe} from '../../../models/searchResults';
-import {AddNewRecipe} from '../../../services/database.service';
+import {Recipe} from '../../../models/searchResults';
+import {AddRecipeToCollection} from '../../../services/database.service';
 
 export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
 
-  const formatElementWithList = (list: string[]): ListWithTitle => {
-    return {
-      Title: '',
-      List: list,
-    };
-  };
-
   const saveRecipe = async () => {
     console.log('SAVING ', steps);
-    const ingredientData: ListWithTitle = formatElementWithList(ingredients);
-    const StepsData: ListWithTitle = formatElementWithList(steps);
 
     const formattedRecipe: Recipe = {
       Name: name,
       Category: 0,
-      Ingredients: [ingredientData],
-      Method: [StepsData],
+      Ingredients: ingredients,
+      Method: steps,
       Id: '',
       UserId: '',
     };
 
-    console.log('READY FOR SAVE ', steps);
-    await AddNewRecipe(formattedRecipe);
+    console.log('READY FOR SAVE ', formattedRecipe);
+    // await AddNewRecipe(formattedRecipe);
+    await AddRecipeToCollection(formattedRecipe);
   };
 
   const addRecipeState: AddRecipeContextValue = {
@@ -41,7 +33,6 @@ export function AddRecipeProvider({children}: any): ReactNode {
     steps,
     setSteps,
     saveRecipe,
-    formatElementWithList,
   };
 
   return (
