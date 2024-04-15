@@ -12,8 +12,6 @@ export function AddRecipeProvider({children}: any): ReactNode {
   const userStore = useStores();
 
   const saveRecipe = async () => {
-    console.log('SAVING ', steps);
-
     const formattedRecipe: Recipe = {
       Name: name,
       Category: 0,
@@ -22,7 +20,6 @@ export function AddRecipeProvider({children}: any): ReactNode {
       UserId: userStore.uid,
       Id: '', //gets set up db
     };
-    console.log('===== REAYD FOR AVE ', formattedRecipe);
     await AddRecipeToCollection(formattedRecipe);
   };
 

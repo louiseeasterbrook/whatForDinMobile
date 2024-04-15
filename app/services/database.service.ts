@@ -31,13 +31,10 @@ export async function UpdateUser(userId: string, data: any): Promise<void> {
   if (!userId) {
     return;
   }
-  await firestore().collection('users').doc(userId).set(data);
+  await firestore().collection('users').doc(userId).update(data);
 }
 
 export async function AddNewRecipe(data: Recipe): Promise<void> {
-  // if (!data) {
-  //   return;
-  // }
   const recipeRef = reference.ref('recipes');
   const newRecipeRef = recipeRef.push();
   await newRecipeRef.set(data);
@@ -47,10 +44,6 @@ export async function UpdateRecipe(
   data: Recipe,
   recipeId: string,
 ): Promise<void> {
-  // if (!data) {
-  //   return;
-  // }
-  console.log(data, ' ', recipeId);
   const recipeRef = reference.ref(`recipes/${recipeId}`);
   await recipeRef.set(data);
 }
@@ -61,6 +54,19 @@ export async function getRecipeCollection(): Promise<any> {
   const recipeData = await firestore().collection('recipes').get();
   return addDocumentIdToEachDataSet(recipeData);
 }
+
+export async function getUserSavedRecipes(favourites: string[]): Promise<any> {
+  const recipeData = await firestore().collection('recipes').get();
+  const formattedData = addDocumentIdToEachDataSet(recipeData);
+  return getRecipesIncludedInIdArray(formattedData, favourites);
+}
+
+const getRecipesIncludedInIdArray = (
+  recipes: Recipe[],
+  favourites: string[],
+) => {
+  return recipes.filter(recipe => favourites.includes(recipe.Id));
+};
 
 const addDocumentIdToEachDataSet = recipeData => {
   return recipeData._docs.map(x => ({

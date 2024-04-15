@@ -30,8 +30,8 @@ export const SearchScreen = ({navigation}): ReactNode => {
     }
   };
 
-  const userPressed = () => {
-    console.log('-- user preseed');
+  const userPressed = (userId: string): void => {
+    navigation.navigate('UserProfile', {userId: userId});
   };
 
   return (
@@ -60,7 +60,10 @@ export const SearchScreen = ({navigation}): ReactNode => {
                   )}
                   data={users}
                   renderItem={({item}) => (
-                    <UserResultCard name={item.Name} onPress={userPressed} />
+                    <UserResultCard
+                      user={item}
+                      onPress={id => userPressed(id)}
+                    />
                   )}
                 />
               ) : (

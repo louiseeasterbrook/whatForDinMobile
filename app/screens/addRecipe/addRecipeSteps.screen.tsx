@@ -51,7 +51,6 @@ export const AddRecipeStepsScreen = observer(
     };
 
     const navToStepsScreen = async () => {
-      console.log(refInputs.current);
       setSteps(refInputs.current);
       navigation.navigate('Review');
     };

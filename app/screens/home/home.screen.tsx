@@ -10,28 +10,48 @@ import {
   GetDataBaseByRef,
   GetUser,
   GetUserRecipeCollection,
-  getRecipeCollection,
+  getUserSavedRecipes,
 } from '../../services/database.service';
+
+enum SegmentType {
+  Mine = 'Mine',
+  Saved = 'Saved',
+}
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
+  const [savedRecipeList, setSavedRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [segmentValue, setSegmentValue] = useState<string>('mine');
+  const [segmentValue, setSegmentValue] = useState<string>(SegmentType.Mine);
+
+  const displayData =
+    segmentValue === SegmentType.Mine ? filteredRecipeList : savedRecipeList;
 
   const userStore = useStores();
 
-  const getRecipes = async (): Promise<void> => {
-    const res = await GetUserRecipeCollection(userStore.uid);
+  useEffect(() => {
+    setLoading(true);
+    (async function () {
+      await Promise.all([
+        getUsers(),
+        getRecipesForDisplay(),
+        getCategories(),
+        ,
+      ]).then(() => setLoading(false));
+    })();
+  }, []);
 
-    if (res) {
-      setRecipeList(res);
-      setFilteredRecipeList(res);
-    }
-  };
+  useEffect(() => {
+    setLoading(true);
+    (async function () {
+      getRecipesForDisplay();
+      setLoading(false);
+    })();
+  }, [segmentValue]);
 
   const getCategories = async (): Promise<void> => {
     const res = await GetDataBaseByRef('categories');
@@ -49,12 +69,32 @@ export const HomeScreen = ({navigation}): ReactNode => {
     await processUserResult(res._data);
   };
 
+  const getRecipesForDisplay = async () => {
+    const res =
+      segmentValue === SegmentType.Mine
+        ? await getRecipes()
+        : await getSavedRecipes();
+    if (res) {
+      setSavedRecipeList(res);
+      setFilteredRecipeList(res);
+    }
+  };
+
+  const getRecipes = async (): Promise<Recipe[]> => {
+    return await GetUserRecipeCollection(userStore.uid);
+  };
+
+  const getSavedRecipes = async (): Promise<Recipe[]> => {
+    return await getUserSavedRecipes(userStore.favourites);
+  };
+
   const processUserResult = async (response: RecipeUser): Promise<void> => {
     if (!response) {
       await addNewUser();
       return;
     }
     userStore.setFavourites(response.Favourites);
+    await getSavedRecipes();
   };
 
   const addNewUser = async (): Promise<void> => {
@@ -68,16 +108,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
     await AddNewUser(userStore.uid, initUserData);
   };
-
-  useEffect(() => {
-    setLoading(true);
-    (async function () {
-      getRecipeCollection();
-      await Promise.all([getRecipes(), getCategories(), getUsers()]).then(() =>
-        setLoading(false),
-      );
-    })();
-  }, []);
 
   useEffect(() => {
     const inputNoSpace = searchInput.trim().toLowerCase();
@@ -157,11 +187,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
             onValueChange={setSegmentValue}
             buttons={[
               {
-                value: 'mine',
+                value: SegmentType.Mine,
                 label: 'My Recipes',
               },
               {
-                value: 'saved',
+                value: SegmentType.Saved,
                 label: 'Saved Reciped',
               },
             ]}
@@ -172,22 +202,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
           <ActivityIndicator animating={true} />
         ) : (
           <View style={styles.flex}>
-            {/* <View style={styles.categoryContainer}>
-              <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                horizontal={true}
-                data={categories}
-                renderItem={({item}) => (
-                  <TouchableOpacity onPress={() => categorySelect(item)}>
-                    <Chip
-                      style={{marginLeft: 8, marginRight: 4}}
-                      selected={isSelectedCategory(item)}>
-                      {item}
-                    </Chip>
-                  </TouchableOpacity>
-                )}
-              />
-            </View> */}
             <View style={styles.contentPadding}>
               {filteredRecipeList.length > 0 ? (
                 <FlatList
@@ -196,7 +210,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                   ItemSeparatorComponent={() => (
                     <View style={{marginBottom: 10}} />
                   )}
-                  data={filteredRecipeList}
+                  data={displayData}
                   renderItem={({item}) => (
                     <SearchResultCard
                       recipe={item}

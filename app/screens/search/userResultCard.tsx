@@ -5,22 +5,22 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 
 type UserResultCardProps = {
-  name: string;
-  onPress: () => void;
+  user: any;
+  onPress: (Id: string) => void;
 };
 
 export const UserResultCard = ({
-  name,
+  user,
   onPress,
 }: UserResultCardProps): ReactNode => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={() => onPress(user.Id)}>
       <View style={styles.main}>
         <View style={styles.iconStyle}>
           <Avatar.Icon size={34} icon="account" />
         </View>
         <View>
-          <Text>{name}</Text>
+          <Text>{user.Name}</Text>
           <Text variant="bodyMedium">{'0 Recipes'}</Text>
         </View>
       </View>

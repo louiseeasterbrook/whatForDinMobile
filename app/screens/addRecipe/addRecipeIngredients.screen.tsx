@@ -52,7 +52,6 @@ export const AddRecipeIngredientsScreen = observer(
     };
 
     const navToStepsScreen = () => {
-      console.log(refInputs.current);
       const ingredientArray = refInputs.current;
       const ingredientsNoNull = ingredientArray.filter(
         (ingredient: string) => ingredient !== null || ingredient !== '',

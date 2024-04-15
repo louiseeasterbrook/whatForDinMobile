@@ -19,7 +19,6 @@ export const DisplayListWithTitle = ({
   orderedList,
   listSteps,
 }: DisplayListWithTitleProps): ReactNode => {
-  console.log('DisplayListWithTitle ', listSteps);
   return (
     <>
       <Card>
