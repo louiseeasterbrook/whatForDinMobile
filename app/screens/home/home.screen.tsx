@@ -10,7 +10,6 @@ import {
   GetDataBaseByRef,
   GetUser,
   GetUserRecipeCollection,
-  GetUsersByName,
   getRecipeCollection,
 } from '../../services/database.service';
 
@@ -26,7 +25,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
 
   const getRecipes = async (): Promise<void> => {
-    await GetUsersByName('Louise');
     const res = await GetUserRecipeCollection(userStore.uid);
 
     if (res) {

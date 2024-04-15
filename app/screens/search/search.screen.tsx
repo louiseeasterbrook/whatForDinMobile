@@ -4,6 +4,8 @@ import {Text, Searchbar, FAB} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {GetAllUsers} from '../../services/database.service';
+import {UserResultCard} from './userResultCard';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -11,9 +13,26 @@ export const SearchScreen = ({navigation}): ReactNode => {
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [users, setUsers] = useState([]);
 
   const userStore = useStores();
+
+  useEffect(() => {
+    (async function () {
+      await getUserData();
+    })();
+  }, []);
+
+  const getUserData = async (): Promise<void> => {
+    const users = await GetAllUsers();
+    if (users) {
+      setUsers(users);
+    }
+  };
+
+  const userPressed = () => {
+    console.log('-- user preseed');
+  };
 
   return (
     <BaseScreen>
@@ -30,7 +49,25 @@ export const SearchScreen = ({navigation}): ReactNode => {
         {loading ? (
           <ActivityIndicator animating={true} />
         ) : (
-          <View style={styles.flex}></View>
+          <View style={styles.flex}>
+            <View style={styles.contentPadding}>
+              {users.length > 0 ? (
+                <FlatList
+                  style={styles.flex}
+                  keyExtractor={(item, index) => index.toString()}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginBottom: 10}} />
+                  )}
+                  data={users}
+                  renderItem={({item}) => (
+                    <UserResultCard name={item.Name} onPress={userPressed} />
+                  )}
+                />
+              ) : (
+                <Text>no result</Text>
+              )}
+            </View>
+          </View>
         )}
       </View>
     </BaseScreen>
