@@ -6,6 +6,7 @@ import {EditStepsScreen} from '../screens/recipe/editSteps.screen.';
 import {ReviewEditScreen} from '../screens/recipe/reviewEdit.screen';
 import {EditMenuScreen} from '../screens/recipe/editMenu.screen';
 import {EditRecipeProvider} from '../screens/recipe/context/editRecipeContext';
+import {HORIZONTAL_ANIMATION} from './navigation.animation';
 
 const Stack = createStackNavigator();
 
@@ -16,32 +17,32 @@ export const EditRecipeStack = () => {
         <Stack.Screen
           name="View"
           component={ViewRecipeScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen
           name="EditMenu"
           component={EditMenuScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen
           name="EditName"
           component={EditNameScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen
           name="EditIngredients"
           component={EditIngredientsScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen
           name="EditSteps"
           component={EditStepsScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen
           name="ReviewEdit"
           component={ReviewEditScreen}
-          options={{headerShown: false}}
+          options={HORIZONTAL_ANIMATION}
         />
       </Stack.Navigator>
     </EditRecipeProvider>

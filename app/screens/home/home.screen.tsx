@@ -141,11 +141,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
     await getRecipesForDisplay();
   };
 
-  const getRecipesThatMatchSelectedCategories = () => {
-    return recipeList.filter((recipe: Recipe) => {
-      return selectedCategories.includes(categories[recipe.Category]);
-    });
-  };
+  // const getRecipesThatMatchSelectedCategories = () => {
+  //   return recipeList.filter((recipe: Recipe) => {
+  //     return selectedCategories.includes(categories[recipe.Category]);
+  //   });
+  // };
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {

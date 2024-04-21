@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth';
 import {useStores} from '../store/mainStore';
 import {AddRecipeStack} from './addRecipe.navigator';
 import {EditRecipeStack} from './editRecipe.navigator';
+import {HORIZONTAL_ANIMATION} from './navigation.animation';
 
 const Stack = createStackNavigator();
 
@@ -41,17 +42,17 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="Tabs"
         component={TabNavigator}
-        options={{headerShown: false}}
+        options={HORIZONTAL_ANIMATION}
       />
       <Stack.Screen
         name="ViewRecipe"
         component={EditRecipeStack}
-        options={{headerShown: false}}
+        options={HORIZONTAL_ANIMATION}
       />
       <Stack.Screen
         name="AddRecipe"
         component={AddRecipeStack}
-        options={{headerShown: false}}
+        options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>
   );
@@ -63,7 +64,7 @@ export const LoggedOutStack = () => {
       <Stack.Screen
         name="Login"
         component={LoginNavigator}
-        options={{headerShown: false}}
+        options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>
   );
