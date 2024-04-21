@@ -21,15 +21,11 @@ enum SegmentType {
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
-  const [savedRecipeList, setSavedRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [segmentValue, setSegmentValue] = useState<string>(SegmentType.Mine);
-
-  const displayData =
-    segmentValue === SegmentType.Mine ? filteredRecipeList : savedRecipeList;
 
   const userStore = useStores();
 
@@ -48,7 +44,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   useEffect(() => {
     setLoading(true);
     (async function () {
-      getRecipesForDisplay();
+      await getRecipesForDisplay();
       setLoading(false);
     })();
   }, [segmentValue]);
@@ -75,7 +71,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
         ? await getRecipes()
         : await getSavedRecipes();
     if (res) {
-      setSavedRecipeList(res);
+      setRecipeList(res);
       setFilteredRecipeList(res);
     }
   };
@@ -123,13 +119,27 @@ export const HomeScreen = ({navigation}): ReactNode => {
     });
   };
 
-  useEffect(() => {
-    const newList = selectedCategories?.length
-      ? getRecipesThatMatchSelectedCategories()
-      : recipeList;
+  // useEffect(() => {
+  //   const newList = selectedCategories?.length
+  //     ? getRecipesThatMatchSelectedCategories()
+  //     : recipeList;
 
-    setFilteredRecipeList(newList);
-  }, [selectedCategories]);
+  //   setFilteredRecipeList(newList);
+  // }, [selectedCategories]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      (async function () {
+        await screenFocus();
+      })();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const screenFocus = async () => {
+    setSegmentValue(SegmentType.Mine);
+    await getRecipesForDisplay();
+  };
 
   const getRecipesThatMatchSelectedCategories = () => {
     return recipeList.filter((recipe: Recipe) => {
@@ -177,7 +187,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <Searchbar
-            placeholder="Search"
+            placeholder="Search for a recipe..."
             onChangeText={setSearchInput}
             value={searchInput}
             style={styles.searchBar}
@@ -210,7 +220,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                   ItemSeparatorComponent={() => (
                     <View style={{marginBottom: 10}} />
                   )}
-                  data={displayData}
+                  data={recipeList}
                   renderItem={({item}) => (
                     <SearchResultCard
                       recipe={item}

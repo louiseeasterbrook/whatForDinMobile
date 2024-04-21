@@ -1,22 +1,8 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {NavigationProp} from '@react-navigation/native';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-  FlatList,
-  ScrollView,
-} from 'react-native';
-import {
-  Text,
-  Searchbar,
-  FAB,
-  Appbar,
-  Card,
-  Avatar,
-  IconButton,
-} from 'react-native-paper';
-import {Recipe, RecipeUser} from '../../models/searchResults';
+import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
+import {Text, Searchbar, FAB, Appbar, Card, Avatar} from 'react-native-paper';
+import {Recipe} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {
   GetUser,
@@ -95,13 +81,6 @@ export const UserProfileScreen = ({
               title={user.Name}
               subtitle="Card Subtitle"
               left={props => <Avatar.Icon icon="account" />}
-              right={props => (
-                <IconButton
-                  {...props}
-                  icon="dots-vertical"
-                  onPress={() => {}}
-                />
-              )}
             />
             <Searchbar
               placeholder="Search"

@@ -12,8 +12,8 @@ export const SearchScreen = ({navigation}): ReactNode => {
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [categories, setCategories] = useState<string[]>([]);
-  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
 
   const userStore = useStores();
 
@@ -26,12 +26,30 @@ export const SearchScreen = ({navigation}): ReactNode => {
   const getUserData = async (): Promise<void> => {
     const users = await GetAllUsers();
     if (users) {
-      setUsers(users);
+      setUsers(RemoveLoggedInUser(users));
     }
+  };
+
+  const RemoveLoggedInUser = (userList: any[]): any[] => {
+    return userList.filter(user => user.Id !== userStore.uid);
   };
 
   const userPressed = (userId: string): void => {
     navigation.navigate('UserProfile', {userId: userId});
+  };
+
+  const onSearch = (): void => {
+    const inputNoSpace = searchInput.trim().toLowerCase();
+    const newList = getUsersThatMatchSearchInput(inputNoSpace);
+    setFilteredUsers(newList);
+  };
+
+  useEffect(() => {
+    onSearch();
+  }, [searchInput]);
+
+  const getUsersThatMatchSearchInput = (searchInput: string) => {
+    return users.filter(user => user.Name.toLowerCase().includes(searchInput));
   };
 
   return (
@@ -39,7 +57,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <Searchbar
-            placeholder="Search"
+            placeholder="Search for a user..."
             onChangeText={setSearchInput}
             value={searchInput}
             style={styles.searchBar}
@@ -58,7 +76,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
                   ItemSeparatorComponent={() => (
                     <View style={{marginBottom: 10}} />
                   )}
-                  data={users}
+                  data={filteredUsers}
                   renderItem={({item}) => (
                     <UserResultCard
                       user={item}
