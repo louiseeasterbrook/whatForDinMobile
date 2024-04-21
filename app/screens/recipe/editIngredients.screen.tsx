@@ -60,7 +60,6 @@ export const EditIngredientsScreen = observer(
     };
 
     const navToStepsScreen = async () => {
-      console.log(refInputs.current);
       setIngredients(refInputs.current);
       goBack();
     };

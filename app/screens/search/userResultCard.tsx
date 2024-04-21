@@ -1,11 +1,11 @@
-import {ReactNode} from 'react';
+import {ReactNode, useEffect} from 'react';
 import {Text, Divider, Avatar} from 'react-native-paper';
-import {Recipe} from '../../models/searchResults';
+import {Recipe, SearchResultUser} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 
 type UserResultCardProps = {
-  user: any;
+  user: SearchResultUser;
   onPress: (Id: string) => void;
 };
 
@@ -21,7 +21,7 @@ export const UserResultCard = ({
         </View>
         <View>
           <Text>{user.Name}</Text>
-          <Text variant="bodyMedium">{'0 Recipes'}</Text>
+          <Text variant="bodyMedium">{`${user.RecipeCount || 0} Recipes`}</Text>
         </View>
       </View>
       <Divider></Divider>

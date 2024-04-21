@@ -16,8 +16,15 @@ export interface RecipeUser {
   Name: string;
   DateCreated: string;
   Favourites: string[];
+  Id: string;
 }
 
 export interface UserFavourites {
   Favourites: string[];
+}
+
+export interface SearchResultUser {
+  Name: string;
+  Id: string;
+  RecipeCount: number;
 }

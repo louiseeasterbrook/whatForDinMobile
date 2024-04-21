@@ -50,7 +50,7 @@ export async function UpdateRecipe(
 
 //////////////////
 
-export async function getRecipeCollection(): Promise<any> {
+export async function GetAllRecipeCollection(): Promise<any> {
   const recipeData = await firestore().collection('recipes').get();
   return addDocumentIdToEachDataSet(recipeData);
 }
@@ -68,7 +68,7 @@ const getRecipesIncludedInIdArray = (
   return recipes.filter(recipe => favourites.includes(recipe.Id));
 };
 
-const addDocumentIdToEachDataSet = recipeData => {
+const addDocumentIdToEachDataSet = (recipeData: any[]) => {
   return recipeData._docs.map(x => ({
     ...x._data,
     Id: x.id,
@@ -94,7 +94,7 @@ export async function UpdateRecipeInCollection(
   await firestore().collection('recipes').doc(recipeData.Id).set(recipeData);
 }
 
-export async function GetAllUsers(): Promise<any> {
+export async function GetAllUsers(): Promise<RecipeUser> {
   const res = await firestore().collection('users').get();
   return addDocumentIdToEachDataSet(res);
 }

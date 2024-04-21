@@ -1,25 +1,28 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Text, Searchbar, FAB} from 'react-native-paper';
-import {Recipe, RecipeUser} from '../../models/searchResults';
+import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {GetAllUsers} from '../../services/database.service';
+import {
+  GetAllUsers,
+  GetAllRecipeCollection,
+} from '../../services/database.service';
 import {UserResultCard} from './userResultCard';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [recipeList, setRecipeList] = useState<Recipe[]>([]);
-  const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [filteredUsers, setFilteredUsers] = useState<string[]>([]);
-  const [users, setUsers] = useState<any[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<SearchResultUser[]>([]);
+  const [users, setUsers] = useState<RecipeUser[]>([]);
+  const [formattedUsers, setFormattedUsers] = useState<SearchResultUser[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const userStore = useStores();
 
   useEffect(() => {
     (async function () {
-      await getUserData();
+      await Promise.all([getUserData(), getRecipeData()]);
     })();
   }, []);
 
@@ -28,6 +31,41 @@ export const SearchScreen = ({navigation}): ReactNode => {
     if (users) {
       setUsers(RemoveLoggedInUser(users));
     }
+  };
+
+  const getRecipeData = async (): Promise<void> => {
+    const res = await GetAllRecipeCollection();
+    if (res) {
+      setRecipes(res);
+    }
+  };
+
+  useEffect(() => {
+    formatUserResult();
+  }, [users, recipes]);
+
+  const formatUserResult = (): void => {
+    if (!users || !recipes) {
+      return;
+    }
+
+    const formattedUsers: SearchResultUser[] = users.map((user: RecipeUser) => {
+      return {
+        Name: user.Name,
+        Id: user.Id,
+        RecipeCount: getUserRecipeCount(user),
+      };
+    });
+
+    setFormattedUsers(formattedUsers);
+    setLoading(false);
+  };
+
+  const getUserRecipeCount = (user: RecipeUser): number => {
+    return recipes.reduce(
+      (acc: number, curr: Recipe) => (curr.UserId == user.Id ? acc + 1 : acc),
+      0,
+    );
   };
 
   const RemoveLoggedInUser = (userList: any[]): any[] => {
@@ -49,7 +87,9 @@ export const SearchScreen = ({navigation}): ReactNode => {
   }, [searchInput]);
 
   const getUsersThatMatchSearchInput = (searchInput: string) => {
-    return users.filter(user => user.Name.toLowerCase().includes(searchInput));
+    return formattedUsers.filter(user =>
+      user.Name.toLowerCase().includes(searchInput),
+    );
   };
 
   return (
@@ -69,7 +109,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
         ) : (
           <View style={styles.flex}>
             <View style={styles.contentPadding}>
-              {users.length > 0 ? (
+              {filteredUsers.length > 0 ? (
                 <FlatList
                   style={styles.flex}
                   keyExtractor={(item, index) => index.toString()}
