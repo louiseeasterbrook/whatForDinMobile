@@ -129,16 +129,13 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      (async function () {
-        await screenFocus();
-      })();
+      screenFocus();
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, segmentValue]);
 
-  const screenFocus = async () => {
-    setSegmentValue(SegmentType.Mine);
-    await getRecipesForDisplay();
+  const screenFocus = () => {
+    getRecipesForDisplay();
   };
 
   // const getRecipesThatMatchSelectedCategories = () => {
