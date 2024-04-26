@@ -1,10 +1,4 @@
-import {ReactNode, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {NavigationProp} from '@react-navigation/native';
-import {ListWithTitle, Recipe} from '../../models/searchResults';
-import {FlatList} from 'react-native-gesture-handler';
-import {ListSection} from './ListSection.component';
-import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
+import {ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 import {ListRow} from './ListRow.component';
 
@@ -21,20 +15,14 @@ export const DisplayListWithTitle = ({
 }: DisplayListWithTitleProps): ReactNode => {
   return (
     <>
-      <Card>
-        <Card.Title title={title}></Card.Title>
-        <Card.Content>
-          {/* <Text style={styles.mainTitle}>{title}</Text> */}
-          {listSteps?.length &&
-            listSteps.map((text: string, index: number) => (
-              <ListRow
-                key={index}
-                text={text}
-                orderedList={orderedList}
-                index={index}></ListRow>
-            ))}
-        </Card.Content>
-      </Card>
+      {listSteps?.length &&
+        listSteps.map((text: string, index: number) => (
+          <ListRow
+            key={index}
+            text={text}
+            orderedList={orderedList}
+            index={index}></ListRow>
+        ))}
     </>
   );
 };

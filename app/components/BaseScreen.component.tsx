@@ -1,11 +1,5 @@
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {useSafeAreaInsets, SafeAreaView} from 'react-native-safe-area-context';
 
 type BaseScreenProps = {
   children: any;
@@ -19,19 +13,8 @@ export const BaseScreen = ({
   statusBarColour = '#FFFFFF',
   useSafeArea = false,
 }: BaseScreenProps) => {
-  const insets = useSafeAreaInsets();
-  const statusBarHeightAndroid = StatusBar.currentHeight + 14;
-
-  const STATUSBAR_HEIGHT =
-    Platform.OS === 'ios' ? insets.top : statusBarHeightAndroid;
   return (
     <View style={styles.screen}>
-      <View style={{height: STATUSBAR_HEIGHT}}>
-        <StatusBar
-          backgroundColor={statusBarColour}
-          translucent
-          barStyle="dark-content"></StatusBar>
-      </View>
       {useSafeArea ? (
         <SafeAreaView style={styles.screen}>{children}</SafeAreaView>
       ) : (

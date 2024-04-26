@@ -180,7 +180,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   return (
-    <BaseScreen>
+    <BaseScreen useSafeArea={true}>
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <Searchbar

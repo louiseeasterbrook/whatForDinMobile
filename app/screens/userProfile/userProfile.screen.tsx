@@ -9,6 +9,8 @@ import {
   GetUserRecipeCollection,
 } from '../../services/database.service';
 import {SearchResultCard} from '../home/searchResultCard';
+import {HeaderCard} from '../../components/headerCard.component';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -71,54 +73,54 @@ export const UserProfileScreen = ({
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={'Profile'} />
       </Appbar.Header>
-
-      {loading ? (
-        <ActivityIndicator animating={true} />
-      ) : (
-        <View style={styles.flex}>
-          <View style={styles.sidePadding}>
-            <Card.Title
-              title={user.Name}
-              subtitle="Card Subtitle"
-              left={props => <Avatar.Icon icon="account" />}
-            />
-            <Searchbar
-              placeholder="Search"
-              onChangeText={setSearchInput}
-              value={searchInput}
-              style={styles.searchBar}
-            />
-          </View>
-
-          {loading ? (
-            <ActivityIndicator animating={true} />
-          ) : (
-            <View style={styles.flex}>
-              <View style={styles.contentPadding}>
-                {filteredRecipeList.length > 0 ? (
-                  <FlatList
-                    style={styles.flex}
-                    keyExtractor={(item, index) => index.toString()}
-                    ItemSeparatorComponent={() => (
-                      <View style={{marginBottom: 10}} />
-                    )}
-                    data={filteredRecipeList}
-                    renderItem={({item}) => (
-                      <SearchResultCard
-                        recipe={item}
-                        category={'hello'}
-                        onPress={item => navToRecipeScreen(item)}
-                      />
-                    )}
-                  />
-                ) : (
-                  <Text>no result</Text>
-                )}
-              </View>
+      <BaseScreen>
+        {loading ? (
+          <ActivityIndicator animating={true} />
+        ) : (
+          <View style={styles.flex}>
+            <View style={styles.sidePadding}>
+              <HeaderCard
+                title={user.Name}
+                subtitle={`User Since: 12 April 2024`}
+                icon="account"></HeaderCard>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={setSearchInput}
+                value={searchInput}
+                style={styles.searchBar}
+              />
             </View>
-          )}
-        </View>
-      )}
+
+            {loading ? (
+              <ActivityIndicator animating={true} />
+            ) : (
+              <View style={styles.flex}>
+                <View style={styles.contentPadding}>
+                  {filteredRecipeList.length > 0 ? (
+                    <FlatList
+                      style={styles.flex}
+                      keyExtractor={(item, index) => index.toString()}
+                      ItemSeparatorComponent={() => (
+                        <View style={{marginBottom: 10}} />
+                      )}
+                      data={filteredRecipeList}
+                      renderItem={({item}) => (
+                        <SearchResultCard
+                          recipe={item}
+                          category={'hello'}
+                          onPress={item => navToRecipeScreen(item)}
+                        />
+                      )}
+                    />
+                  ) : (
+                    <Text>no result</Text>
+                  )}
+                </View>
+              </View>
+            )}
+          </View>
+        )}
+      </BaseScreen>
     </>
   );
 };
@@ -126,6 +128,7 @@ export const UserProfileScreen = ({
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
+    paddingTop: 12,
   },
   contentPadding: {
     paddingHorizontal: 18,

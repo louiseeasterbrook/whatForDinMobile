@@ -5,6 +5,7 @@ export interface Recipe {
   Method: string[];
   Id: string;
   UserId: string;
+  UserName: string;
 }
 
 export interface ListWithTitle {

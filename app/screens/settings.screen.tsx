@@ -1,17 +1,7 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BaseScreen} from '../components/BaseScreen.component';
-import {
-  Button,
-  Text,
-  TextInput,
-  Divider,
-  List,
-  Switch,
-  Avatar,
-  Icon,
-  IconButton,
-} from 'react-native-paper';
+import {Text, Divider, Switch, Avatar, IconButton} from 'react-native-paper';
 import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
 
@@ -31,7 +21,7 @@ export const SettingsScreen = (): ReactNode => {
   };
 
   return (
-    <BaseScreen>
+    <BaseScreen useSafeArea={true}>
       <View style={styles.fullScreenContainer}>
         <View>
           <View style={styles.nameContainer}>
