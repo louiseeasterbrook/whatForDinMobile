@@ -10,6 +10,7 @@ import React, {useEffect} from 'react';
 import {Environment} from './models/environment';
 import {MainStore, RootStoreProvider} from './store/mainStore';
 import {useColorScheme} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 import {
   MD3LightTheme as DefaultTheme,
@@ -24,6 +25,9 @@ function App(): React.JSX.Element {
 
   //TODO: move to own setup function in diff file
   useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 500);
     (async () => {
       await environment.setup();
     })();
