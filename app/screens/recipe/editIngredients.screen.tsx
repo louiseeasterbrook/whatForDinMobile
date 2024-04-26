@@ -95,7 +95,7 @@ export const EditIngredientsScreen = observer(
               ))}
             </>
             <Button mode="contained" onPress={addInput}>
-              Add Step
+              Add step
             </Button>
           </ScrollView>
           <Button

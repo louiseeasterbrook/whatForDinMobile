@@ -4,6 +4,7 @@ import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useRef, useState} from 'react';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type AddRecipeIngredientsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -68,40 +69,45 @@ export const AddRecipeIngredientsScreen = observer(
             }}
           />
         </Appbar.Header>
-        <View style={styles.main}>
-          <View>
-            <View style={styles.header}>
-              <Text variant="headlineSmall">What are your Ingredients?</Text>
+        <BaseScreen>
+          <View style={styles.main}>
+            <View>
+              <View style={styles.header}>
+                <Text>Add your Ingredients</Text>
+              </View>
+              <>
+                {[...Array(numInputs)].map((e, i) => (
+                  <View key={i} style={styles.inputButtonContainer}>
+                    <TextInput
+                      style={styles.input}
+                      value={refInputs.current[i]}
+                      onChangeText={(currentValue: string) =>
+                        setInputValue(i, currentValue)
+                      }
+                    />
+                    <TouchableOpacity
+                      style={styles.inputRemoveButton}
+                      onPress={() => removeInput(i)}>
+                      <Icon source="minus-circle-outline" size={20} />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </>
+              <Button
+                mode="contained"
+                onPress={addInput}
+                style={styles.addButton}>
+                Add ingredient
+              </Button>
             </View>
-            <>
-              {[...Array(numInputs)].map((e, i) => (
-                <View key={i} style={styles.inputButtonContainer}>
-                  <TextInput
-                    style={styles.input}
-                    value={refInputs.current[i]}
-                    onChangeText={(currentValue: string) =>
-                      setInputValue(i, currentValue)
-                    }
-                  />
-                  <TouchableOpacity
-                    style={styles.inputRemoveButton}
-                    onPress={() => removeInput(i)}>
-                    <Icon source="minus-circle-outline" size={20} />
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </>
-            <Button mode="contained" onPress={addInput}>
-              Add Ingredient
+            <Button
+              mode="contained"
+              onPress={navToStepsScreen}
+              disabled={buttonDisabled}>
+              Next
             </Button>
           </View>
-          <Button
-            mode="contained"
-            onPress={navToStepsScreen}
-            disabled={buttonDisabled}>
-            Next
-          </Button>
-        </View>
+        </BaseScreen>
       </>
     );
   },
@@ -133,6 +139,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  addButton: {
+    marginTop: 12,
   },
 });

@@ -27,13 +27,15 @@ export const LoginScreen = ({navigation}): ReactNode => {
   }
 
   return (
-    <BaseScreen>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Whats for din</Text>
+    <BaseScreen useSafeArea={true}>
+      <View style={styles.mainContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Whats for din?</Text>
+        </View>
+        <Button mode="contained" onPress={onGoogleButtonPress}>
+          Google Sign In
+        </Button>
       </View>
-      <Button mode="contained" onPress={onGoogleButtonPress}>
-        Google Sign In
-      </Button>
     </BaseScreen>
   );
 };
@@ -48,5 +50,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: 'center',
+  },
+  mainContainer: {
+    paddingHorizontal: 20,
+    flex: 1,
   },
 });

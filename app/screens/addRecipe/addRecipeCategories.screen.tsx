@@ -3,8 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Text, Appbar, Checkbox} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useState} from 'react';
+import {useState, version} from 'react';
 import {CATEGORIES} from '../../index/constants';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type AddRecipeCategoryScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -86,28 +87,30 @@ export const AddRecipeCategoryScreen = observer(
             }}
           />
         </Appbar.Header>
-        <View style={styles.main}>
-          <View>
-            <View style={styles.header}>
-              <Text variant="headlineSmall">Add a recipe Category</Text>
+        <BaseScreen>
+          <View style={styles.main}>
+            <View>
+              <View style={styles.header}>
+                <Text>Select one or more Categories below</Text>
+              </View>
+              <>
+                {categoryData.map(categ => {
+                  return (
+                    <Checkbox.Item
+                      key={categ.id}
+                      label={categ.name}
+                      status={categ.checked}
+                      onPress={() => checkBoxPressed(categ.id)}
+                    />
+                  );
+                })}
+              </>
             </View>
-            <>
-              {categoryData.map(categ => {
-                return (
-                  <Checkbox.Item
-                    key={categ.id}
-                    label={categ.name}
-                    status={categ.checked}
-                    onPress={() => checkBoxPressed(categ.id)}
-                  />
-                );
-              })}
-            </>
+            <Button mode="contained" onPress={navToStepsScreen}>
+              Next
+            </Button>
           </View>
-          <Button mode="contained" onPress={navToStepsScreen}>
-            Next
-          </Button>
-        </View>
+        </BaseScreen>
       </>
     );
   },
@@ -139,6 +142,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    alignItems: 'center',
+    paddingVertical: 12,
   },
 });
