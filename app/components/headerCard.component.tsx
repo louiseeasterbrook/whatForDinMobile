@@ -20,8 +20,8 @@ export const HeaderCard = ({
           <View style={styles.mainContainer}>
             <Avatar.Icon icon={icon} style={styles.icon} />
             <View style={styles.textContainer}>
-              <Text>{title}</Text>
-              <Text>{subtitle}</Text>
+              <Text style={styles.mainTitle}>{title}</Text>
+              <Text style={styles.subtitle}>{subtitle}</Text>
             </View>
           </View>
         </Card.Content>
@@ -38,5 +38,10 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 12,
   },
+  mainTitle: {
+    fontSize: 18,
+    paddingBottom: 2,
+  },
+  subtitle: {},
   textContainer: {},
 });

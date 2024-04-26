@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 import {ListRow} from './ListRow.component';
+import {Text} from 'react-native-paper';
 
 type DisplayListWithTitleProps = {
   title: string;
@@ -15,6 +16,7 @@ export const DisplayListWithTitle = ({
 }: DisplayListWithTitleProps): ReactNode => {
   return (
     <>
+      <Text style={styles.mainTitle}>{title}</Text>
       {listSteps?.length &&
         listSteps.map((text: string, index: number) => (
           <ListRow
@@ -29,8 +31,8 @@ export const DisplayListWithTitle = ({
 
 const styles = StyleSheet.create({
   mainTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
     paddingBottom: 8,
+    fontSize: 18,
   },
 });
