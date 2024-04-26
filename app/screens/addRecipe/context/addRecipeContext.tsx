@@ -8,13 +8,14 @@ export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
+  const [category, setCategory] = useState<string[]>([]);
 
   const userStore = useStores();
 
   const saveRecipe = async () => {
     const formattedRecipe: Recipe = {
       Name: name,
-      Category: 0,
+      Category: category,
       Ingredients: ingredients,
       Method: steps,
       UserId: userStore.uid,
@@ -30,6 +31,8 @@ export function AddRecipeProvider({children}: any): ReactNode {
     setIngredients,
     steps,
     setSteps,
+    category,
+    setCategory,
     saveRecipe,
   };
 

@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Text, Searchbar, FAB} from 'react-native-paper';
+import {Text, Searchbar} from 'react-native-paper';
 import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -58,6 +58,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
     });
 
     setFormattedUsers(formattedUsers);
+    setFilteredUsers(formattedUsers);
     setLoading(false);
   };
 

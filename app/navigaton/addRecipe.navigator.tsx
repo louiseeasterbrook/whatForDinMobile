@@ -5,6 +5,7 @@ import {AddRecipeStepsScreen} from '../screens/addRecipe/addRecipeSteps.screen';
 import {AddRecipeProvider} from '../screens/addRecipe/context/addRecipeContext';
 import {AddRecipeReviewScreen} from '../screens/addRecipe/addRecipeReview.screen';
 import {HORIZONTAL_ANIMATION} from './navigation.animation';
+import {AddRecipeCategoryScreen} from '../screens/addRecipe/addRecipeCategories.screen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ export const AddRecipeStack = () => {
         <Stack.Screen
           name="AddSteps"
           component={AddRecipeStepsScreen}
+          options={HORIZONTAL_ANIMATION}
+        />
+        <Stack.Screen
+          name="AddCategory"
+          component={AddRecipeCategoryScreen}
           options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen

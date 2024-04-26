@@ -42,6 +42,10 @@ export const AddRecipeStepsScreen = observer(
     };
 
     const removeInput = (i: number) => {
+      const currentInputArray = refInputs.current;
+      if (currentInputArray.length === 1) {
+        return;
+      }
       refInputs.current.splice(i, 1)[0];
       setNumInputs(value => value - 1);
     };
@@ -52,7 +56,7 @@ export const AddRecipeStepsScreen = observer(
 
     const navToStepsScreen = async () => {
       setSteps(refInputs.current);
-      navigation.navigate('Review');
+      navigation.navigate('AddCategory');
     };
 
     return (

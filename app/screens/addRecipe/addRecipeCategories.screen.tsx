@@ -5,13 +5,13 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useRef, useState} from 'react';
 
-type AddRecipeIngredientsScreenProps = {
+type AddRecipeCategoryScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
-export const AddRecipeIngredientsScreen = observer(
-  ({navigation}: AddRecipeIngredientsScreenProps) => {
-    const {ingredients, setIngredients} = useAddRecipe();
+export const AddRecipeCategoryScreen = observer(
+  ({navigation}: AddRecipeCategoryScreenProps) => {
+    const {category, setCategory} = useAddRecipe();
 
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
@@ -26,21 +26,17 @@ export const AddRecipeIngredientsScreen = observer(
       setText(value);
     };
 
-    const addInput = (): void => {
+    const addInput = () => {
       refInputs.current.push('');
       setNumInputs(value => value + 1);
     };
 
-    const removeInput = (i: number): void => {
-      const currentInputArray = refInputs.current;
-      if (currentInputArray.length === 1) {
-        return;
-      }
+    const removeInput = (i: number) => {
       refInputs.current.splice(i, 1)[0];
       setNumInputs(value => value - 1);
     };
 
-    const goBack = (): void => {
+    const goBack = () => {
       navigation.goBack();
     };
 
@@ -50,8 +46,8 @@ export const AddRecipeIngredientsScreen = observer(
         (ingredient: string) => ingredient !== null || ingredient !== '',
       );
       if (ingredientsNoNull.length > 0) {
-        setIngredients(ingredientsNoNull);
-        navigation.navigate('AddSteps');
+        setCategory(ingredientsNoNull);
+        navigation.navigate('Review');
       }
     };
 
@@ -71,7 +67,7 @@ export const AddRecipeIngredientsScreen = observer(
         <View style={styles.main}>
           <View>
             <View style={styles.header}>
-              <Text variant="headlineSmall">What are your Ingredients?</Text>
+              <Text variant="headlineSmall">Add a recipe Category</Text>
             </View>
             <>
               {[...Array(numInputs)].map((e, i) => (

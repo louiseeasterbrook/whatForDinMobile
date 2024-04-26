@@ -1,6 +1,6 @@
 export interface Recipe {
   Name: string;
-  Category: number;
+  Category: string[];
   Ingredients: string[];
   Method: string[];
   Id: string;
