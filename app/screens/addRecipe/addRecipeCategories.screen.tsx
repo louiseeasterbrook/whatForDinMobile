@@ -1,53 +1,75 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Button, Text, Appbar, Checkbox} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
+import {CATEGORIES} from '../../index/constants';
 
 type AddRecipeCategoryScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
+interface CheckBoxData {
+  name: string;
+  checked: CheckBoxState;
+  id: number;
+}
+
+enum CheckBoxState {
+  checked = 'checked',
+  unchecked = 'unchecked',
+}
+
 export const AddRecipeCategoryScreen = observer(
   ({navigation}: AddRecipeCategoryScreenProps) => {
-    const {category, setCategory} = useAddRecipe();
+    const getCheckBoxData = (): CheckBoxData[] => {
+      return CATEGORIES.map((categ: string, index: number) => ({
+        name: categ,
+        checked: CheckBoxState.unchecked,
+        id: index,
+      }));
+    };
 
-    const [text, setText] = useState<string>('');
-    const [numInputs, setNumInputs] = useState<number>(1);
-    const refInputs = useRef<string[]>([text]);
-    const buttonDisabled = Boolean(
-      refInputs.current?.length && refInputs.current[0].length <= 0,
+    const {category, setCategory} = useAddRecipe();
+    const [categoryData, setCategoryData] = useState<CheckBoxData[]>(
+      getCheckBoxData(),
     );
 
-    const setInputValue = (index: number, value: string) => {
-      const inputs = refInputs.current;
-      inputs[index] = value;
-      setText(value);
-    };
-
-    const addInput = () => {
-      refInputs.current.push('');
-      setNumInputs(value => value + 1);
-    };
-
-    const removeInput = (i: number) => {
-      refInputs.current.splice(i, 1)[0];
-      setNumInputs(value => value - 1);
-    };
-
-    const goBack = () => {
+    const goBack = (): void => {
       navigation.goBack();
     };
 
-    const navToStepsScreen = () => {
-      const ingredientArray = refInputs.current;
-      const ingredientsNoNull = ingredientArray.filter(
-        (ingredient: string) => ingredient !== null || ingredient !== '',
+    const navToStepsScreen = (): void => {
+      setCategory(getSelectedCategoryString());
+      navigation.navigate('Review');
+    };
+
+    const getSelectedCategoryString = (): string[] => {
+      return categoryData.reduce((acc: string[], curr: CheckBoxData) => {
+        if (curr.checked == CheckBoxState.checked) {
+          acc.push(curr.name);
+        }
+        return acc;
+      }, []);
+    };
+
+    const checkBoxPressed = (id: number): void => {
+      const index = categoryData.findIndex(
+        (cat: CheckBoxData) => cat.id === id,
       );
-      if (ingredientsNoNull.length > 0) {
-        setCategory(ingredientsNoNull);
-        navigation.navigate('Review');
+
+      if (index >= 0) {
+        const currentState = categoryData[index].checked;
+        const newState =
+          currentState === CheckBoxState.checked
+            ? CheckBoxState.unchecked
+            : CheckBoxState.checked;
+
+        const updatedArray = [...categoryData];
+        updatedArray[index].checked = newState;
+
+        setCategoryData(updatedArray);
       }
     };
 
@@ -70,31 +92,19 @@ export const AddRecipeCategoryScreen = observer(
               <Text variant="headlineSmall">Add a recipe Category</Text>
             </View>
             <>
-              {[...Array(numInputs)].map((e, i) => (
-                <View key={i} style={styles.inputButtonContainer}>
-                  <TextInput
-                    style={styles.input}
-                    value={refInputs.current[i]}
-                    onChangeText={(currentValue: string) =>
-                      setInputValue(i, currentValue)
-                    }
+              {categoryData.map(categ => {
+                return (
+                  <Checkbox.Item
+                    key={categ.id}
+                    label={categ.name}
+                    status={categ.checked}
+                    onPress={() => checkBoxPressed(categ.id)}
                   />
-                  <TouchableOpacity
-                    style={styles.inputRemoveButton}
-                    onPress={() => removeInput(i)}>
-                    <Icon source="minus-circle-outline" size={20} />
-                  </TouchableOpacity>
-                </View>
-              ))}
+                );
+              })}
             </>
-            <Button mode="contained" onPress={addInput}>
-              Add Ingredient
-            </Button>
           </View>
-          <Button
-            mode="contained"
-            onPress={navToStepsScreen}
-            disabled={buttonDisabled}>
+          <Button mode="contained" onPress={navToStepsScreen}>
             Next
           </Button>
         </View>
