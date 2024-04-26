@@ -6,6 +6,7 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import {useStores} from '../../store/mainStore';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type AddRecipeReviewScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -39,18 +40,20 @@ export const AddRecipeReviewScreen = observer(
           />
         </Appbar.Header>
 
-        <View style={styles.main}>
-          <ScrollView>
-            <RecipeDisplay
-              ingredients={ingredients}
-              steps={steps}
-              userName={userStore.name}
-              recipeName={name}></RecipeDisplay>
-          </ScrollView>
-          <Button mode="contained" onPress={navToStepsScreen}>
-            Save Recipe
-          </Button>
-        </View>
+        <BaseScreen>
+          <View style={styles.main}>
+            <ScrollView>
+              <RecipeDisplay
+                ingredients={ingredients}
+                steps={steps}
+                userName={userStore.name}
+                recipeName={name}></RecipeDisplay>
+            </ScrollView>
+            <Button mode="contained" onPress={navToStepsScreen}>
+              Save Recipe
+            </Button>
+          </View>
+        </BaseScreen>
       </>
     );
   },
