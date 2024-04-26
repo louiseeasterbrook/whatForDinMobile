@@ -1,11 +1,12 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
-import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
+import {Button, Appbar} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';
+import {RecipeDisplay} from '../../components/recipeDisplay.component';
+import {useStores} from '../../store/mainStore';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -15,6 +16,7 @@ type ReviewEditScreenProps = {
 export const ReviewEditScreen = observer(
   ({navigation, route}: ReviewEditScreenProps) => {
     const {name, steps, ingredients, updateRecipe} = useEditRecipe();
+    const userStore = useStores();
 
     const goBack = () => {
       navigation.goBack();
@@ -34,22 +36,11 @@ export const ReviewEditScreen = observer(
 
         <View style={styles.main}>
           <ScrollView>
-            <>
-              <Text variant="headlineSmall">{name}</Text>
-              <View style={styles.cardContainer}>
-                <DisplayListWithTitle
-                  title="Ingredients"
-                  orderedList={false}
-                  listSteps={ingredients}></DisplayListWithTitle>
-              </View>
-
-              <View style={styles.cardContainer}>
-                <DisplayListWithTitle
-                  title="Method"
-                  orderedList={true}
-                  listSteps={steps}></DisplayListWithTitle>
-              </View>
-            </>
+            <RecipeDisplay
+              ingredients={ingredients}
+              steps={steps}
+              userName={userStore.name}
+              recipeName={name}></RecipeDisplay>
           </ScrollView>
           <Button mode="contained" onPress={save}>
             Save Recipe

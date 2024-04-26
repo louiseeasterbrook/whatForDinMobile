@@ -1,8 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
-import {DisplayListWithTitle} from './ListWithTitle.component';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Text, Appbar} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
@@ -10,7 +9,7 @@ import {observer} from 'mobx-react-lite';
 import {UpdateUser} from '../../services/database.service';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {HeaderCard} from '../../components/headerCard.component';
+import {RecipeDisplay} from '../../components/recipeDisplay.component';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -76,25 +75,11 @@ export const ViewRecipeScreen = observer(
         <BaseScreen>
           <ScrollView style={styles.main}>
             {hasRecipe ? (
-              <>
-                <View style={styles.cardContainer}>
-                  <HeaderCard
-                    title={recipe.Name}
-                    subtitle={'Louise Easterbrook'}></HeaderCard>
-                </View>
-                <View style={styles.cardContainer}>
-                  <DisplayListWithTitle
-                    title="Ingredients"
-                    orderedList={false}
-                    listSteps={recipe.Ingredients}></DisplayListWithTitle>
-                </View>
-                <View style={styles.cardContainer}>
-                  <DisplayListWithTitle
-                    title="Method"
-                    orderedList={true}
-                    listSteps={recipe.Method}></DisplayListWithTitle>
-                </View>
-              </>
+              <RecipeDisplay
+                ingredients={recipe.Ingredients}
+                steps={recipe.Method}
+                userName="Louise Easterbrook"
+                recipeName={recipe.Name}></RecipeDisplay>
             ) : (
               <>
                 <Text>Recipe coming soon</Text>

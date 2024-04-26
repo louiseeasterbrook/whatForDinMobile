@@ -6,20 +6,17 @@ import {StyleSheet, View} from 'react-native';
 
 type SearchResultCardProps = {
   recipe: Recipe;
-  category: string;
   onPress: (item: Recipe) => void;
 };
 
 export const SearchResultCard = ({
   recipe,
-  category,
   onPress,
 }: SearchResultCardProps): ReactNode => {
   return (
     <TouchableOpacity onPress={() => onPress(recipe)}>
       <View style={styles.main}>
         <Text>{recipe.Name}</Text>
-        <Text variant="bodyMedium">{category}</Text>
       </View>
       <Divider></Divider>
     </TouchableOpacity>

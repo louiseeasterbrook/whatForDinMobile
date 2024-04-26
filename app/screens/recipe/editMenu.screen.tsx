@@ -1,13 +1,11 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
-import {DisplayListWithTitle} from './ListWithTitle.component';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Avatar, Button, Card, Text, Appbar, FAB} from 'react-native-paper';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Button, Card, Text, Appbar} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type EditMenuScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -29,37 +27,54 @@ export const EditMenuScreen = observer(
           <Appbar.Content title={'Edit Recipe'} />
         </Appbar.Header>
 
-        <ScrollView style={styles.main}>
-          <>
-            <TouchableOpacity onPress={() => navigation.navigate('EditName')}>
-              <Card>
-                <Card.Content>
-                  <Text variant="titleLarge">Name</Text>
-                </Card.Content>
-              </Card>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('EditIngredients')}>
-              <Card>
-                <Card.Content>
-                  <Text variant="titleLarge">Ingredients</Text>
-                </Card.Content>
-              </Card>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('EditSteps')}>
-              <Card>
-                <Card.Content>
-                  <Text variant="titleLarge">Steps</Text>
-                </Card.Content>
-              </Card>
-            </TouchableOpacity>
-          </>
-        </ScrollView>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('ReviewEdit')}>
-          Review Changes
-        </Button>
+        <BaseScreen>
+          <ScrollView style={styles.main}>
+            <>
+              <TouchableOpacity
+                style={styles.cardContainer}
+                onPress={() => navigation.navigate('EditName')}>
+                <Card>
+                  <Card.Content>
+                    <Text>Name</Text>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cardContainer}
+                onPress={() => navigation.navigate('EditIngredients')}>
+                <Card>
+                  <Card.Content>
+                    <Text>Ingredients</Text>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cardContainer}
+                onPress={() => navigation.navigate('EditSteps')}>
+                <Card>
+                  <Card.Content>
+                    <Text>Steps</Text>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cardContainer}
+                onPress={() => navigation.navigate('EditSteps')}>
+                <Card>
+                  <Card.Content>
+                    <Text>Categories</Text>
+                  </Card.Content>
+                </Card>
+              </TouchableOpacity>
+            </>
+          </ScrollView>
+
+          <Button
+            mode="contained"
+            onPress={() => navigation.navigate('ReviewEdit')}>
+            Review Changes
+          </Button>
+        </BaseScreen>
       </>
     );
   },
@@ -71,6 +86,6 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   cardContainer: {
-    paddingVertical: 10,
+    paddingTop: 10,
   },
 });

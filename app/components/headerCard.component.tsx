@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native';
 type HeaderCardProps = {
   title: string;
   subtitle: string;
-  icon: string;
+  icon?: string;
 };
 
 export const HeaderCard = ({

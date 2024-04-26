@@ -1,19 +1,11 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  Text,
-  Appbar,
-  TextInput,
-  Icon,
-} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Button, Appbar} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useRef, useState} from 'react';
-import {DisplayListWithTitle} from '../recipe/ListWithTitle.component';
+import {RecipeDisplay} from '../../components/recipeDisplay.component';
+import {useStores} from '../../store/mainStore';
 
 type AddRecipeReviewScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -22,6 +14,7 @@ type AddRecipeReviewScreenProps = {
 export const AddRecipeReviewScreen = observer(
   ({navigation}: AddRecipeReviewScreenProps) => {
     const {saveRecipe, steps, ingredients, name} = useAddRecipe();
+    const userStore = useStores();
 
     const goBack = () => {
       navigation.goBack();
@@ -48,22 +41,11 @@ export const AddRecipeReviewScreen = observer(
 
         <View style={styles.main}>
           <ScrollView>
-            <>
-              <Text variant="headlineSmall">{name}</Text>
-              <View style={styles.cardContainer}>
-                <DisplayListWithTitle
-                  title="Ingredients"
-                  orderedList={false}
-                  listSteps={ingredients}></DisplayListWithTitle>
-              </View>
-
-              <View style={styles.cardContainer}>
-                <DisplayListWithTitle
-                  title="Method"
-                  orderedList={true}
-                  listSteps={steps}></DisplayListWithTitle>
-              </View>
-            </>
+            <RecipeDisplay
+              ingredients={ingredients}
+              steps={steps}
+              userName={userStore.name}
+              recipeName={name}></RecipeDisplay>
           </ScrollView>
           <Button mode="contained" onPress={navToStepsScreen}>
             Save Recipe
