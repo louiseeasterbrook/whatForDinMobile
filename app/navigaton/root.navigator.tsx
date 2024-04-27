@@ -9,6 +9,7 @@ import {useStores} from '../store/mainStore';
 import {AddRecipeStack} from './addRecipe.navigator';
 import {EditRecipeStack} from './editRecipe.navigator';
 import {HORIZONTAL_ANIMATION} from './navigation.animation';
+import {UserProfileScreen} from '../screens/userProfile/userProfile.screen';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,11 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="AddRecipe"
         component={AddRecipeStack}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="UserProfile"
+        component={UserProfileScreen}
         options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>

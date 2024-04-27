@@ -4,7 +4,7 @@ import {BottomNavigation} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SettingsScreen} from '../screens/settings.screen';
 import {HomeScreen} from '../screens/home/home.screen';
-import {UserStack} from './user.navigator';
+import {SearchScreen} from '../screens/search/search.screen';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,7 +59,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Users"
-        component={UserStack}
+        component={SearchScreen}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({color, size}) => {
