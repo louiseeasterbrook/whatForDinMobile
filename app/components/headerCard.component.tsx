@@ -18,7 +18,7 @@ export const HeaderCard = ({
       <Card>
         <Card.Content>
           <View style={styles.mainContainer}>
-            <Avatar.Icon icon={icon} style={styles.icon} />
+            <Avatar.Icon size={50} icon={icon} style={styles.icon} />
             <View style={styles.textContainer}>
               <Text style={styles.mainTitle}>{title}</Text>
               <Text style={styles.subtitle}>{subtitle}</Text>
@@ -37,11 +37,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 12,
+    fontSize: 12,
   },
   mainTitle: {
-    fontSize: 18,
-    paddingBottom: 2,
+    fontSize: 16,
+    paddingBottom: 4,
   },
-  subtitle: {},
+  subtitle: {
+    fontSize: 12,
+  },
   textContainer: {},
 });

@@ -30,7 +30,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
     <BaseScreen useSafeArea={true}>
       <View style={styles.mainContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Whats for din?</Text>
+          <Text style={styles.title}>what's for din?</Text>
         </View>
         <Button mode="contained" onPress={onGoogleButtonPress}>
           Google Sign In

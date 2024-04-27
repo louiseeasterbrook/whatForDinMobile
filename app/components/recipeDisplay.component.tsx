@@ -40,6 +40,6 @@ export const RecipeDisplay = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingVertical: 10,
+    paddingVertical: 16,
   },
 });

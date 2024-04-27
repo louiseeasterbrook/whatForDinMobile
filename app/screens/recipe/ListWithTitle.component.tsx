@@ -33,6 +33,5 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontWeight: '700',
     paddingBottom: 8,
-    fontSize: 18,
   },
 });
