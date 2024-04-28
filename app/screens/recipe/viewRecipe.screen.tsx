@@ -80,7 +80,7 @@ export const ViewRecipeScreen = observer(
               <RecipeDisplay
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
-                userName="Louise Easterbrook"
+                userName={recipe.UserName}
                 recipeName={recipe.Name}></RecipeDisplay>
             ) : (
               <>
