@@ -180,7 +180,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   return (
-    <BaseScreen useSafeArea={true}>
+    <BaseScreen useSafeArea={true} noBottomPadding={true}>
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <Searchbar
@@ -208,28 +208,26 @@ export const HomeScreen = ({navigation}): ReactNode => {
         {loading ? (
           <ActivityIndicator animating={true} />
         ) : (
-          <View style={styles.flex}>
-            <View style={styles.contentPadding}>
-              {filteredRecipeList.length > 0 ? (
-                <FlatList
-                  style={styles.flex}
-                  keyExtractor={(item, index) => index.toString()}
-                  ItemSeparatorComponent={() => (
-                    <View style={{marginBottom: 10}} />
-                  )}
-                  data={recipeList}
-                  renderItem={({item}) => (
-                    <SearchResultCard
-                      recipe={item}
-                      category={categories[item.Category]}
-                      onPress={item => navToRecipeScreen(item)}
-                    />
-                  )}
-                />
-              ) : (
-                <Text>no result</Text>
-              )}
-            </View>
+          <View style={styles.contentPadding}>
+            {filteredRecipeList.length > 0 ? (
+              <FlatList
+                style={styles.flex}
+                keyExtractor={(item, index) => index.toString()}
+                ItemSeparatorComponent={() => (
+                  <View style={{marginBottom: 10}} />
+                )}
+                data={recipeList}
+                renderItem={({item}) => (
+                  <SearchResultCard
+                    recipe={item}
+                    category={categories[item.Category]}
+                    onPress={item => navToRecipeScreen(item)}
+                  />
+                )}
+              />
+            ) : (
+              <Text>no result</Text>
+            )}
           </View>
         )}
       </View>

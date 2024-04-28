@@ -1,22 +1,11 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
-import {ScrollView} from 'react-native-gesture-handler';
-import {DisplayListWithTitle} from './ListWithTitle.component';
 import {StyleSheet, View} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  Text,
-  Appbar,
-  FAB,
-  TextInput,
-} from 'react-native-paper';
+import {Button, Text, Appbar, TextInput} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {UpdateUserFavourites} from '../../services/database.service';
 import {useEditRecipe} from './context/editRecipeProvider';
+import {BaseScreen} from '../../components/BaseScreen.component';
 
 type EditNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -45,22 +34,24 @@ export const EditNameScreen = observer(
           <Appbar.Content title={'Edit Name'} />
         </Appbar.Header>
 
-        <View style={styles.main}>
-          <View>
-            <View style={styles.header}>
-              <Text variant="headlineSmall">What's your Recipe Name?</Text>
-            </View>
+        <BaseScreen>
+          <View style={styles.main}>
+            <View>
+              <View style={styles.header}>
+                <Text>Edit your Recipe Name</Text>
+              </View>
 
-            <TextInput
-              label="Name"
-              value={name}
-              onChangeText={(text: string) => setName(text)}
-            />
+              <TextInput
+                label="Name"
+                value={name}
+                onChangeText={(text: string) => setName(text)}
+              />
+            </View>
+            <Button mode="contained" onPress={save} disabled={buttonDisabled}>
+              Done
+            </Button>
           </View>
-          <Button mode="contained" onPress={save} disabled={buttonDisabled}>
-            Done
-          </Button>
-        </View>
+        </BaseScreen>
       </>
     );
   },
@@ -79,6 +70,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   header: {
-    alignItems: 'center',
+    paddingVertical: 12,
   },
 });

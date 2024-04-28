@@ -1,16 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  Text,
-  Appbar,
-  TextInput,
-  Icon,
-  ProgressBar,
-} from 'react-native-paper';
+import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useRef, useState} from 'react';
@@ -75,11 +66,12 @@ export const AddRecipeStepsScreen = observer(
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
-            <ScrollView>
+            <View style={styles.header}>
+              <Text>Add your recipe steps</Text>
+            </View>
+            <ScrollView
+              contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
-                <View style={styles.header}>
-                  <Text>Add your Recipe steps</Text>
-                </View>
                 {[...Array(numInputs)].map((e, i) => (
                   <View key={i} style={styles.inputButtonContainer}>
                     <TextInput
@@ -97,10 +89,14 @@ export const AddRecipeStepsScreen = observer(
                   </View>
                 ))}
               </>
-              <Button mode="contained" onPress={addInput}>
+              <Button
+                mode="contained"
+                onPress={addInput}
+                style={styles.addButton}>
                 Add step
               </Button>
             </ScrollView>
+
             <Button
               mode="contained"
               onPress={navToStepsScreen}
@@ -141,5 +137,8 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingVertical: 12,
+  },
+  addButton: {
+    marginTop: 12,
   },
 });
