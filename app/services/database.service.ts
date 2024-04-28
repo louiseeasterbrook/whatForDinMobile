@@ -98,3 +98,7 @@ export async function GetAllUsers(): Promise<RecipeUser> {
   const res = await firestore().collection('users').get();
   return addDocumentIdToEachDataSet(res);
 }
+
+export async function DeleteRecipe(id: string): Promise<any> {
+  await firestore().collection('recipes').doc(id).delete();
+}
