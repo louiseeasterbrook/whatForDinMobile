@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Text, Searchbar} from 'react-native-paper';
+import {Searchbar} from 'react-native-paper';
 import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -9,6 +9,7 @@ import {
   GetAllRecipeCollection,
 } from '../../services/database.service';
 import {UserResultCard} from './userResultCard';
+import {NullState} from '../../components/nullState.component copy';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -126,7 +127,9 @@ export const SearchScreen = ({navigation}): ReactNode => {
                   )}
                 />
               ) : (
-                <Text>no result</Text>
+                <NullState
+                  messageLine1={'No users'}
+                  icon="account-group"></NullState>
               )}
             </View>
           </View>

@@ -2,7 +2,6 @@ import {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
-import {Recipe} from '../models/searchResults';
 
 type RecipeDisplayProps = {
   ingredients: string[];

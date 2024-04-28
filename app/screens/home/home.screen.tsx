@@ -11,6 +11,7 @@ import {
   GetUserRecipeCollection,
   getUserSavedRecipes,
 } from '../../services/database.service';
+import {NullState} from '../../components/nullState.component copy';
 
 enum SegmentType {
   Mine = 'Mine',
@@ -181,6 +182,15 @@ export const HomeScreen = ({navigation}): ReactNode => {
     return selectedCategories.includes(category);
   };
 
+  const getNullStateMessageLine1 = (): string => {
+    const userRecipeMessage = 'No Recipes';
+    const noSavedRecipeMessage = 'No Saved recipes';
+
+    return segmentValue === SegmentType.Mine
+      ? userRecipeMessage
+      : noSavedRecipeMessage;
+  };
+
   return (
     <BaseScreen useSafeArea={true} noBottomPadding={true}>
       <View style={styles.flex}>
@@ -227,7 +237,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 )}
               />
             ) : (
-              <Text>no result</Text>
+              <NullState messageLine1={getNullStateMessageLine1()}></NullState>
             )}
           </View>
         )}

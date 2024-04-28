@@ -11,6 +11,7 @@ import {
 import {SearchResultCard} from '../home/searchResultCard';
 import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {NullState} from '../../components/nullState.component copy';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -129,7 +130,7 @@ export const UserProfileScreen = ({
                       )}
                     />
                   ) : (
-                    <Text>no result</Text>
+                    <NullState></NullState>
                   )}
                 </View>
               </View>
