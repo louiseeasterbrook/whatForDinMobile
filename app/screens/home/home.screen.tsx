@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Text, Searchbar, FAB, SegmentedButtons} from 'react-native-paper';
+import {Searchbar, FAB, SegmentedButtons} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
@@ -23,8 +23,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  // const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [segmentValue, setSegmentValue] = useState<string>(SegmentType.Mine);
 
   const userStore = useStores();
@@ -32,12 +30,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
   useEffect(() => {
     setLoading(true);
     (async function () {
-      await Promise.all([
-        getUsers(),
-        getRecipesForDisplay(),
-        getCategories(),
-        ,
-      ]).then(() => setLoading(false));
+      await Promise.all([getUsers(), getRecipesForDisplay(), ,]).then(() =>
+        setLoading(false),
+      );
     })();
   }, []);
 
@@ -48,14 +43,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
       setLoading(false);
     })();
   }, [segmentValue]);
-
-  const getCategories = async (): Promise<void> => {
-    // const res = await GetDataBaseByRef('categories');
-    // if (res) {
-    //   const noNullRes = res.filter((x: string) => x !== null);
-    //   setCategories(noNullRes);
-    // }
-  };
 
   const getUsers = async (): Promise<void> => {
     if (!userStore.uid) {
@@ -122,14 +109,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
     });
   };
 
-  // useEffect(() => {
-  //   const newList = selectedCategories?.length
-  //     ? getRecipesThatMatchSelectedCategories()
-  //     : recipeList;
-
-  //   setFilteredRecipeList(newList);
-  // }, [selectedCategories]);
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       screenFocus();
@@ -140,12 +119,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const screenFocus = () => {
     getRecipesForDisplay();
   };
-
-  // const getRecipesThatMatchSelectedCategories = () => {
-  //   return recipeList.filter((recipe: Recipe) => {
-  //     return selectedCategories.includes(categories[recipe.Category]);
-  //   });
-  // };
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {
@@ -160,35 +133,21 @@ export const HomeScreen = ({navigation}): ReactNode => {
     navigation.navigate('AddRecipe', {screen: 'AddName'});
   };
 
-  const categorySelect = (category: string): void => {
-    const newCategories: string[] = isSelectedCategory(category)
-      ? removeSelectedCategory(category)
-      : addSelectedCategory(category);
-
-    setSelectedCategories(newCategories);
-  };
-
-  const removeSelectedCategory = (category: string): string[] => {
-    return selectedCategories.filter(
-      (selectedCatory: string) => selectedCatory != category,
-    );
-  };
-
-  const addSelectedCategory = (category: string): string[] => {
-    return [...selectedCategories, category];
-  };
-
-  const isSelectedCategory = (category: string): boolean => {
-    return selectedCategories.includes(category);
-  };
-
   const getNullStateMessageLine1 = (): string => {
+    const searchMessage = `No search results`;
     const userRecipeMessage = 'No Recipes';
     const noSavedRecipeMessage = 'No Saved recipes';
 
-    return segmentValue === SegmentType.Mine
+    return searchInput
+      ? searchMessage
+      : segmentValue === SegmentType.Mine
       ? userRecipeMessage
       : noSavedRecipeMessage;
+  };
+
+  const changeSegmentValue = (val: SegmentType): void => {
+    setSearchInput('');
+    setSegmentValue(val);
   };
 
   return (
@@ -203,7 +162,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
           />
           <SegmentedButtons
             value={segmentValue}
-            onValueChange={setSegmentValue}
+            onValueChange={changeSegmentValue}
             buttons={[
               {
                 value: SegmentType.Mine,
@@ -237,7 +196,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 )}
               />
             ) : (
-              <NullState messageLine1={getNullStateMessageLine1()}></NullState>
+              <NullState
+                messageLine1={getNullStateMessageLine1()}
+                icon={searchInput ? 'magnify' : 'noodles'}></NullState>
             )}
           </View>
         )}
