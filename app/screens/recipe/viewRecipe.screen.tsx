@@ -10,6 +10,7 @@ import {UpdateUser} from '../../services/database.service';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
+import _ from 'lodash';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -23,7 +24,7 @@ export const ViewRecipeScreen = observer(
     const hasRecipe = recipe?.Ingredients && recipe?.Method;
     const isOwnRecipe = recipe.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe.Id);
-    const {setRecipe} = useEditRecipe();
+    const {initRecipe} = useEditRecipe();
 
     const goBack = () => {
       navigation.goBack();
@@ -53,7 +54,8 @@ export const ViewRecipeScreen = observer(
     };
 
     const goToEditMenu = () => {
-      setRecipe(recipe);
+      const newRec = _.cloneDeep(recipe);
+      initRecipe(newRec);
       navigation.navigate('EditMenu');
     };
 

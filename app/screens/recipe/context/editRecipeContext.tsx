@@ -1,10 +1,7 @@
-import {ReactNode, useEffect, useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {EditRecipeContext, EditRecipeContextValue} from './editRecipeProvider';
-import {ListWithTitle, Recipe} from '../../../models/searchResults';
-import {
-  UpdateRecipe,
-  UpdateRecipeInCollection,
-} from '../../../services/database.service';
+import {Recipe} from '../../../models/searchResults';
+import {UpdateRecipeInCollection} from '../../../services/database.service';
 
 export function EditRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
@@ -12,14 +9,15 @@ export function EditRecipeProvider({children}: any): ReactNode {
   const [steps, setSteps] = useState<string[]>([]);
   const [recipe, setRecipe] = useState<Recipe>();
 
-  useEffect(() => {
+  const initRecipe = (recipe: Recipe) => {
     if (!recipe) {
       return;
     }
     setName(recipe.Name);
     setIngredients(recipe.Ingredients);
     setSteps(recipe.Method);
-  }, [recipe]);
+    setRecipe(recipe);
+  };
 
   const updateRecipe = async () => {
     recipe.Name = name;
@@ -37,7 +35,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     steps,
     setSteps,
     updateRecipe,
-    setRecipe,
+    initRecipe,
   };
 
   return (

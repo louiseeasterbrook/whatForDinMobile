@@ -8,7 +8,7 @@ export interface EditRecipeContextValue {
   steps: string[];
   setSteps: Function;
   updateRecipe: Function;
-  setRecipe: Function;
+  initRecipe: Function;
 }
 
 export const EditRecipeContext = createContext<EditRecipeContextValue>(null);

@@ -1,3 +1,21 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  // "extends": "@react-native/typescript-config/tsconfig.json"
+  "compilerOptions": {
+    "strict": false,
+    "noImplicitAny": false,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react-native",
+    "module": "ES2015",
+    "moduleResolution": "Node",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "lib": ["ESNext"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["index.js", "app"]
 }

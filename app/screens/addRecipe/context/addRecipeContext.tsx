@@ -20,6 +20,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
       Method: steps,
       UserId: userStore.uid,
       Id: '', //gets set up db
+      UserName: userStore.name,
     };
     await AddRecipeToCollection(formattedRecipe);
   };
