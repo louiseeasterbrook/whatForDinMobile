@@ -7,7 +7,6 @@ import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {
   AddNewUser,
-  GetDataBaseByRef,
   GetUser,
   GetUserRecipeCollection,
   getUserSavedRecipes,
@@ -23,7 +22,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [categories, setCategories] = useState<string[]>([]);
+  // const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [segmentValue, setSegmentValue] = useState<string>(SegmentType.Mine);
 
@@ -50,11 +49,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
   }, [segmentValue]);
 
   const getCategories = async (): Promise<void> => {
-    const res = await GetDataBaseByRef('categories');
-    if (res) {
-      const noNullRes = res.filter((x: string) => x !== null);
-      setCategories(noNullRes);
-    }
+    // const res = await GetDataBaseByRef('categories');
+    // if (res) {
+    //   const noNullRes = res.filter((x: string) => x !== null);
+    //   setCategories(noNullRes);
+    // }
   };
 
   const getUsers = async (): Promise<void> => {
@@ -106,11 +105,14 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   useEffect(() => {
+    filterRecipesBySearchInput();
+  }, [searchInput]);
+
+  const filterRecipesBySearchInput = (): void => {
     const inputNoSpace = searchInput.trim().toLowerCase();
     const newList = getRecipesThatMatchInput(inputNoSpace);
-
     setFilteredRecipeList(newList);
-  }, [searchInput]);
+  };
 
   const getRecipesThatMatchInput = (input: string): Recipe[] => {
     return recipeList.filter((recipe: Recipe) => {
@@ -216,11 +218,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 ItemSeparatorComponent={() => (
                   <View style={{marginBottom: 10}} />
                 )}
-                data={recipeList}
+                data={filteredRecipeList}
                 renderItem={({item}) => (
                   <SearchResultCard
                     recipe={item}
-                    category={categories[item.Category]}
                     onPress={item => navToRecipeScreen(item)}
                   />
                 )}

@@ -2,7 +2,7 @@ import {ReactNode, useEffect, useState} from 'react';
 import {NavigationProp} from '@react-navigation/native';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Text, Searchbar, FAB, Appbar, Card, Avatar} from 'react-native-paper';
-import {Recipe} from '../../models/searchResults';
+import {Recipe, RecipeUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {
   GetUser,
@@ -23,12 +23,10 @@ export const UserProfileScreen = ({
 }: UserProfileScreenProps): ReactNode => {
   const {userId} = route.params;
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState([]);
-  const [recipes, setRecipes] = useState<Recipe[]>();
+  const [user, setUser] = useState<RecipeUser>();
+  const [recipeList, setRecipeList] = useState<Recipe[]>();
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-
-  const userStore = useStores();
 
   useEffect(() => {
     setLoading(true);
@@ -41,6 +39,7 @@ export const UserProfileScreen = ({
 
   const getUserData = async (): Promise<void> => {
     const userResponse = await GetUser(userId);
+    console.log(userResponse);
     if (userResponse) {
       setUser(userResponse._data);
     }
@@ -49,9 +48,26 @@ export const UserProfileScreen = ({
   const getUserRecipes = async (): Promise<void> => {
     const recipeResponse = await GetUserRecipeCollection(userId);
     if (recipeResponse) {
-      setRecipes(recipeResponse);
+      setRecipeList(recipeResponse);
       setFilteredRecipeList(recipeResponse);
     }
+  };
+
+  useEffect(() => {
+    filterRecipesBySearchInput();
+  }, [searchInput]);
+
+  const filterRecipesBySearchInput = (): void => {
+    const inputNoSpace = searchInput.trim().toLowerCase();
+    const newList = getRecipesThatMatchInput(inputNoSpace);
+    setFilteredRecipeList(newList);
+  };
+
+  const getRecipesThatMatchInput = (input: string): Recipe[] => {
+    return recipeList?.filter((recipe: Recipe) => {
+      const lowerCaseName = recipe.Name.toLowerCase();
+      return lowerCaseName.includes(input);
+    });
   };
 
   const goBack = (): void => {
@@ -74,13 +90,13 @@ export const UserProfileScreen = ({
         <Appbar.Content title={'Profile'} />
       </Appbar.Header>
       <BaseScreen>
-        {loading ? (
+        {loading && !user ? (
           <ActivityIndicator animating={true} />
         ) : (
           <View style={styles.flex}>
             <View style={styles.sidePadding}>
               <HeaderCard
-                title={user.Name}
+                title={user?.Name}
                 subtitle={`User Since: 12 April 2024`}
                 icon="account"></HeaderCard>
               <Searchbar
