@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar} from 'react-native-paper';
+import {Searchbar, Text} from 'react-native-paper';
 import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -12,7 +12,7 @@ import {UserResultCard} from './userResultCard';
 import {NullState} from '../../components/nullState.component copy';
 
 export const SearchScreen = ({navigation}): ReactNode => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [searchInput, setSearchInput] = useState<string>('');
   const [filteredUsers, setFilteredUsers] = useState<SearchResultUser[]>([]);
   const [users, setUsers] = useState<RecipeUser[]>([]);
@@ -46,7 +46,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
   }, [users, recipes]);
 
   const formatUserResult = (): void => {
-    if (!users || !recipes) {
+    if (users?.length === 0 || recipes?.length === 0) {
       return;
     }
 

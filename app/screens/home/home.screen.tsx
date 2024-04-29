@@ -166,23 +166,25 @@ export const HomeScreen = ({navigation}): ReactNode => {
             buttons={[
               {
                 value: SegmentType.Mine,
-                label: 'My Recipes',
+                label: 'My Recipes ',
               },
               {
                 value: SegmentType.Saved,
-                label: 'Saved Reciped',
+                label: 'Saved Recipes',
               },
             ]}
           />
         </View>
 
         {loading ? (
-          <ActivityIndicator animating={true} />
+          <View style={styles.flatList}>
+            <ActivityIndicator animating={true} />
+          </View>
         ) : (
           <View style={styles.contentPadding}>
             {filteredRecipeList.length > 0 ? (
               <FlatList
-                style={styles.flex}
+                contentContainerStyle={styles.flatList}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => (
                   <View style={{marginBottom: 10}} />
@@ -211,7 +213,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
-    paddingBottom: 18,
   },
   contentPadding: {
     paddingHorizontal: 18,
@@ -219,6 +220,9 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  flatList: {
+    paddingTop: 18,
   },
   button: {
     marginTop: 20,

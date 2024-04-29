@@ -7,6 +7,7 @@ import {useAddRecipe} from './context/addRecipeProvider';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {useState} from 'react';
 
 type AddRecipeReviewScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -14,6 +15,7 @@ type AddRecipeReviewScreenProps = {
 
 export const AddRecipeReviewScreen = observer(
   ({navigation}: AddRecipeReviewScreenProps) => {
+    const [saving, setSaving] = useState<boolean>();
     const {saveRecipe, steps, ingredients, name} = useAddRecipe();
     const userStore = useStores();
 
@@ -21,7 +23,11 @@ export const AddRecipeReviewScreen = observer(
       navigation.goBack();
     };
 
-    const navToStepsScreen = async () => {
+    const navToHomeScreen = async () => {
+      if (saving) {
+        return;
+      }
+      setSaving(true);
       await saveRecipe();
       navigation.navigate('Tabs');
     };
@@ -49,7 +55,7 @@ export const AddRecipeReviewScreen = observer(
                 userName={userStore.name}
                 recipeName={name}></RecipeDisplay>
             </ScrollView>
-            <Button mode="contained" onPress={navToStepsScreen}>
+            <Button mode="contained" onPress={navToHomeScreen} loading={saving}>
               Save Recipe
             </Button>
           </View>
