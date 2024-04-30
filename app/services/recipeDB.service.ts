@@ -74,6 +74,5 @@ export async function DeleteRecipe(id: string): Promise<any> {
 
 export async function GetRecipe(id: string): Promise<any> {
   const res = await firestore().collection('recipes').doc(id).get();
-  console.log(res.id);
   return AddDocumentIdToSingleData(res);
 }

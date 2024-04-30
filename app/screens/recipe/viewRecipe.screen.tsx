@@ -126,17 +126,21 @@ export const ViewRecipeScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title="Recipe" />
-          {isOwnRecipe && (
+          {!loading && (
             <>
-              <Appbar.Action icon="pencil" onPress={goToEditMenu} />
-              <Appbar.Action icon={'delete'} onPress={showDeleteDialog} />
+              {isOwnRecipe && (
+                <>
+                  <Appbar.Action icon="pencil" onPress={goToEditMenu} />
+                  <Appbar.Action icon={'delete'} onPress={showDeleteDialog} />
+                </>
+              )}
+              {!isOwnRecipe && (
+                <Appbar.Action
+                  icon={isFav ? 'bookmark' : 'bookmark-outline'}
+                  onPress={favToggle}
+                />
+              )}
             </>
-          )}
-          {!isOwnRecipe && (
-            <Appbar.Action
-              icon={isFav ? 'bookmark' : 'bookmark-outline'}
-              onPress={favToggle}
-            />
           )}
         </Appbar.Header>
 

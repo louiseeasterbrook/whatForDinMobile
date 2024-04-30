@@ -14,19 +14,13 @@ export const HeaderCard = ({
   icon = 'silverware-fork',
 }: HeaderCardProps): ReactNode => {
   return (
-    <>
-      <Card>
-        <Card.Content>
-          <View style={styles.mainContainer}>
-            <Avatar.Icon size={50} icon={icon} style={styles.icon} />
-            <View style={styles.textContainer}>
-              <Text style={styles.mainTitle}>{title}</Text>
-              <Text style={styles.subtitle}>{subtitle}</Text>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
-    </>
+    <View style={styles.mainContainer}>
+      <Avatar.Icon size={50} icon={icon} style={styles.icon} />
+      <View style={styles.textContainer}>
+        <Text style={styles.mainTitle}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
+    </View>
   );
 };
 
