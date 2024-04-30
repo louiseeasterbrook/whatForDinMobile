@@ -18,8 +18,11 @@ export const AddRecipeStepsScreen = observer(
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
     const refInputs = useRef<string[]>([text]);
+    const everyRowIsPopulated = (): boolean => {
+      return refInputs.current.every(x => x.length > 0);
+    };
     const buttonDisabled = Boolean(
-      refInputs.current?.length && refInputs.current[0].length <= 0,
+      refInputs.current?.length && !everyRowIsPopulated(),
     );
 
     const setInputValue = (index: number, value: string) => {

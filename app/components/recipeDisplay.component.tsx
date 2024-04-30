@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
+import {Divider} from 'react-native-paper';
 
 type RecipeDisplayProps = {
   ingredients: string[];
@@ -21,6 +22,7 @@ export const RecipeDisplay = ({
       <View style={styles.cardContainer}>
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
       </View>
+      <Divider />
       <View style={styles.cardContainer}>
         <DisplayListWithTitle
           title="Ingredients"

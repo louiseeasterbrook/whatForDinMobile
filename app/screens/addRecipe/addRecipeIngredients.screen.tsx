@@ -14,12 +14,15 @@ type AddRecipeIngredientsScreenProps = {
 export const AddRecipeIngredientsScreen = observer(
   ({navigation}: AddRecipeIngredientsScreenProps) => {
     const {setIngredients} = useAddRecipe();
+    const everyRowIsPopulated = (): boolean => {
+      return refInputs.current.every(x => x.length > 0);
+    };
 
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
     const refInputs = useRef<string[]>([text]);
     const buttonDisabled = Boolean(
-      refInputs.current?.length && refInputs.current[0].length <= 0,
+      refInputs.current?.length && !everyRowIsPopulated(),
     );
 
     const setInputValue = (index: number, value: string) => {
@@ -78,24 +81,23 @@ export const AddRecipeIngredientsScreen = observer(
             <ScrollView
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
-              <>
-                {[...Array(numInputs)].map((e, i) => (
-                  <View key={i} style={styles.inputButtonContainer}>
-                    <TextInput
-                      style={styles.input}
-                      value={refInputs.current[i]}
-                      onChangeText={(currentValue: string) =>
-                        setInputValue(i, currentValue)
-                      }
-                    />
-                    <TouchableOpacity
-                      style={styles.inputRemoveButton}
-                      onPress={() => removeInput(i)}>
-                      <Icon source="minus-circle-outline" size={20} />
-                    </TouchableOpacity>
-                  </View>
-                ))}
-              </>
+              {[...Array(numInputs)].map((e, i) => (
+                <View key={i} style={styles.inputButtonContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={refInputs.current[i]}
+                    onChangeText={(currentValue: string) =>
+                      setInputValue(i, currentValue)
+                    }
+                  />
+                  <TouchableOpacity
+                    style={styles.inputRemoveButton}
+                    onPress={() => removeInput(i)}>
+                    <Icon source="minus-circle-outline" size={20} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+
               <Button
                 mode="contained"
                 onPress={addInput}

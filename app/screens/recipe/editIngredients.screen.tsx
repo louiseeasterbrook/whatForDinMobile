@@ -23,8 +23,11 @@ export const EditIngredientsScreen = observer(
       ingredients?.length || 1,
     );
     const refInputs = useRef<string[]>(initInput);
-    const buttonDisabled = !(
-      refInputs.current?.length > 0 && refInputs.current[0]?.length > 0
+    const everyRowIsPopulated = (): boolean => {
+      return refInputs.current.every(x => x.length > 0);
+    };
+    const buttonDisabled = Boolean(
+      refInputs.current?.length && !everyRowIsPopulated(),
     );
 
     const setInputValue = (index: number, value: string) => {
