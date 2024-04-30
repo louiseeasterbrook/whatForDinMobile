@@ -1,15 +1,13 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar, Text} from 'react-native-paper';
+import {Searchbar} from 'react-native-paper';
 import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {
-  GetAllUsers,
-  GetAllRecipeCollection,
-} from '../../services/database.service';
+import {GetAllUsers} from '../../services/userDBservice';
 import {UserResultCard} from './userResultCard';
 import {NullState} from '../../components/nullState.component copy';
+import {GetAllRecipeCollection} from '../../services/recipeDB.service copy';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(true);

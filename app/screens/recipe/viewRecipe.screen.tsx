@@ -2,16 +2,24 @@ import {NavigationProp} from '@react-navigation/native';
 import {UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
-import {Text, Appbar, Portal, Dialog, Button} from 'react-native-paper';
+import {
+  Text,
+  Appbar,
+  Portal,
+  Dialog,
+  Button,
+  ActivityIndicator,
+} from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
 import {observer} from 'mobx-react-lite';
-import {DeleteRecipe, UpdateUser} from '../../services/database.service';
+import {UpdateUser} from '../../services/userDBservice';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import _ from 'lodash';
 import {useState} from 'react';
+import {DeleteRecipe} from '../../services/recipeDB.service copy';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -25,8 +33,10 @@ export const ViewRecipeScreen = observer(
     const hasRecipe = recipe?.Ingredients && recipe?.Method;
     const isOwnRecipe = recipe.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe.Id);
-    const [dialogVisible, setDialogVisible] = useState<boolean>(false);
-    const [favLoading, setFavLoading] = useState<boolean>(false);
+    const [loadingDialogVisible, setLoadingDialogVisible] =
+      useState<string>('');
+    const [deleteDialogVisible, setDeleteDialogVisible] =
+      useState<boolean>(false);
 
     const {initRecipe} = useEditRecipe();
 
@@ -53,13 +63,29 @@ export const ViewRecipeScreen = observer(
       const initUserData: UserFavourites = {
         Favourites: newFavList,
       };
-      setFavLoading(true);
-      await UpdateUser(userStore.uid, initUserData).then(() => {
-        console.log('goooooo');
-        userStore.setFavourites(newFavList);
-      });
-      setFavLoading(false);
-      console.log('after');
+      const loadingMessage = isFav
+        ? 'Removing this recipe from your favourites'
+        : 'Adding this recipe to your favourites';
+      showLoadingDialog(loadingMessage);
+
+      // waiting a miminum of 1.5 seconds to return finsihing api response
+      await Promise.all([
+        updateUserFavouritesInDataBase(initUserData),
+        delayPromise(1500),
+      ]);
+
+      userStore.setFavourites(initUserData.Favourites);
+      hideLoadingDialog();
+    };
+
+    const updateUserFavouritesInDataBase = async (
+      data: UserFavourites,
+    ): Promise<void> => {
+      return await UpdateUser(userStore.uid, data).then(() => {});
+    };
+
+    const delayPromise = async (milliseconds: number): Promise<void> => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
     };
 
     const goToEditMenu = () => {
@@ -70,11 +96,14 @@ export const ViewRecipeScreen = observer(
 
     const deleteRecipe = async () => {
       await DeleteRecipe(recipe.Id);
-      hideDialog();
+      hideDeleteDialog();
       goBack();
     };
-    const showDialog = () => setDialogVisible(true);
-    const hideDialog = () => setDialogVisible(false);
+    const showDeleteDialog = () => setDeleteDialogVisible(true);
+    const hideDeleteDialog = () => setDeleteDialogVisible(false);
+
+    const showLoadingDialog = (text: string) => setLoadingDialogVisible(text);
+    const hideLoadingDialog = () => setLoadingDialogVisible('');
 
     return (
       <>
@@ -84,14 +113,12 @@ export const ViewRecipeScreen = observer(
           {isOwnRecipe && (
             <>
               <Appbar.Action icon="pencil" onPress={goToEditMenu} />
-              <Appbar.Action icon={'delete'} onPress={showDialog} />
+              <Appbar.Action icon={'delete'} onPress={showDeleteDialog} />
             </>
           )}
           {!isOwnRecipe && (
             <Appbar.Action
-              icon={
-                favLoading ? 'account' : isFav ? 'bookmark' : 'bookmark-outline'
-              }
+              icon={isFav ? 'bookmark' : 'bookmark-outline'}
               onPress={favToggle}
             />
           )}
@@ -111,16 +138,27 @@ export const ViewRecipeScreen = observer(
             )}
           </ScrollView>
           <Portal>
-            <Dialog visible={dialogVisible} onDismiss={hideDialog}>
+            <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
               <Dialog.Content>
                 <Text variant="bodyMedium">
                   Are you sure you want to delete this recipe?
                 </Text>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button onPress={hideDialog}>Cancel</Button>
+                <Button onPress={hideDeleteDialog}>Cancel</Button>
                 <Button onPress={deleteRecipe}>Yes, delete</Button>
               </Dialog.Actions>
+            </Dialog>
+
+            <Dialog
+              visible={loadingDialogVisible !== ''}
+              onDismiss={hideLoadingDialog}>
+              <Dialog.Content>
+                <ActivityIndicator animating={true} />
+                <Text variant="bodyMedium" style={styles.dialogText}>
+                  {loadingDialogVisible}
+                </Text>
+              </Dialog.Content>
             </Dialog>
           </Portal>
         </BaseScreen>
@@ -136,5 +174,9 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     paddingVertical: 10,
+  },
+  dialogText: {
+    textAlign: 'center',
+    paddingTop: 22,
   },
 });

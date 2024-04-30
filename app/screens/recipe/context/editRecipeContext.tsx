@@ -1,7 +1,7 @@
 import {ReactNode, useState} from 'react';
 import {EditRecipeContext, EditRecipeContextValue} from './editRecipeProvider';
 import {Recipe} from '../../../models/searchResults';
-import {UpdateRecipeInCollection} from '../../../services/database.service';
+import {UpdateRecipeInCollection} from '../../../services/recipeDB.service copy';
 
 export function EditRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');

@@ -3,15 +3,13 @@ import {NavigationProp} from '@react-navigation/native';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
-import {
-  GetUser,
-  GetUserRecipeCollection,
-} from '../../services/database.service';
+import {GetUser, GetUserRecipeCollection} from '../../services/userDBservice';
 import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeListWithSearch} from './recipeListWithSearch.component';
 import moment from 'moment';
+import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -68,7 +66,9 @@ export const UserProfileScreen = ({
     if (!date) {
       return '';
     }
-    return moment(date).format('D MMMM yyyy');
+    return moment(date, DATE_FORMAT_FOR_DISPLAY).format(
+      DATE_FORMAT_FOR_DISPLAY,
+    );
   };
 
   return (
@@ -85,7 +85,7 @@ export const UserProfileScreen = ({
             <View style={styles.sidePadding}>
               <HeaderCard
                 title={user?.Name}
-                subtitle={`User Since: ${formatDate(user?.DateCreated)}`}
+                subtitle={`User Since: ${user?.DateCreated}`}
                 icon="account"></HeaderCard>
             </View>
             {loading && !recipeList ? (
