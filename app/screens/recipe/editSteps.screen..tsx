@@ -64,6 +64,7 @@ export const EditStepsScreen = observer(
               <Text>Edit your recipe steps</Text>
             </View>
             <ScrollView
+              keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
                 {[...Array(numInputs)].map((e, i) => (

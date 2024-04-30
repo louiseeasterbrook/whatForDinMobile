@@ -52,7 +52,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
             mode="contained"
             onPress={onGoogleButtonPress}
             loading={loading}>
-            Google Sign In
+            Sign In
           </Button>
         </View>
       </BaseScreen>

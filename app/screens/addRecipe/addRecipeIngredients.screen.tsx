@@ -72,38 +72,38 @@ export const AddRecipeIngredientsScreen = observer(
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
-            <View>
-              <View style={styles.header}>
-                <Text>Add your Ingredients</Text>
-              </View>
-              <ScrollView
-                contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
-                <>
-                  {[...Array(numInputs)].map((e, i) => (
-                    <View key={i} style={styles.inputButtonContainer}>
-                      <TextInput
-                        style={styles.input}
-                        value={refInputs.current[i]}
-                        onChangeText={(currentValue: string) =>
-                          setInputValue(i, currentValue)
-                        }
-                      />
-                      <TouchableOpacity
-                        style={styles.inputRemoveButton}
-                        onPress={() => removeInput(i)}>
-                        <Icon source="minus-circle-outline" size={20} />
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-                </>
-                <Button
-                  mode="contained"
-                  onPress={addInput}
-                  style={styles.addButton}>
-                  Add ingredient
-                </Button>
-              </ScrollView>
+            <View style={styles.header}>
+              <Text>Add your Ingredients</Text>
             </View>
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
+              <>
+                {[...Array(numInputs)].map((e, i) => (
+                  <View key={i} style={styles.inputButtonContainer}>
+                    <TextInput
+                      style={styles.input}
+                      value={refInputs.current[i]}
+                      onChangeText={(currentValue: string) =>
+                        setInputValue(i, currentValue)
+                      }
+                    />
+                    <TouchableOpacity
+                      style={styles.inputRemoveButton}
+                      onPress={() => removeInput(i)}>
+                      <Icon source="minus-circle-outline" size={20} />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </>
+              <Button
+                mode="contained"
+                onPress={addInput}
+                style={styles.addButton}>
+                Add ingredient
+              </Button>
+            </ScrollView>
+
             <Button
               mode="contained"
               onPress={navToStepsScreen}

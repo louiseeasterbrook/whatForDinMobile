@@ -12,11 +12,7 @@ import {MainStore, RootStoreProvider} from './store/mainStore';
 import {useColorScheme} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
-import {
-  MD3LightTheme as DefaultTheme,
-  MD3DarkTheme as DarkTheme,
-  PaperProvider,
-} from 'react-native-paper';
+import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
 import {RootNavigator} from './navigaton/root.navigator';
 
 function App(): React.JSX.Element {
@@ -35,7 +31,7 @@ function App(): React.JSX.Element {
 
   return (
     <RootStoreProvider value={rootStore}>
-      <PaperProvider>
+      <PaperProvider theme={DefaultTheme}>
         <RootNavigator />
       </PaperProvider>
     </RootStoreProvider>

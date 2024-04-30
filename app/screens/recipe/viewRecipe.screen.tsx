@@ -26,6 +26,7 @@ export const ViewRecipeScreen = observer(
     const isOwnRecipe = recipe.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe.Id);
     const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+    const [favLoading, setFavLoading] = useState<boolean>(false);
 
     const {initRecipe} = useEditRecipe();
 
@@ -52,8 +53,13 @@ export const ViewRecipeScreen = observer(
       const initUserData: UserFavourites = {
         Favourites: newFavList,
       };
-      await UpdateUser(userStore.uid, initUserData);
-      userStore.setFavourites(newFavList);
+      setFavLoading(true);
+      await UpdateUser(userStore.uid, initUserData).then(() => {
+        console.log('goooooo');
+        userStore.setFavourites(newFavList);
+      });
+      setFavLoading(false);
+      console.log('after');
     };
 
     const goToEditMenu = () => {
@@ -83,7 +89,9 @@ export const ViewRecipeScreen = observer(
           )}
           {!isOwnRecipe && (
             <Appbar.Action
-              icon={isFav ? 'bookmark' : 'bookmark-outline'}
+              icon={
+                favLoading ? 'account' : isFav ? 'bookmark' : 'bookmark-outline'
+              }
               onPress={favToggle}
             />
           )}

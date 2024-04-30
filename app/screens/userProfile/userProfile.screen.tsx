@@ -11,6 +11,7 @@ import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeListWithSearch} from './recipeListWithSearch.component';
+import moment from 'moment';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -63,6 +64,13 @@ export const UserProfileScreen = ({
     });
   };
 
+  const formatDate = (date: string): string => {
+    if (!date) {
+      return '';
+    }
+    return moment(date).format('D MMMM yyyy');
+  };
+
   return (
     <>
       <Appbar.Header>
@@ -77,7 +85,7 @@ export const UserProfileScreen = ({
             <View style={styles.sidePadding}>
               <HeaderCard
                 title={user?.Name}
-                subtitle={`User Since: 12 April 2024`}
+                subtitle={`User Since: ${formatDate(user?.DateCreated)}`}
                 icon="account"></HeaderCard>
             </View>
             {loading && !recipeList ? (

@@ -12,6 +12,7 @@ import {
   getUserSavedRecipes,
 } from '../../services/database.service';
 import {NullState} from '../../components/nullState.component copy';
+import moment from 'moment';
 
 enum SegmentType {
   Mine = 'Mine',
@@ -81,11 +82,9 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   const addNewUser = async (): Promise<void> => {
-    const currentDate = new Date();
-
     const initUserData: RecipeUser = {
       Name: userStore.name,
-      DateCreated: currentDate.toString(),
+      DateCreated: moment().format('D MMMM yyyy'),
       Favourites: [],
     };
 

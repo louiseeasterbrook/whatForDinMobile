@@ -31,7 +31,7 @@ export async function UpdateUser(userId: string, data: any): Promise<void> {
   if (!userId) {
     return;
   }
-  await firestore().collection('users').doc(userId).update(data);
+  return await firestore().collection('users').doc(userId).update(data);
 }
 
 export async function AddNewRecipe(data: Recipe): Promise<void> {

@@ -65,6 +65,7 @@ export const EditIngredientsScreen = observer(
               <Text>Edit your ingredients</Text>
             </View>
             <ScrollView
+              keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
                 {[...Array(numInputs)].map((e, i) => (
@@ -88,7 +89,7 @@ export const EditIngredientsScreen = observer(
                 mode="contained"
                 onPress={addInput}
                 style={styles.addButton}>
-                Add step
+                Add ingredient
               </Button>
             </ScrollView>
 

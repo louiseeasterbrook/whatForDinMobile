@@ -13,7 +13,7 @@ type AddRecipeStepsScreenProps = {
 
 export const AddRecipeStepsScreen = observer(
   ({navigation}: AddRecipeStepsScreenProps) => {
-    const {setSteps, saveRecipe} = useAddRecipe();
+    const {setSteps} = useAddRecipe();
 
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
@@ -70,6 +70,7 @@ export const AddRecipeStepsScreen = observer(
               <Text>Add your recipe steps</Text>
             </View>
             <ScrollView
+              keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
                 {[...Array(numInputs)].map((e, i) => (
