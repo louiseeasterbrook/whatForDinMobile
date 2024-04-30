@@ -2,7 +2,7 @@ import {ReactNode, useState} from 'react';
 import {AddRecipeContext, AddRecipeContextValue} from './addRecipeProvider';
 import {Recipe} from '../../../models/searchResults';
 import {useStores} from '../../../store/mainStore';
-import {AddRecipeToCollection} from '../../../services/recipeDB.service copy';
+import {AddRecipeToCollection} from '../../../services/recipeDB.service';
 
 export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');

@@ -57,7 +57,7 @@ export const UserProfileScreen = ({
     navigation.navigate('ViewRecipe', {
       screen: 'View',
       params: {
-        recipe: selectedRecipe,
+        recipeId: selectedRecipe.Id,
       },
     });
   };

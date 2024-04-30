@@ -13,7 +13,7 @@ import {
 import {NullState} from '../../components/nullState.component copy';
 import moment from 'moment';
 import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
-import {getUserSavedRecipes} from '../../services/recipeDB.service copy';
+import {getUserSavedRecipes} from '../../services/recipeDB.service';
 
 enum SegmentType {
   Mine = 'Mine',
@@ -124,7 +124,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     navigation.navigate('ViewRecipe', {
       screen: 'View',
       params: {
-        recipe: selectedRecipe,
+        recipeId: selectedRecipe.Id,
       },
     });
   };

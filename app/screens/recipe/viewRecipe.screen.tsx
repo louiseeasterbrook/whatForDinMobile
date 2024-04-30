@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {UserFavourites} from '../../models/searchResults';
+import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 import {
@@ -18,8 +18,8 @@ import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import _ from 'lodash';
-import {useState} from 'react';
-import {DeleteRecipe} from '../../services/recipeDB.service copy';
+import {useEffect, useState} from 'react';
+import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -29,18 +29,34 @@ type ViewRecipeScreenProps = {
 export const ViewRecipeScreen = observer(
   ({navigation, route}: ViewRecipeScreenProps) => {
     const userStore = useStores();
-    const {recipe} = route.params;
-    const hasRecipe = recipe?.Ingredients && recipe?.Method;
-    const isOwnRecipe = recipe.UserId === userStore.uid;
-    const isFav = userStore.favourites.includes(recipe.Id);
+    const {recipeId} = route.params;
+
+    const [recipe, setRecipe] = useState<Recipe>();
+    const [loading, setLoading] = useState<boolean>(true);
     const [loadingDialogVisible, setLoadingDialogVisible] =
       useState<string>('');
     const [deleteDialogVisible, setDeleteDialogVisible] =
       useState<boolean>(false);
 
+    const isOwnRecipe = recipe?.UserId === userStore.uid;
+    const isFav = userStore.favourites.includes(recipe?.Id);
+
     const {initRecipe} = useEditRecipe();
 
-    const goBack = () => {
+    useEffect(() => {
+      const unsubscribe = navigation.addListener('focus', () => {
+        getRecipeFromDB();
+      });
+      return unsubscribe;
+    }, [navigation]);
+
+    const getRecipeFromDB = async (): Promise<void> => {
+      const res = await GetRecipe(recipeId);
+      setRecipe(res);
+      setLoading(false);
+    };
+
+    const goBack = (): void => {
       navigation.goBack();
     };
 
@@ -123,20 +139,19 @@ export const ViewRecipeScreen = observer(
             />
           )}
         </Appbar.Header>
+
         <BaseScreen>
-          <ScrollView style={styles.main}>
-            {hasRecipe ? (
+          {loading ? (
+            <ActivityIndicator animating={true}></ActivityIndicator>
+          ) : (
+            <ScrollView style={styles.main}>
               <RecipeDisplay
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
                 userName={recipe.UserName}
                 recipeName={recipe.Name}></RecipeDisplay>
-            ) : (
-              <>
-                <Text>Recipe coming soon</Text>
-              </>
-            )}
-          </ScrollView>
+            </ScrollView>
+          )}
           <Portal>
             <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
               <Dialog.Content>

@@ -7,7 +7,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {GetAllUsers} from '../../services/userDBservice';
 import {UserResultCard} from './userResultCard';
 import {NullState} from '../../components/nullState.component copy';
-import {GetAllRecipeCollection} from '../../services/recipeDB.service copy';
+import {GetAllRecipeCollection} from '../../services/recipeDB.service';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(true);

@@ -2,7 +2,10 @@ import {firebase} from '@react-native-firebase/database';
 import {Recipe} from '../models/searchResults';
 
 import firestore from '@react-native-firebase/firestore';
-import {AddDocumentIdToEachDataSet} from './DBMethods';
+import {
+  AddDocumentIdToEachDataSet,
+  AddDocumentIdToSingleData,
+} from './DBMethods';
 
 const reference = firebase.app().database(process.env.DB_URL);
 
@@ -53,15 +56,24 @@ export async function getUserSavedRecipes(favourites: string[]): Promise<any> {
 }
 
 export async function AddRecipeToCollection(recipeData: Recipe): Promise<any> {
-  await firestore().collection('recipes').add(recipeData);
+  return await firestore().collection('recipes').add(recipeData);
 }
 
 export async function UpdateRecipeInCollection(
   recipeData: Recipe,
 ): Promise<any> {
-  await firestore().collection('recipes').doc(recipeData.Id).set(recipeData);
+  return await firestore()
+    .collection('recipes')
+    .doc(recipeData.Id)
+    .set(recipeData);
 }
 
 export async function DeleteRecipe(id: string): Promise<any> {
-  await firestore().collection('recipes').doc(id).delete();
+  return await firestore().collection('recipes').doc(id).delete();
+}
+
+export async function GetRecipe(id: string): Promise<any> {
+  const res = await firestore().collection('recipes').doc(id).get();
+  console.log(res.id);
+  return AddDocumentIdToSingleData(res);
 }
