@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Dialog, Portal, Text} from 'react-native-paper';
+import {Button, Dialog, Divider, Portal, Text} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -54,6 +54,13 @@ export const LoginScreen = ({navigation}): ReactNode => {
             loading={loading}>
             Sign In
           </Button>
+          <Text variant="bodyMedium">
+            {`ENV: ${process.env.ANDROID_GOOGLE_LOGIN_TOKEN}`}
+          </Text>
+          <Divider />
+          <Text variant="bodyMedium">
+            {loading ? 'loading' : 'not loading'}
+          </Text>
         </View>
       </BaseScreen>
       <Portal>
