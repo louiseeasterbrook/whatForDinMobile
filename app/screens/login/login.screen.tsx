@@ -46,7 +46,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
       <BaseScreen useSafeArea={true}>
         <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>what's for din?</Text>
+            <Text style={styles.title}>what's for din? 2</Text>
           </View>
           <Button
             mode="contained"
