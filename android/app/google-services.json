@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "770166546922-87h6ej7h8jfch89p7a6eiuobc6gebqoo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.whatsfordin",
+            "certificate_hash": "ba9ddba1da07b177a36148316d285caaa6e8736c"
+          }
+        },
+        {
           "client_id": "770166546922-nrb9039ivgp9ctsoofqk5tskgkr7trrd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
