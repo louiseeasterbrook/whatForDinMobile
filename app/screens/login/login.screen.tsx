@@ -5,17 +5,16 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
+GoogleSignin.configure({
+  webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
+});
+
 export const LoginScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
   const showDialog = () => setDialogVisible(true);
   const hideDialog = () => setDialogVisible(false);
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
-    });
-  }, []);
 
   async function onGoogleButtonPress(): Promise<void> {
     if (loading) {
@@ -46,7 +45,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
       <BaseScreen useSafeArea={true}>
         <View style={styles.mainContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>what's for din? tester4</Text>
+            <Text style={styles.title}>what's for din?</Text>
           </View>
           <Button
             mode="contained"
@@ -54,13 +53,6 @@ export const LoginScreen = ({navigation}): ReactNode => {
             loading={loading}>
             Sign In
           </Button>
-          <Text variant="bodyMedium">
-            {`ENV: ${process.env.ANDROID_GOOGLE_LOGIN_TOKEN}`}
-          </Text>
-          <Divider />
-          <Text variant="bodyMedium">
-            {loading ? 'loading' : 'not loading'}
-          </Text>
         </View>
       </BaseScreen>
       <Portal>
