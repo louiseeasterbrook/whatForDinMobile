@@ -1,5 +1,4 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {ViewRecipeScreen} from '../screens/recipe/viewRecipe.screen';
 import TabNavigator from './Tab.navigator';
 import {NavigationContainer} from '@react-navigation/native';
 import LoginNavigator from './login.navigator';
@@ -20,11 +19,19 @@ export const RootNavigator = () => {
   function onAuthStateChanged(user: any) {
     console.log('------- USER CHANGED ', user);
     if (user) {
-      const name = user?.displayName ? user.displayName : 'hello';
+      const name = getUserName(user);
       userStore.setUserInfo(name, user.uid);
     }
     setUser(user);
   }
+
+  const getUserName = (firebaseUser): string => {
+    const googleLoginName: string = firebaseUser?.displayName
+      ? firebaseUser.displayName
+      : null;
+    const nameToDisplay = googleLoginName ? googleLoginName : userStore.name;
+    return nameToDisplay ? nameToDisplay : '';
+  };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

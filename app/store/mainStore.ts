@@ -7,17 +7,20 @@ import {cast} from 'mobx-state-tree';
 export const MainStore = types
   .model('MainStore')
   .props({
-    name: types.optional(types.string, 'yello mello'),
+    name: types.optional(types.string, ''),
     uid: types.optional(types.string, ''),
     favourites: types.array(types.string),
   })
 
   .actions(self => ({
-    setUserInfo: (name: string, uid: string) => {
+    setUserInfo: (name: string, uid: string): void => {
       self.name = name;
       self.uid = uid;
     },
-    setFavourites: (fav: string[]) => {
+    setUserName: (name: string): void => {
+      self.name = name;
+    },
+    setFavourites: (fav: string[]): void => {
       self.favourites = cast(fav);
     },
   }));

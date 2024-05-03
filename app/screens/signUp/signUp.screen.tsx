@@ -12,8 +12,10 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour} from '../../index/theme';
 import auth from '@react-native-firebase/auth';
+import {useStores} from '../../store/mainStore';
 
 export const SignUpScreen = ({navigation}): ReactNode => {
+  const userStore = useStores();
   const [loading, setLoading] = useState<boolean>(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
@@ -33,7 +35,8 @@ export const SignUpScreen = ({navigation}): ReactNode => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('logged in!');
+        const name = `${firstName} ${lastName}`;
+        updateUserDisplayName(name);
       })
       .catch(error => {
         showDialog();
@@ -41,6 +44,12 @@ export const SignUpScreen = ({navigation}): ReactNode => {
         console.error(error);
       });
   }
+
+  const updateUserDisplayName = async (name: string): Promise<void> => {
+    userStore.setUserName(name);
+    const user = auth().currentUser;
+    await user.updateProfile({displayName: name});
+  };
 
   const goBack = () => {
     navigation.goBack();

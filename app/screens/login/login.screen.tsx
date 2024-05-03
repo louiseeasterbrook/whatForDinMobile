@@ -52,6 +52,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
         console.log('logged in!');
       })
       .catch(error => {
+        showDialog();
         setLoading(false);
         console.error(error);
       });
@@ -79,6 +80,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
               style={styles.paddingBottom}
               label="Password"
               value={password}
+              secureTextEntry={true}
               onChangeText={(text: string) => setPassword(text)}
             />
             <Button
