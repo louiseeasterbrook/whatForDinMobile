@@ -17,11 +17,11 @@ export const ListRow = ({
   return (
     <View style={styles.rowContainer}>
       {orderedList ? (
-        <Text>{`${index + 1}.`}</Text>
+        <Text>{`${index + 1}.   `}</Text>
       ) : (
         <Icon name="circle-small" size={20} color={'black'} />
       )}
-      <Text>{text}</Text>
+      <Text style={styles.wrapContainer}>{text}</Text>
     </View>
   );
 };
@@ -31,5 +31,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 5,
+  },
+  wrapContainer: {
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });

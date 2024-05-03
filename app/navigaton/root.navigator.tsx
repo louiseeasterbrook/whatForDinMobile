@@ -20,7 +20,8 @@ export const RootNavigator = () => {
   function onAuthStateChanged(user: any) {
     console.log('------- USER CHANGED ', user);
     if (user) {
-      userStore.setUserInfo(user.displayName, user.uid);
+      const name = user?.displayName ? user.displayName : 'hello';
+      userStore.setUserInfo(name, user.uid);
     }
     setUser(user);
   }

@@ -31,7 +31,7 @@ export const SignUpScreen = ({navigation}): ReactNode => {
     console.log(email, ' ', password);
     setLoading(true);
     auth()
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('logged in!');
       })
@@ -110,25 +110,9 @@ export const SignUpScreen = ({navigation}): ReactNode => {
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    height: '40%',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 30,
-    textAlign: 'center',
-  },
   mainContainer: {
     paddingHorizontal: 20,
     flex: 1,
-  },
-  bottomText: {
-    position: 'absolute',
-    width: '100%',
-    textAlign: 'center',
-    bottom: 18,
   },
   paddingBottom: {
     marginBottom: 8,

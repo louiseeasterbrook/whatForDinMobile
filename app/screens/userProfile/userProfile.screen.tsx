@@ -8,8 +8,6 @@ import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeListWithSearch} from './recipeListWithSearch.component';
-import moment from 'moment';
-import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -36,7 +34,6 @@ export const UserProfileScreen = ({
 
   const getUserData = async (): Promise<void> => {
     const userResponse = await GetUser(userId);
-    console.log(userResponse);
     if (userResponse) {
       setUser(userResponse._data);
     }
@@ -60,15 +57,6 @@ export const UserProfileScreen = ({
         recipeId: selectedRecipe.Id,
       },
     });
-  };
-
-  const formatDate = (date: string): string => {
-    if (!date) {
-      return '';
-    }
-    return moment(date, DATE_FORMAT_FOR_DISPLAY).format(
-      DATE_FORMAT_FOR_DISPLAY,
-    );
   };
 
   return (

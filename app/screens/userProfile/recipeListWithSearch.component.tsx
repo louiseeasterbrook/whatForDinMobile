@@ -40,7 +40,7 @@ export const RecipeListWithSearch = ({
   };
 
   return (
-    <>
+    <View style={styles.flex}>
       <Searchbar
         placeholder="Search"
         onChangeText={setSearchInput}
@@ -63,7 +63,7 @@ export const RecipeListWithSearch = ({
       ) : (
         <NullState messageLine1="No search results" icon="magnify"></NullState>
       )}
-    </>
+    </View>
   );
 };
 
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+    width: '100%',
   },
   searchBar: {
     marginVertical: 20,
