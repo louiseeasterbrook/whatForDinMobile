@@ -1,50 +1,34 @@
 import {ReactNode, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Dialog, Portal, Text, TextInput} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  Portal,
+  Text,
+  TextInput,
+  Appbar,
+} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour} from '../../index/theme';
+import auth from '@react-native-firebase/auth';
 
-GoogleSignin.configure({
-  webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
-});
-
-export const LoginScreen = ({navigation}): ReactNode => {
-  const [googleLoading, setGoogleLoading] = useState<boolean>(false);
+export const SignUpScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+
+  const buttonDisabled = !email || !password || !firstName || !lastName;
 
   const showDialog = () => setDialogVisible(true);
   const hideDialog = () => setDialogVisible(false);
 
-  async function onGoogleButtonPress(): Promise<void> {
-    if (loading) {
-      return;
-    }
-    try {
-      // Check if your device supports Google Play
-      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      setGoogleLoading(true);
-      // Get the users ID token
-      const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      auth().signInWithCredential(googleCredential);
-    } catch (err) {
-      showDialog();
-      setGoogleLoading(false);
-    }
-  }
-
-  async function loginPress(): Promise<void> {
+  async function createUserPress(): Promise<void> {
+    console.log(email, ' ', password);
     setLoading(true);
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -52,23 +36,37 @@ export const LoginScreen = ({navigation}): ReactNode => {
         console.log('logged in!');
       })
       .catch(error => {
+        showDialog();
         setLoading(false);
         console.error(error);
       });
   }
 
-  const navToSignUp = (): void => {
-    navigation.navigate('SignUpScreen');
+  const goBack = () => {
+    navigation.goBack();
   };
 
   return (
     <>
-      <BaseScreen useSafeArea={true}>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={goBack} />
+        <Appbar.Content title={'Sign up'} />
+      </Appbar.Header>
+      <BaseScreen>
         <View style={styles.mainContainer}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>what's for din?</Text>
-          </View>
           <ScrollView>
+            <TextInput
+              style={styles.paddingBottom}
+              label="First Name"
+              value={firstName}
+              onChangeText={(text: string) => setFirstName(text)}
+            />
+            <TextInput
+              style={styles.paddingBottom}
+              label="Last Name"
+              value={lastName}
+              onChangeText={(text: string) => setLastName(text)}
+            />
             <TextInput
               style={styles.paddingBottom}
               label="Email"
@@ -79,28 +77,19 @@ export const LoginScreen = ({navigation}): ReactNode => {
               style={styles.paddingBottom}
               label="Password"
               value={password}
+              secureTextEntry={true}
               onChangeText={(text: string) => setPassword(text)}
             />
-            <Button
-              mode="contained"
-              onPress={loginPress}
-              loading={loading}
-              style={styles.paddingBottom}>
-              Sign In
-            </Button>
-            <Text style={styles.loginDivider}>or</Text>
-            <Button
-              mode="contained"
-              onPress={onGoogleButtonPress}
-              loading={googleLoading}
-              style={styles.paddingBottom}>
-              Sign in with Google
-            </Button>
           </ScrollView>
-          <Text style={styles.bottomText} onPress={navToSignUp}>
-            Don't have an account?
-            <Text style={styles.colouredText}> Sign up here</Text>
-          </Text>
+
+          <Button
+            mode="contained"
+            onPress={createUserPress}
+            loading={loading}
+            style={styles.button}
+            disabled={buttonDisabled}>
+            Sign up
+          </Button>
         </View>
       </BaseScreen>
       <Portal>
@@ -108,7 +97,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
           <Dialog.Title>Opps, Something's gone wrong</Dialog.Title>
           <Dialog.Content>
             <Text variant="bodyMedium">
-              We were unable to sign you in, please try again.
+              We were unable to create a login for you, please try again.
             </Text>
           </Dialog.Content>
           <Dialog.Actions>
@@ -151,5 +140,8 @@ const styles = StyleSheet.create({
   colouredText: {
     color: main_colour,
     fontWeight: '700',
+  },
+  button: {
+    marginBottom: 26,
   },
 });
