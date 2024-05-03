@@ -14,6 +14,7 @@ GoogleSignin.configure({
 export const LoginScreen = ({navigation}): ReactNode => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const loadingInProgress = loading || googleLoading;
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>();
@@ -23,7 +24,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
   const hideDialog = () => setDialogVisible(false);
 
   async function onGoogleButtonPress(): Promise<void> {
-    if (loading) {
+    if (loadingInProgress) {
       return;
     }
     try {
@@ -45,6 +46,9 @@ export const LoginScreen = ({navigation}): ReactNode => {
   }
 
   async function loginPress(): Promise<void> {
+    if (loadingInProgress || !email || !password) {
+      return;
+    }
     setLoading(true);
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -69,7 +73,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>what's for din?</Text>
           </View>
-          <ScrollView>
+          <ScrollView contentContainerStyle={{paddingHorizontal: 20}}>
             <TextInput
               style={styles.paddingBottom}
               label="Email"
@@ -134,7 +138,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   mainContainer: {
-    paddingHorizontal: 20,
     flex: 1,
   },
   bottomText: {
