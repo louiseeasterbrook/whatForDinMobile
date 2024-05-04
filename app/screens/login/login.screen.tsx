@@ -100,14 +100,11 @@ export const LoginScreen = ({navigation}): ReactNode => {
                 style={{flex: 1}}
                 contentContainerStyle={{paddingHorizontal: 20}}>
                 <TextInput
-                  // style={styles.paddingBottom}
+                  style={styles.paddingBottom}
                   label="Email"
                   value={email}
                   onChangeText={(text: string) => setEmail(text)}
                 />
-                <HelperText type="error" visible={emailHasError()}>
-                  Please enter a valid email address
-                </HelperText>
                 <TextInput
                   style={styles.paddingBottom}
                   label="Password"

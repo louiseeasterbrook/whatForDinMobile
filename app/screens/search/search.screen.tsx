@@ -19,11 +19,16 @@ export const SearchScreen = ({navigation}): ReactNode => {
 
   const userStore = useStores();
 
+  const getData = async () => {
+    await Promise.all([getUserData(), getRecipeData()]);
+  };
+
   useEffect(() => {
-    (async function () {
-      await Promise.all([getUserData(), getRecipeData()]);
-    })();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getData();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const getUserData = async (): Promise<void> => {
     const users = await GetAllUsers();

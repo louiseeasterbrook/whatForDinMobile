@@ -42,7 +42,7 @@ export const RecipeListWithSearch = ({
   return (
     <View style={styles.flex}>
       <Searchbar
-        placeholder="Search"
+        placeholder="Search for a recipe..."
         onChangeText={setSearchInput}
         value={searchInput}
         style={styles.searchBar}
