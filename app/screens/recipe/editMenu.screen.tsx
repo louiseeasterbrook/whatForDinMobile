@@ -17,17 +17,10 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
     navigation.goBack();
   };
 
-  const navToName = () => {
-    navigation.navigate('EditName');
-  };
-
-  const navToIngredients = () => {
-    navigation.navigate('EditIngredients');
-  };
-
-  const navToSteps = () => {
-    navigation.navigate('EditSteps');
-  };
+  const navToName = () => navigation.navigate('EditName');
+  const navToIngredients = () => navigation.navigate('EditIngredients');
+  const navToSteps = () => navigation.navigate('EditSteps');
+  const navToComment = () => navigation.navigate('EditComment');
 
   return (
     <>
@@ -45,6 +38,7 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
                 title="Ingredients"
                 onPress={navToIngredients}></SettingsRow>
               <SettingsRow title="Steps" onPress={navToSteps}></SettingsRow>
+              <SettingsRow title="Comment" onPress={navToComment}></SettingsRow>
             </>
           </ScrollView>
 

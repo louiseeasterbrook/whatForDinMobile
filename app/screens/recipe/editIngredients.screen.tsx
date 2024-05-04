@@ -50,7 +50,7 @@ export const EditIngredientsScreen = observer(
       navigation.goBack();
     };
 
-    const navToStepsScreen = async () => {
+    const navToEditScreen = async () => {
       setIngredients(refInputs.current);
       goBack();
     };
@@ -99,7 +99,7 @@ export const EditIngredientsScreen = observer(
 
             <Button
               mode="contained"
-              onPress={navToStepsScreen}
+              onPress={navToEditScreen}
               disabled={buttonDisabled}>
               Done
             </Button>

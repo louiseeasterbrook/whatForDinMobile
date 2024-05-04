@@ -9,6 +9,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [steps, setSteps] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
+  const [comment, setComment] = useState<string>();
 
   const userStore = useStores();
 
@@ -21,6 +22,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
       UserId: userStore.uid,
       Id: '', //gets set up db
       UserName: userStore.name,
+      Comment: comment,
     };
     await AddRecipeToCollection(formattedRecipe);
   };
@@ -34,6 +36,8 @@ export function AddRecipeProvider({children}: any): ReactNode {
     setSteps,
     category,
     setCategory,
+    comment,
+    setComment,
     saveRecipe,
   };
 

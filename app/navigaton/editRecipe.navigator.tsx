@@ -7,6 +7,7 @@ import {ReviewEditScreen} from '../screens/recipe/reviewEdit.screen';
 import {EditMenuScreen} from '../screens/recipe/editMenu.screen';
 import {EditRecipeProvider} from '../screens/recipe/context/editRecipeContext';
 import {HORIZONTAL_ANIMATION} from './navigation.animation';
+import {EditRecipeCommentScreen} from '../screens/recipe/editComment.screen';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,11 @@ export const EditRecipeStack = () => {
         <Stack.Screen
           name="EditSteps"
           component={EditStepsScreen}
+          options={HORIZONTAL_ANIMATION}
+        />
+        <Stack.Screen
+          name="EditComment"
+          component={EditRecipeCommentScreen}
           options={HORIZONTAL_ANIMATION}
         />
         <Stack.Screen

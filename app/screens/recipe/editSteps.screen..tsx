@@ -49,7 +49,7 @@ export const EditStepsScreen = observer(
       navigation.goBack();
     };
 
-    const navToStepsScreen = async () => {
+    const navToEditScreen = async () => {
       setSteps(refInputs.current);
       goBack();
     };
@@ -98,7 +98,7 @@ export const EditStepsScreen = observer(
 
             <Button
               mode="contained"
-              onPress={navToStepsScreen}
+              onPress={navToEditScreen}
               disabled={buttonDisabled}>
               Done
             </Button>

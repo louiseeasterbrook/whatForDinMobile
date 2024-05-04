@@ -6,6 +6,7 @@ export interface Recipe {
   Id: string;
   UserId: string;
   UserName: string;
+  Comment: string;
 }
 
 export interface ListWithTitle {

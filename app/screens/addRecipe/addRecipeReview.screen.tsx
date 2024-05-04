@@ -16,7 +16,7 @@ type AddRecipeReviewScreenProps = {
 export const AddRecipeReviewScreen = observer(
   ({navigation}: AddRecipeReviewScreenProps) => {
     const [saving, setSaving] = useState<boolean>();
-    const {saveRecipe, steps, ingredients, name} = useAddRecipe();
+    const {saveRecipe, steps, ingredients, name, comment} = useAddRecipe();
     const userStore = useStores();
 
     const goBack = () => {
@@ -53,7 +53,8 @@ export const AddRecipeReviewScreen = observer(
                 ingredients={ingredients}
                 steps={steps}
                 userName={userStore.name}
-                recipeName={name}></RecipeDisplay>
+                recipeName={name}
+                comments={comment}></RecipeDisplay>
             </ScrollView>
             <Button mode="contained" onPress={navToHomeScreen} loading={saving}>
               Save Recipe

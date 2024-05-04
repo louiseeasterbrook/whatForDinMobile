@@ -2,13 +2,14 @@ import {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
-import {Divider} from 'react-native-paper';
+import {Divider, Text} from 'react-native-paper';
 
 type RecipeDisplayProps = {
   ingredients: string[];
   steps: string[];
   userName: string;
   recipeName: string;
+  comments: string;
 };
 
 export const RecipeDisplay = ({
@@ -16,6 +17,7 @@ export const RecipeDisplay = ({
   steps,
   userName,
   recipeName,
+  comments,
 }: RecipeDisplayProps): ReactNode => {
   return (
     <>
@@ -35,6 +37,12 @@ export const RecipeDisplay = ({
           orderedList={true}
           listSteps={steps}></DisplayListWithTitle>
       </View>
+      {comments && (
+        <View>
+          <Text style={styles.mainTitle}>Comments</Text>
+          <Text>{comments}</Text>
+        </View>
+      )}
     </>
   );
 };
@@ -42,5 +50,9 @@ export const RecipeDisplay = ({
 const styles = StyleSheet.create({
   cardContainer: {
     paddingVertical: 16,
+  },
+  mainTitle: {
+    fontWeight: '700',
+    paddingBottom: 8,
   },
 });

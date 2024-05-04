@@ -1,27 +1,27 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View} from 'react-native';
 import {Button, Text, Appbar, TextInput} from 'react-native-paper';
-
 import {observer} from 'mobx-react-lite';
-import {useEditRecipe} from './context/editRecipeProvider';
+import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {useEditRecipe} from './context/editRecipeProvider';
 
-type EditNameScreenProps = {
+type EditRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
-  route: any;
 };
 
-export const EditNameScreen = observer(
-  ({navigation, route}: EditNameScreenProps) => {
-    const {name, setName} = useEditRecipe();
-    const buttonDisabled = name?.length === 0;
+export const EditRecipeCommentScreen = observer(
+  ({navigation}: EditRecipeCommentScreenProps) => {
+    const {setComment, comment} = useEditRecipe();
+    const [input, setInput] = useState<string>(comment);
 
-    const goBack = () => {
+    const goBack = (): void => {
+      setComment(input);
       navigation.goBack();
     };
 
-    const save = () => {
-      setName(name);
+    const navToEditScreen = async () => {
+      setComment(input);
       goBack();
     };
 
@@ -29,23 +29,23 @@ export const EditNameScreen = observer(
       <>
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Edit Name'} />
+          <Appbar.Content title={'Add Recipe'} />
         </Appbar.Header>
-
         <BaseScreen>
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Edit your Recipe Name</Text>
+                <Text>Add a comment to your recipe</Text>
               </View>
-
               <TextInput
-                label="Name"
-                value={name}
-                onChangeText={(text: string) => setName(text)}
+                multiline
+                numberOfLines={2}
+                placeholder="Add comment..."
+                value={input}
+                onChangeText={setInput}
               />
             </View>
-            <Button mode="contained" onPress={save} disabled={buttonDisabled}>
+            <Button mode="contained" onPress={navToEditScreen}>
               Done
             </Button>
           </View>
@@ -63,9 +63,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     paddingBottom: 26,
-  },
-  cardContainer: {
-    paddingVertical: 10,
   },
   header: {
     paddingVertical: 12,

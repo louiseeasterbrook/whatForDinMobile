@@ -153,7 +153,8 @@ export const ViewRecipeScreen = observer(
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
                 userName={recipe.UserName}
-                recipeName={recipe.Name}></RecipeDisplay>
+                recipeName={recipe.Name}
+                comments={recipe.Comment}></RecipeDisplay>
             </ScrollView>
           )}
           <Portal>

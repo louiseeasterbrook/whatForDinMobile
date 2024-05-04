@@ -9,6 +9,8 @@ export interface AddRecipeContextValue {
   setSteps: Function;
   category: string[];
   setCategory: Function;
+  comment: string;
+  setComment: Function;
   saveRecipe: Function;
 }
 
