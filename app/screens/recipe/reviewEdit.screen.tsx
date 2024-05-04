@@ -16,7 +16,7 @@ type ReviewEditScreenProps = {
 };
 
 export const ReviewEditScreen = observer(
-  ({navigation, route}: ReviewEditScreenProps) => {
+  ({navigation}: ReviewEditScreenProps) => {
     const {name, steps, ingredients, updateRecipe} = useEditRecipe();
     const [saving, setSaving] = useState<boolean>(false);
     const userStore = useStores();
@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
   main: {
     paddingLeft: 15,
     paddingRight: 15,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingBottom: 26,
   },
   cardContainer: {
     paddingVertical: 10,

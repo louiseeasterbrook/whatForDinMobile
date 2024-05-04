@@ -1,86 +1,63 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, Card, Text, Appbar} from 'react-native-paper';
-import {useStores} from '../../store/mainStore';
+import {StyleSheet, View} from 'react-native';
+import {Button, Appbar} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {SettingsRow} from '../../components/settingsRow.component';
 
 type EditMenuScreenProps = {
   navigation: NavigationProp<any, any>;
   route: any;
 };
 
-export const EditMenuScreen = observer(
-  ({navigation, route}: EditMenuScreenProps) => {
-    const userStore = useStores();
+export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
+  const goBack = () => {
+    navigation.goBack();
+  };
 
-    const goBack = () => {
-      navigation.goBack();
-    };
+  const navToName = () => {
+    navigation.navigate('EditName');
+  };
 
-    return (
-      <>
-        <Appbar.Header>
-          <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Edit Recipe'} />
-        </Appbar.Header>
+  const navToIngredients = () => {
+    navigation.navigate('EditIngredients');
+  };
 
-        <BaseScreen>
-          <View style={styles.mainContainer}>
-            <ScrollView>
-              <>
-                <TouchableOpacity
-                  style={styles.cardContainer}
-                  onPress={() => navigation.navigate('EditName')}>
-                  <Card>
-                    <Card.Content>
-                      <Text>Name</Text>
-                    </Card.Content>
-                  </Card>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.cardContainer}
-                  onPress={() => navigation.navigate('EditIngredients')}>
-                  <Card>
-                    <Card.Content>
-                      <Text>Ingredients</Text>
-                    </Card.Content>
-                  </Card>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.cardContainer}
-                  onPress={() => navigation.navigate('EditSteps')}>
-                  <Card>
-                    <Card.Content>
-                      <Text>Steps</Text>
-                    </Card.Content>
-                  </Card>
-                </TouchableOpacity>
-                {/* <TouchableOpacity
-                  style={styles.cardContainer}
-                  onPress={() => navigation.navigate('EditSteps')}>
-                  <Card>
-                    <Card.Content>
-                      <Text>Categories</Text>
-                    </Card.Content>
-                  </Card>
-                </TouchableOpacity> */}
-              </>
-            </ScrollView>
+  const navToSteps = () => {
+    navigation.navigate('EditSteps');
+  };
 
-            <Button
-              mode="contained"
-              onPress={() => navigation.navigate('ReviewEdit')}>
-              Review Changes
-            </Button>
-          </View>
-        </BaseScreen>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={goBack} />
+        <Appbar.Content title={'Edit Recipe'} />
+      </Appbar.Header>
+
+      <BaseScreen>
+        <View style={styles.mainContainer}>
+          <ScrollView>
+            <>
+              <SettingsRow title="Name" onPress={navToName}></SettingsRow>
+              <SettingsRow
+                title="Ingredients"
+                onPress={navToIngredients}></SettingsRow>
+              <SettingsRow title="Steps" onPress={navToSteps}></SettingsRow>
+            </>
+          </ScrollView>
+
+          <Button
+            mode="contained"
+            onPress={() => navigation.navigate('ReviewEdit')}>
+            Review Changes
+          </Button>
+        </View>
+      </BaseScreen>
+    </>
+  );
+});
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -92,6 +69,6 @@ const styles = StyleSheet.create({
     paddingBottom: 26,
   },
   cardContainer: {
-    paddingTop: 10,
+    // paddingTop: 10,
   },
 });
