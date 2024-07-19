@@ -12,6 +12,11 @@ export interface AddRecipeContextValue {
   comment: string;
   setComment: Function;
   saveRecipe: Function;
+  showExitDialog: boolean;
+  openExitDialog: Function;
+  closeExitDialog: Function;
+  exitFlow: Function;
+  exitFlowFullBack: Function;
 }
 
 export const AddRecipeContext = createContext<AddRecipeContextValue>(null);

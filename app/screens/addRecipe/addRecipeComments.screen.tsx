@@ -1,6 +1,13 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View} from 'react-native';
-import {Button, Text, Appbar, TextInput} from 'react-native-paper';
+import {
+  Button,
+  Text,
+  Appbar,
+  TextInput,
+  Portal,
+  Dialog,
+} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
@@ -13,7 +20,13 @@ type AddRecipeCommentScreenProps = {
 export const AddRecipeCommentScreen = observer(
   ({navigation}: AddRecipeCommentScreenProps) => {
     const [input, setInput] = useState<string>();
-    const {setComment} = useAddRecipe();
+    const {
+      setComment,
+      exitFlowFullBack,
+      showExitDialog,
+      closeExitDialog,
+      openExitDialog,
+    } = useAddRecipe();
 
     const goBack = (): void => {
       navigation.goBack();
@@ -29,13 +42,7 @@ export const AddRecipeCommentScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action
-            icon="close"
-            onPress={() => {
-              navigation.popToTop();
-              navigation.goBack();
-            }}
-          />
+          <Appbar.Action icon="close" onPress={() => openExitDialog()} />
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
@@ -56,6 +63,19 @@ export const AddRecipeCommentScreen = observer(
             </Button>
           </View>
         </BaseScreen>
+        <Portal>
+          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
+            <Dialog.Content>
+              <Text variant="bodyMedium">
+                Are you sure you want to exit the create recipe flow?
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => closeExitDialog()}>Cancel</Button>
+              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </>
     );
   },

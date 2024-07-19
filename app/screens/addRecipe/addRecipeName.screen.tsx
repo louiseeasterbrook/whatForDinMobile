@@ -1,6 +1,13 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View} from 'react-native';
-import {Button, Text, Appbar, TextInput} from 'react-native-paper';
+import {
+  Button,
+  Text,
+  Appbar,
+  TextInput,
+  Portal,
+  Dialog,
+} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -11,7 +18,14 @@ type AddRecipeNameScreenProps = {
 
 export const AddRecipeNameScreen = observer(
   ({navigation}: AddRecipeNameScreenProps) => {
-    const {name, setName} = useAddRecipe();
+    const {
+      name,
+      setName,
+      exitFlow,
+      showExitDialog,
+      closeExitDialog,
+      openExitDialog,
+    } = useAddRecipe();
     const buttonDisabled = name?.length <= 0;
 
     const goBack = () => {
@@ -30,13 +44,13 @@ export const AddRecipeNameScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action icon="close" onPress={() => navigation.popToTop()} />
+          <Appbar.Action icon="close" onPress={() => openExitDialog()} />
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Enter your Recipe Name</Text>
+                <Text>Enter your recipe name</Text>
               </View>
 
               <TextInput
@@ -53,6 +67,19 @@ export const AddRecipeNameScreen = observer(
             </Button>
           </View>
         </BaseScreen>
+        <Portal>
+          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
+            <Dialog.Content>
+              <Text variant="bodyMedium">
+                Are you sure you want to exit the create recipe flow?
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => closeExitDialog()}>Cancel</Button>
+              <Button onPress={() => exitFlow()}>Yes, exit</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </>
     );
   },

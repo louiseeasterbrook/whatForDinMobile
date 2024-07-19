@@ -1,7 +1,15 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
+import {
+  Button,
+  Text,
+  Appbar,
+  TextInput,
+  Icon,
+  Portal,
+  Dialog,
+} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useRef, useState} from 'react';
@@ -13,7 +21,13 @@ type AddRecipeStepsScreenProps = {
 
 export const AddRecipeStepsScreen = observer(
   ({navigation}: AddRecipeStepsScreenProps) => {
-    const {setSteps} = useAddRecipe();
+    const {
+      setSteps,
+      showExitDialog,
+      closeExitDialog,
+      openExitDialog,
+      exitFlowFullBack,
+    } = useAddRecipe();
 
     const [text, setText] = useState<string>('');
     const [numInputs, setNumInputs] = useState<number>(1);
@@ -59,13 +73,7 @@ export const AddRecipeStepsScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action
-            icon="close"
-            onPress={() => {
-              navigation.popToTop();
-              navigation.goBack();
-            }}
-          />
+          <Appbar.Action icon="close" onPress={() => openExitDialog()} />
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
@@ -110,6 +118,19 @@ export const AddRecipeStepsScreen = observer(
             </Button>
           </View>
         </BaseScreen>
+        <Portal>
+          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
+            <Dialog.Content>
+              <Text variant="bodyMedium">
+                Are you sure you want to exit the create recipe flow?
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => closeExitDialog()}>Cancel</Button>
+              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </>
     );
   },

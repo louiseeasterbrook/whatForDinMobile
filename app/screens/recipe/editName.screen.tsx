@@ -5,6 +5,7 @@ import {Button, Text, Appbar, TextInput} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {useState} from 'react';
 
 type EditNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -16,12 +17,14 @@ export const EditNameScreen = observer(
     const {name, setName} = useEditRecipe();
     const buttonDisabled = name?.length === 0;
 
-    const goBack = () => {
+    const [tempName, setTempName] = useState<string>(name);
+
+    const goBack = (): void => {
       navigation.goBack();
     };
 
-    const save = () => {
-      setName(name);
+    const save = (): void => {
+      setName(tempName);
       goBack();
     };
 
@@ -36,13 +39,13 @@ export const EditNameScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Edit your Recipe Name</Text>
+                <Text>Edit your recipe name</Text>
               </View>
 
               <TextInput
                 label="Name"
-                value={name}
-                onChangeText={(text: string) => setName(text)}
+                value={tempName}
+                onChangeText={(text: string) => setTempName(text)}
               />
             </View>
             <Button mode="contained" onPress={save} disabled={buttonDisabled}>

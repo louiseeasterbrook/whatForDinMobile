@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import {Button, Appbar} from 'react-native-paper';
+import {Button, Appbar, Portal, Dialog, Text} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
@@ -16,7 +16,17 @@ type AddRecipeReviewScreenProps = {
 export const AddRecipeReviewScreen = observer(
   ({navigation}: AddRecipeReviewScreenProps) => {
     const [saving, setSaving] = useState<boolean>();
-    const {saveRecipe, steps, ingredients, name, comment} = useAddRecipe();
+    const {
+      saveRecipe,
+      steps,
+      ingredients,
+      name,
+      comment,
+      exitFlowFullBack,
+      showExitDialog,
+      closeExitDialog,
+      openExitDialog,
+    } = useAddRecipe();
     const userStore = useStores();
 
     const goBack = () => {
@@ -37,13 +47,7 @@ export const AddRecipeReviewScreen = observer(
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action
-            icon="close"
-            onPress={() => {
-              navigation.popToTop();
-              navigation.goBack();
-            }}
-          />
+          <Appbar.Action icon="close" onPress={() => openExitDialog()} />
         </Appbar.Header>
 
         <BaseScreen>
@@ -61,6 +65,19 @@ export const AddRecipeReviewScreen = observer(
             </Button>
           </View>
         </BaseScreen>
+        <Portal>
+          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
+            <Dialog.Content>
+              <Text variant="bodyMedium">
+                Are you sure you want to exit the create recipe flow?
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => closeExitDialog()}>Cancel</Button>
+              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </>
     );
   },
