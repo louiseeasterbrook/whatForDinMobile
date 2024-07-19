@@ -16,11 +16,11 @@ type EditStepsScreenProps = {
 export const EditStepsScreen = observer(
   ({navigation, route}: EditStepsScreenProps) => {
     const {setSteps, steps} = useEditRecipe();
-
-    const initInput = steps?.length ? steps : [];
+    const tempSteps = [...steps];
+    const initInput = tempSteps?.length ? tempSteps : [];
 
     const [text, setText] = useState<string>('');
-    const [numInputs, setNumInputs] = useState<number>(steps?.length || 1);
+    const [numInputs, setNumInputs] = useState<number>(tempSteps?.length || 1);
     const refInputs = useRef<string[]>(initInput);
     const everyRowIsPopulated = (): boolean => {
       return refInputs.current.every(x => x.length > 0);

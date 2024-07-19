@@ -16,7 +16,6 @@ export const EditRecipeCommentScreen = observer(
     const [input, setInput] = useState<string>(comment);
 
     const goBack = (): void => {
-      setComment(input);
       navigation.goBack();
     };
 
