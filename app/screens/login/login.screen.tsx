@@ -81,56 +81,64 @@ export const LoginScreen = ({navigation}): ReactNode => {
     navigation.navigate('SignUpScreen');
   };
 
+  const renderLogin = () => {
+    return (
+      <View style={{paddingHorizontal: 20}}>
+        <TextInput
+          style={styles.paddingBottom}
+          label="Email"
+          value={email}
+          onChangeText={(text: string) => setEmail(text)}
+        />
+        <TextInput
+          style={styles.paddingBottom}
+          label="Password"
+          value={password}
+          secureTextEntry={true}
+          onChangeText={(text: string) => setPassword(text)}
+        />
+        <Button
+          mode="contained"
+          onPress={loginPress}
+          loading={loading}
+          style={styles.paddingBottom}>
+          Sign In
+        </Button>
+
+        <Text style={styles.loginDivider}>or</Text>
+        <Button
+          mode="contained"
+          onPress={onGoogleButtonPress}
+          loading={googleLoading}
+          style={styles.paddingBottom}>
+          Sign in with Google
+        </Button>
+      </View>
+    );
+  };
+
   return (
     <>
       <BaseScreen useSafeArea={true}>
-        <View style={styles.mainContainer}>
-          <View style={{flex: 1}}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>what's for din?</Text>
-            </View>
-            <KeyboardAvoidingView
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'center',
-              }}
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-              <ScrollView
-                style={{flex: 1}}
-                contentContainerStyle={{paddingHorizontal: 20}}>
-                <TextInput
-                  style={styles.paddingBottom}
-                  label="Email"
-                  value={email}
-                  onChangeText={(text: string) => setEmail(text)}
-                />
-                <TextInput
-                  style={styles.paddingBottom}
-                  label="Password"
-                  value={password}
-                  secureTextEntry={true}
-                  onChangeText={(text: string) => setPassword(text)}
-                />
-                <Button
-                  mode="contained"
-                  onPress={loginPress}
-                  loading={loading}
-                  style={styles.paddingBottom}>
-                  Sign In
-                </Button>
+        <KeyboardAvoidingView
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          enabled={true}>
+          <View style={styles.mainContainer}>
+            <View style={{flex: 1}}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>what's for din?</Text>
+              </View>
 
-                <Text style={styles.loginDivider}>or</Text>
-                <Button
-                  mode="contained"
-                  onPress={onGoogleButtonPress}
-                  loading={googleLoading}
-                  style={styles.paddingBottom}>
-                  Sign in with Google
-                </Button>
-              </ScrollView>
-            </KeyboardAvoidingView>
+              {renderLogin()}
+            </View>
           </View>
+        </KeyboardAvoidingView>
+        <View>
           <Text style={styles.bottomText} onPress={navToSignUp}>
             Don't have an account?
             <Text style={styles.colouredText}> Sign up here</Text>
