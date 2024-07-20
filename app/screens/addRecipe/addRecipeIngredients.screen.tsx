@@ -107,7 +107,7 @@ export const AddRecipeIngredientsScreen = observer(
               {[...Array(numInputs)].map((e, i) => (
                 <View key={i} style={styles.inputButtonContainer}>
                   <TextInput
-                    placeholder="Add ingredient.."
+                    placeholder="Add ingredient..."
                     style={styles.input}
                     value={refInputs.current[i]}
                     onChangeText={(currentValue: string) =>
