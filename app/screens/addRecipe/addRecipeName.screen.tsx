@@ -11,6 +11,7 @@ import {
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {useEffect, useRef} from 'react';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -27,6 +28,11 @@ export const AddRecipeNameScreen = observer(
       openExitDialog,
     } = useAddRecipe();
     const buttonDisabled = name?.length <= 0;
+    const name_input = useRef();
+
+    useEffect(() => {
+      name_input.current.focus();
+    }, []);
 
     const goBack = () => {
       navigation.goBack();
@@ -57,6 +63,7 @@ export const AddRecipeNameScreen = observer(
                 label="Name"
                 value={name}
                 onChangeText={(text: string) => setName(text)}
+                ref={name_input}
               />
             </View>
             <Button

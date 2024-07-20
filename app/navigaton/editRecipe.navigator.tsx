@@ -48,7 +48,7 @@ export const EditRecipeStack = () => {
         <Stack.Screen
           name="ReviewEdit"
           component={ReviewEditScreen}
-          options={HORIZONTAL_ANIMATION}
+          options={{gestureEnabled: false, ...HORIZONTAL_ANIMATION}}
         />
       </Stack.Navigator>
     </EditRecipeProvider>

@@ -10,7 +10,7 @@ import {
 } from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 
 type AddRecipeCommentScreenProps = {
@@ -27,6 +27,11 @@ export const AddRecipeCommentScreen = observer(
       closeExitDialog,
       openExitDialog,
     } = useAddRecipe();
+    const firstInput = useRef();
+
+    useEffect(() => {
+      firstInput.current.focus();
+    }, []);
 
     const goBack = (): void => {
       navigation.goBack();
@@ -56,6 +61,7 @@ export const AddRecipeCommentScreen = observer(
                 placeholder="Add comment..."
                 value={input}
                 onChangeText={setInput}
+                ref={firstInput}
               />
             </View>
             <Button mode="contained" onPress={navToStepsScreen}>

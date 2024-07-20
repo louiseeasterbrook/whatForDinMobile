@@ -36,7 +36,7 @@ export const AddRecipeStack = () => {
         <Stack.Screen
           name="Review"
           component={AddRecipeReviewScreen}
-          options={HORIZONTAL_ANIMATION}
+          options={{gestureEnabled: false, ...HORIZONTAL_ANIMATION}}
         />
       </Stack.Navigator>
     </AddRecipeProvider>

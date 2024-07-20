@@ -12,7 +12,7 @@ import {
 } from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 
 type AddRecipeStepsScreenProps = {
@@ -21,6 +21,7 @@ type AddRecipeStepsScreenProps = {
 
 export const AddRecipeStepsScreen = observer(
   ({navigation}: AddRecipeStepsScreenProps) => {
+    const scrollViewRef = useRef();
     const {
       setSteps,
       showExitDialog,
@@ -30,6 +31,8 @@ export const AddRecipeStepsScreen = observer(
     } = useAddRecipe();
 
     const [text, setText] = useState<string>('');
+    const [latestButtonPress, setLatestButtonPress] =
+      useState<string>('remove');
     const [numInputs, setNumInputs] = useState<number>(1);
     const refInputs = useRef<string[]>([text]);
     const everyRowIsPopulated = (): boolean => {
@@ -38,6 +41,11 @@ export const AddRecipeStepsScreen = observer(
     const buttonDisabled = Boolean(
       refInputs.current?.length && !everyRowIsPopulated(),
     );
+    const firstInput = useRef();
+
+    useEffect(() => {
+      firstInput.current.focus();
+    }, []);
 
     const setInputValue = (index: number, value: string) => {
       const inputs = refInputs.current;
@@ -48,6 +56,7 @@ export const AddRecipeStepsScreen = observer(
     const addInput = () => {
       refInputs.current.push('');
       setNumInputs(value => value + 1);
+      setLatestButtonPress('add');
     };
 
     const removeInput = (i: number) => {
@@ -57,6 +66,7 @@ export const AddRecipeStepsScreen = observer(
       }
       refInputs.current.splice(i, 1)[0];
       setNumInputs(value => value - 1);
+      setLatestButtonPress('remove');
     };
 
     const goBack = () => {
@@ -66,6 +76,14 @@ export const AddRecipeStepsScreen = observer(
     const navToStepsScreen = async () => {
       setSteps(refInputs.current);
       navigation.navigate('AddComment');
+    };
+
+    const scrollViewControl = (
+      scrollViewRef: React.MutableRefObject<undefined>,
+    ): void => {
+      if (latestButtonPress === 'add') {
+        scrollViewRef.current.scrollToEnd({animated: true});
+      }
     };
 
     return (
@@ -81,6 +99,8 @@ export const AddRecipeStepsScreen = observer(
               <Text>Add your recipe steps</Text>
             </View>
             <ScrollView
+              ref={scrollViewRef}
+              onContentSizeChange={() => scrollViewControl(scrollViewRef)}
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
@@ -93,6 +113,7 @@ export const AddRecipeStepsScreen = observer(
                       onChangeText={(currentValue: string) =>
                         setInputValue(i, currentValue)
                       }
+                      ref={firstInput}
                     />
                     <TouchableOpacity
                       style={styles.inputRemoveButton}

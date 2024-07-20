@@ -56,12 +56,12 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="ViewRecipe"
         component={EditRecipeStack}
-        options={HORIZONTAL_ANIMATION}
+        options={{gestureEnabled: false, ...HORIZONTAL_ANIMATION}}
       />
       <Stack.Screen
         name="AddRecipe"
         component={AddRecipeStack}
-        options={HORIZONTAL_ANIMATION}
+        options={{gestureEnabled: false, ...HORIZONTAL_ANIMATION}}
       />
       <Stack.Screen
         name="UserProfile"

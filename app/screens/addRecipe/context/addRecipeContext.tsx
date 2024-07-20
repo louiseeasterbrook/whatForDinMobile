@@ -25,7 +25,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
       UserId: userStore.uid,
       Id: '', //gets set up db
       UserName: userStore.name,
-      Comment: comment,
+      Comment: comment ? comment : null,
     };
     await AddRecipeToCollection(formattedRecipe);
   };

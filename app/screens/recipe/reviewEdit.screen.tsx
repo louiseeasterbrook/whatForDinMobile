@@ -9,6 +9,7 @@ import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
+import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -36,6 +37,7 @@ export const ReviewEditScreen = observer(
 
     return (
       <>
+        {saving && <ScreenDimmer />}
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Review Recipe'} />

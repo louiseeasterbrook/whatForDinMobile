@@ -18,8 +18,11 @@ export const EditIngredientsScreen = observer(
     const {setIngredients, ingredients} = useEditRecipe();
     const tempIng = [...ingredients];
     const initInput = tempIng?.length ? tempIng : [];
+    const scrollViewRef = useRef();
 
     const [text, setText] = useState<string>('');
+    const [latestButtonPress, setLatestButtonPress] =
+      useState<string>('remove');
     const [numInputs, setNumInputs] = useState<number>(tempIng?.length || 1);
     const refInputs = useRef<string[]>(initInput);
     const everyRowIsPopulated = (): boolean => {
@@ -38,11 +41,13 @@ export const EditIngredientsScreen = observer(
     const addInput = () => {
       refInputs.current.push('');
       setNumInputs(value => value + 1);
+      setLatestButtonPress('add');
     };
 
     const removeInput = (i: number) => {
       refInputs.current.splice(i, 1)[0];
       setNumInputs(value => value - 1);
+      setLatestButtonPress('remove');
     };
 
     const goBack = () => {
@@ -52,6 +57,14 @@ export const EditIngredientsScreen = observer(
     const navToEditScreen = async () => {
       setIngredients(refInputs.current);
       goBack();
+    };
+
+    const scrollViewControl = (
+      scrollViewRef: React.MutableRefObject<undefined>,
+    ): void => {
+      if (latestButtonPress === 'add') {
+        scrollViewRef.current.scrollToEnd({animated: true});
+      }
     };
 
     return (
@@ -67,6 +80,8 @@ export const EditIngredientsScreen = observer(
               <Text>Edit your ingredients</Text>
             </View>
             <ScrollView
+              ref={scrollViewRef}
+              onContentSizeChange={() => scrollViewControl(scrollViewRef)}
               keyboardShouldPersistTaps="handled"
               contentContainerStyle={{flexGrow: 1, paddingBottom: 26}}>
               <>
