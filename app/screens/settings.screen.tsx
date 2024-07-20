@@ -4,6 +4,7 @@ import {BaseScreen} from '../components/BaseScreen.component';
 import {Text, Divider, Switch, Avatar, IconButton} from 'react-native-paper';
 import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const ToggleButton = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -17,7 +18,10 @@ export const SettingsScreen = (): ReactNode => {
   const logout = () => {
     auth()
       .signOut()
-      .then(() => console.log('User signed out!'));
+      .then(() => {
+        GoogleSignin.revokeAccess(); //stops auto sign in to first selected google account
+        console.log('User signed out!');
+      });
   };
 
   return (

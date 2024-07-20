@@ -1,17 +1,9 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Dialog,
-  Portal,
-  Text,
-  TextInput,
-  HelperText,
-} from 'react-native-paper';
+import {Button, Dialog, Portal, Text, TextInput} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour} from '../../index/theme';
 import {isValidEmailFormat} from '../../models/validation';
 
