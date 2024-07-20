@@ -1,6 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import TabNavigator from './Tab.navigator';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import LoginNavigator from './login.navigator';
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
@@ -9,10 +12,14 @@ import {AddRecipeStack} from './addRecipe.navigator';
 import {EditRecipeStack} from './editRecipe.navigator';
 import {HORIZONTAL_ANIMATION} from './navigation.animation';
 import {UserProfileScreen} from '../screens/userProfile/userProfile.screen';
+import {BackHandler} from 'react-native';
+
+export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review'];
 
 const Stack = createStackNavigator();
 
 export const RootNavigator = () => {
+  const navigationRef = useNavigationContainerRef();
   const userStore = useStores();
   const [user, setUser] = useState(null);
   // Handle user state changes
@@ -33,13 +40,42 @@ export const RootNavigator = () => {
     return nameToDisplay ? nameToDisplay : '';
   };
 
+  const getCurrentRouteName = (state): string => {
+    const route = state.routes[state.index];
+    if (route.state) {
+      return getCurrentRouteName(route.state);
+    }
+    return route.name;
+  };
+
   useEffect(() => {
+    const onBackPressed = (): boolean => {
+      const state = navigationRef.current.getRootState();
+      const currentRouteName = getCurrentRouteName(state);
+      const noGoingBack = NO_GO_BACK_SCREENS.includes(currentRouteName);
+
+      console.log(currentRouteName, ' ', noGoingBack);
+
+      if (noGoingBack) {
+        return true;
+      }
+
+      if (navigationRef.canGoBack()) {
+        navigationRef.goBack();
+      }
+      return true;
+    };
+
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    BackHandler.addEventListener('hardwareBackPress', onBackPressed);
+    return () => {
+      subscriber;
+      BackHandler.removeEventListener('hardwareBackPress', onBackPressed);
+    };
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {user ? <LoggedInStack /> : <LoggedOutStack />}
     </NavigationContainer>
   );
@@ -56,7 +92,7 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="ViewRecipe"
         component={EditRecipeStack}
-        options={{gestureEnabled: false, ...HORIZONTAL_ANIMATION}}
+        options={HORIZONTAL_ANIMATION}
       />
       <Stack.Screen
         name="AddRecipe"
