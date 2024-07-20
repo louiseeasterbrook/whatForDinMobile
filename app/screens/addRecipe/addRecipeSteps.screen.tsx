@@ -41,11 +41,6 @@ export const AddRecipeStepsScreen = observer(
     const buttonDisabled = Boolean(
       refInputs.current?.length && !everyRowIsPopulated(),
     );
-    const firstInput = useRef();
-
-    useEffect(() => {
-      firstInput.current.focus();
-    }, []);
 
     const setInputValue = (index: number, value: string) => {
       const inputs = refInputs.current;
@@ -113,7 +108,7 @@ export const AddRecipeStepsScreen = observer(
                       onChangeText={(currentValue: string) =>
                         setInputValue(i, currentValue)
                       }
-                      ref={firstInput}
+                      autoFocus
                     />
                     <TouchableOpacity
                       style={styles.inputRemoveButton}

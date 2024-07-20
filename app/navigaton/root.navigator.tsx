@@ -14,7 +14,7 @@ import {HORIZONTAL_ANIMATION} from './navigation.animation';
 import {UserProfileScreen} from '../screens/userProfile/userProfile.screen';
 import {BackHandler} from 'react-native';
 
-export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review'];
+export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review', 'ReviewEdit'];
 
 const Stack = createStackNavigator();
 

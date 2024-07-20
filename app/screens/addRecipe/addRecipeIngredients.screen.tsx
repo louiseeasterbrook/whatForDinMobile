@@ -32,7 +32,6 @@ export const AddRecipeIngredientsScreen = observer(
     const everyRowIsPopulated = (): boolean => {
       return refInputs.current.every(x => x.length > 0);
     };
-    const firstInput = useRef();
 
     const [text, setText] = useState<string>('');
     const [latestButtonPress, setLatestButtonPress] =
@@ -42,10 +41,6 @@ export const AddRecipeIngredientsScreen = observer(
     const buttonDisabled = Boolean(
       refInputs.current?.length && !everyRowIsPopulated(),
     );
-
-    useEffect(() => {
-      firstInput.current.focus();
-    }, []);
 
     const setInputValue = (index: number, value: string) => {
       const inputs = refInputs.current;
@@ -118,7 +113,7 @@ export const AddRecipeIngredientsScreen = observer(
                     onChangeText={(currentValue: string) =>
                       setInputValue(i, currentValue)
                     }
-                    ref={firstInput}
+                    autoFocus
                   />
                   <TouchableOpacity
                     style={styles.inputRemoveButton}
