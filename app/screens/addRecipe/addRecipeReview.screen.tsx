@@ -39,8 +39,13 @@ export const AddRecipeReviewScreen = observer(
         return;
       }
       setSaving(true);
-      await saveRecipe();
+      // waiting a miminum of 1.5 seconds to return finsihing api response
+      await Promise.all([saveRecipe(), delayPromise(1500)]);
       navigation.navigate('Tabs');
+    };
+
+    const delayPromise = async (milliseconds: number): Promise<void> => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
     };
 
     return (
