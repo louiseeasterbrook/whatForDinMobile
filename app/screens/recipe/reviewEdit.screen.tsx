@@ -22,17 +22,22 @@ export const ReviewEditScreen = observer(
     const [saving, setSaving] = useState<boolean>(false);
     const userStore = useStores();
 
-    const goBack = () => {
+    const goBack = (): void => {
       navigation.goBack();
     };
 
-    const save = () => {
+    const save = async (): Promise<void> => {
       if (saving) {
         return;
       }
       setSaving(true);
-      updateRecipe();
+      // waiting a miminum of 1.5 seconds to return finsihing api response
+      await Promise.all([updateRecipe(), delayPromise(1500)]);
       navigation.popToTop();
+    };
+
+    const delayPromise = async (milliseconds: number): Promise<void> => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
     };
 
     return (

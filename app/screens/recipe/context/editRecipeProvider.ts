@@ -11,6 +11,7 @@ export interface EditRecipeContextValue {
   comment: string;
   setComment: Function;
   initRecipe: Function;
+  anyChanges: Function;
 }
 
 export const EditRecipeContext = createContext<EditRecipeContextValue>(null);

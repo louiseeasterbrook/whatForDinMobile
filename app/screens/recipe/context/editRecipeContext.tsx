@@ -17,11 +17,32 @@ export function EditRecipeProvider({children}: any): ReactNode {
     setName(recipe.Name);
     setIngredients(recipe.Ingredients);
     setSteps(recipe.Method);
-    setRecipe(recipe);
     setComment(recipe?.Comment || '');
+    setRecipe({...recipe});
   };
 
-  const updateRecipe = async () => {
+  const anyChanges = (): boolean => {
+    const nameChange = recipe.Name !== name;
+    const ingredientChange = stringArrayChange(recipe.Ingredients, ingredients);
+    const stepsChange = stringArrayChange(recipe.Method, steps);
+    const commentChange = recipe.Comment && recipe.Comment !== comment;
+
+    return nameChange || ingredientChange || stepsChange || commentChange;
+  };
+
+  const stringArrayChange = (array1: string[], array2: string[]): boolean => {
+    if (array1.length !== array2.length) return true;
+
+    for (var i = 0; i < array1.length; i++) {
+      if (array1[i] !== array2[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const updateRecipe = async (): Promise<void> => {
     recipe.Name = name;
     recipe.Ingredients = ingredients;
     recipe.Method = steps;
@@ -41,6 +62,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     comment,
     setComment,
     initRecipe,
+    anyChanges,
   };
 
   return (

@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import {Avatar, Card, Text} from 'react-native-paper';
+import {Avatar, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 type HeaderCardProps = {
