@@ -9,6 +9,7 @@ import {
   Dialog,
   Button,
   ActivityIndicator,
+  FAB,
 } from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
@@ -20,6 +21,7 @@ import {RecipeDisplay} from '../../components/recipeDisplay.component';
 import _ from 'lodash';
 import {useEffect, useState} from 'react';
 import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
+import KeepAwake from '@sayem314/react-native-keep-awake';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -37,6 +39,12 @@ export const ViewRecipeScreen = observer(
       useState<string>('');
     const [deleteDialogVisible, setDeleteDialogVisible] =
       useState<boolean>(false);
+
+    const [AlwaysOnDialogVisible, setAlwaysOnDialogVisible] =
+      useState<boolean>(false);
+    const [keepAwake, setKeepAwake] = useState<boolean>(false);
+    const [chefMode, setChefMode] = useState<boolean>(false);
+    const [textSize, setTextSize] = useState<number>(14);
 
     const isOwnRecipe = recipe?.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe?.Id);
@@ -104,36 +112,77 @@ export const ViewRecipeScreen = observer(
       return new Promise(resolve => setTimeout(resolve, milliseconds));
     };
 
-    const goToEditMenu = () => {
+    const goToEditMenu = (): void => {
       const newRec = _.cloneDeep(recipe);
       initRecipe(newRec);
       navigation.navigate('EditMenu');
     };
 
-    const deleteRecipe = async () => {
+    const deleteRecipe = async (): Promise<void> => {
       await DeleteRecipe(recipe.Id);
       hideDeleteDialog();
       goBack();
     };
-    const showDeleteDialog = () => setDeleteDialogVisible(true);
-    const hideDeleteDialog = () => setDeleteDialogVisible(false);
 
-    const showLoadingDialog = (text: string) => setLoadingDialogVisible(text);
-    const hideLoadingDialog = () => setLoadingDialogVisible('');
+    const showDeleteDialog = (): void => setDeleteDialogVisible(true);
+    const hideDeleteDialog = (): void => setDeleteDialogVisible(false);
+
+    const keepAwakePress = (): void => {
+      if (keepAwake) {
+        setKeepAwake(false);
+        return;
+      }
+      showAlwaysOnDialog();
+    };
+    const showAlwaysOnDialog = (): void => setAlwaysOnDialogVisible(true);
+    const hideAlwaysOnDialog = (): void => setAlwaysOnDialogVisible(false);
+    const turnOnKeepAwake = (): void => {
+      setKeepAwake(true);
+      hideAlwaysOnDialog();
+    };
+
+    const pressChefMode = (): void => {
+      setChefMode(!chefMode);
+    };
+
+    const showLoadingDialog = (text: string): void =>
+      setLoadingDialogVisible(text);
+    const hideLoadingDialog = (): void => setLoadingDialogVisible('');
+
+    const minusTextSize = (): void => {
+      const calcValue = textSize - 2;
+      if (calcValue <= 12) {
+        return;
+      }
+
+      setTextSize(calcValue);
+    };
+
+    const plusTextSize = (): void => {
+      const calcValue = textSize + 2;
+      if (calcValue >= 24) {
+        return;
+      }
+
+      setTextSize(calcValue);
+    };
+
+    const [openFab, setOpenFab] = useState(false);
+    const onStateChange = ({open}) => setOpenFab(open);
 
     return (
       <>
+        {keepAwake && <KeepAwake />}
         <Appbar.Header>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title="Recipe" />
           {!loading && (
             <>
-              {isOwnRecipe && (
-                <>
-                  <Appbar.Action icon="pencil" onPress={goToEditMenu} />
-                  <Appbar.Action icon={'delete'} onPress={showDeleteDialog} />
-                </>
-              )}
+              <Appbar.Action icon={'chef-hat'} onPress={pressChefMode} />
+              <Appbar.Action
+                icon={keepAwake ? 'lightbulb-on' : 'lightbulb'}
+                onPress={keepAwakePress}
+              />
               {!isOwnRecipe && (
                 <Appbar.Action
                   icon={isFav ? 'bookmark' : 'bookmark-outline'}
@@ -145,16 +194,21 @@ export const ViewRecipeScreen = observer(
         </Appbar.Header>
 
         <BaseScreen>
+          {/* <IconButton icon="plus" size={26} onPress={plusTextSize} />
+
+          <IconButton icon="minus" size={26} onPress={minusTextSize} /> */}
           {loading ? (
             <ActivityIndicator animating={true}></ActivityIndicator>
           ) : (
             <ScrollView style={styles.main}>
               <RecipeDisplay
+                textSize={textSize}
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
                 userName={recipe.UserName}
                 recipeName={recipe.Name}
-                comments={recipe.Comment}></RecipeDisplay>
+                comments={recipe.Comment}
+                chefMode={chefMode}></RecipeDisplay>
             </ScrollView>
           )}
           <Portal>
@@ -171,6 +225,20 @@ export const ViewRecipeScreen = observer(
             </Dialog>
 
             <Dialog
+              visible={AlwaysOnDialogVisible}
+              onDismiss={hideDeleteDialog}>
+              <Dialog.Content>
+                <Text variant="bodyMedium">
+                  Would you like to activate 'always on' display?
+                </Text>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={hideAlwaysOnDialog}>Cancel</Button>
+                <Button onPress={turnOnKeepAwake}>Yes</Button>
+              </Dialog.Actions>
+            </Dialog>
+
+            <Dialog
               visible={loadingDialogVisible !== ''}
               onDismiss={hideLoadingDialog}>
               <Dialog.Content>
@@ -181,6 +249,27 @@ export const ViewRecipeScreen = observer(
               </Dialog.Content>
             </Dialog>
           </Portal>
+          {isOwnRecipe && (
+            <FAB.Group
+              open={openFab}
+              visible
+              icon={openFab ? 'emoticon-happy-outline' : 'pencil'}
+              actions={[
+                {
+                  icon: 'pencil',
+                  label: 'Edit',
+                  onPress: () => goToEditMenu(),
+                },
+                {
+                  icon: 'delete',
+                  label: 'Delete',
+                  onPress: () => showDeleteDialog(),
+                },
+              ]}
+              onStateChange={onStateChange}
+              onPress={() => {}}
+            />
+          )}
         </BaseScreen>
       </>
     );
