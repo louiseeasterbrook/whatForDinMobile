@@ -7,7 +7,7 @@ import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {SettingsRow} from '../../components/settingsRow.component';
 import {useEditRecipe} from './context/editRecipeProvider';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type EditMenuScreenProps = {
   navigation: NavigationProp<any, any>;

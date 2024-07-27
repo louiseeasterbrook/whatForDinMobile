@@ -14,6 +14,7 @@ import {NullState} from '../../components/nullState.component copy';
 import moment from 'moment';
 import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
 import {getUserSavedRecipes} from '../../services/recipeDB.service';
+import {sharedStyles} from '../../index/theme';
 
 enum SegmentType {
   Mine = 'Mine',
@@ -158,7 +159,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             placeholder="Search for a recipe..."
             onChangeText={setSearchInput}
             value={searchInput}
-            style={styles.searchBar}
+            style={[styles.searchBar, sharedStyles.searchBar]}
           />
           <SegmentedButtons
             value={segmentValue}

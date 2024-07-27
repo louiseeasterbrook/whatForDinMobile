@@ -22,7 +22,7 @@ import _ from 'lodash';
 import {useEffect, useState} from 'react';
 import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
 import KeepAwake from '@sayem314/react-native-keep-awake';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;

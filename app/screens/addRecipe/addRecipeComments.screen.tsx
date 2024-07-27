@@ -13,7 +13,7 @@ import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type AddRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;

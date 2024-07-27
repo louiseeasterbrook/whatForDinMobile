@@ -8,6 +8,7 @@ import {GetAllUsers} from '../../services/userDBservice';
 import {UserResultCard} from './userResultCard';
 import {NullState} from '../../components/nullState.component copy';
 import {GetAllRecipeCollection} from '../../services/recipeDB.service';
+import {sharedStyles} from '../../index/theme';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -105,7 +106,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
             placeholder="Search for a user..."
             onChangeText={setSearchInput}
             value={searchInput}
-            style={styles.searchBar}
+            style={[styles.searchBar, sharedStyles.searchBar]}
           />
         </View>
 

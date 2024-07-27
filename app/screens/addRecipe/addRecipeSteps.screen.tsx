@@ -15,7 +15,7 @@ import {useAddRecipe} from './context/addRecipeProvider';
 import {useEffect, useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;

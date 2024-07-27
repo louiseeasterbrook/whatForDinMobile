@@ -10,10 +10,9 @@ import {
 } from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
-import {main_colour} from '../../index/theme';
+import {main_colour, sharedStyles} from '../../index/theme';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../../store/mainStore';
-import {sharedStyles} from '../../index/constants';
 
 export const SignUpScreen = ({navigation}): ReactNode => {
   const userStore = useStores();

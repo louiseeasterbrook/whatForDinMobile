@@ -8,7 +8,7 @@ import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type EditStepsScreenProps = {
   navigation: NavigationProp<any, any>;

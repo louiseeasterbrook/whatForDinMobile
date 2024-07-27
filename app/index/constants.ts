@@ -8,9 +8,3 @@ export const CATEGORIES = [
   'Sweet',
   'Savoury',
 ];
-
-export const sharedStyles = StyleSheet.create({
-  appBar: {
-    backgroundColor: 'white',
-  },
-});

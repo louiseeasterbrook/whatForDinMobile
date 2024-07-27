@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SettingsScreen} from '../screens/settings.screen';
 import {HomeScreen} from '../screens/home/home.screen';
 import {SearchScreen} from '../screens/search/search.screen';
+import {StyleSheet} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ export default function TabNavigator() {
       }}
       tabBar={({navigation, state, descriptors, insets}) => (
         <BottomNavigation.Bar
+          style={styles.tabBar}
           navigationState={state}
           safeAreaInsets={insets}
           onTabPress={({route, preventDefault}) => {
@@ -80,3 +82,9 @@ export default function TabNavigator() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: 'white',
+  },
+});

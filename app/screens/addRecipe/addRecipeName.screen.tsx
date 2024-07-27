@@ -12,7 +12,7 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;

@@ -7,7 +7,7 @@ import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type EditNameScreenProps = {
   navigation: NavigationProp<any, any>;

@@ -8,7 +8,7 @@ import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeListWithSearch} from './recipeListWithSearch.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;

@@ -4,6 +4,7 @@ import {Searchbar} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {SearchResultCard} from '../home/searchResultCard';
 import {NullState} from '../../components/nullState.component copy';
+import {sharedStyles} from '../../index/theme';
 
 type RecipeListWithSearchProps = {
   recipeList: Recipe[];
@@ -45,7 +46,7 @@ export const RecipeListWithSearch = ({
         placeholder="Search for a recipe..."
         onChangeText={setSearchInput}
         value={searchInput}
-        style={styles.searchBar}
+        style={[styles.searchBar, sharedStyles.searchBar]}
       />
       {filteredRecipeList.length > 0 ? (
         <FlatList

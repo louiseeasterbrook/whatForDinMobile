@@ -11,7 +11,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/constants';
+import {sharedStyles} from '../../index/theme';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
