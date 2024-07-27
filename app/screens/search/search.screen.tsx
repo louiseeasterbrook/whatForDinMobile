@@ -146,6 +146,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
+    backgroundColor: 'white',
   },
   contentPadding: {
     paddingHorizontal: 18,

@@ -25,6 +25,6 @@ export const SearchResultCard = ({
 
 const styles = StyleSheet.create({
   main: {
-    paddingVertical: 16,
+    paddingVertical: 20,
   },
 });

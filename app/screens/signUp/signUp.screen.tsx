@@ -13,6 +13,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour, sharedStyles} from '../../index/theme';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../../store/mainStore';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 export const SignUpScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
@@ -90,15 +91,13 @@ export const SignUpScreen = ({navigation}): ReactNode => {
               onChangeText={(text: string) => setPassword(text)}
             />
           </ScrollView>
-
-          <Button
-            mode="contained"
-            onPress={createUserPress}
-            loading={loading}
-            style={styles.button}
-            disabled={buttonDisabled}>
-            Sign up
-          </Button>
+          <View style={styles.button}>
+            <PrimaryButton
+              text="Sign up"
+              onPress={createUserPress}
+              loading={loading}
+              disabled={buttonDisabled}></PrimaryButton>
+          </View>
         </View>
       </BaseScreen>
       <Portal>

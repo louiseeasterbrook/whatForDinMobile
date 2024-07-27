@@ -1,13 +1,14 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import {Button, Appbar} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {SettingsRow} from '../../components/settingsRow.component';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {sharedStyles} from '../../index/theme';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type EditMenuScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -59,11 +60,9 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
           </ScrollView>
 
           {anyChanges() && (
-            <Button
-              mode="contained"
-              onPress={() => navigation.navigate('ReviewEdit')}>
-              Review Changes
-            </Button>
+            <PrimaryButton
+              text="Review Changes"
+              onPress={() => navigation.navigate('ReviewEdit')}></PrimaryButton>
           )}
         </View>
       </BaseScreen>

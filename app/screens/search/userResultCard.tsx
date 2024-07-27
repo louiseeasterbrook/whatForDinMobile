@@ -21,7 +21,9 @@ export const UserResultCard = ({
         </View>
         <View>
           <Text>{user.Name}</Text>
-          <Text variant="bodyMedium">{`${user.RecipeCount || 0} Recipes`}</Text>
+          <Text style={styles.subTitle}>{`${
+            user.RecipeCount || 0
+          } Recipes`}</Text>
         </View>
       </View>
       <Divider></Divider>
@@ -37,5 +39,8 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     paddingRight: 20,
+  },
+  subTitle: {
+    color: 'grey',
   },
 });

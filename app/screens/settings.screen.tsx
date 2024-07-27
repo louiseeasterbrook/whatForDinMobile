@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BaseScreen} from '../components/BaseScreen.component';
-import {Text, Divider, Switch, Avatar, IconButton} from 'react-native-paper';
+import {Text, Switch, Avatar, IconButton} from 'react-native-paper';
 import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -28,14 +28,13 @@ export const SettingsScreen = (): ReactNode => {
     <BaseScreen useSafeArea={true}>
       <View style={styles.fullScreenContainer}>
         <View>
-          <View style={styles.nameContainer}>
+          <View style={styles.headerContainer}>
             <View style={styles.nameContainer}>
               <Avatar.Icon size={44} icon="account" />
               <Text style={styles.name}>{userStore.name}</Text>
             </View>
             <IconButton icon="logout" size={20} onPress={logout} />
           </View>
-          <Divider />
 
           {/* <List.Section>
             <List.Subheader>Settings</List.Subheader>
@@ -51,6 +50,14 @@ export const SettingsScreen = (): ReactNode => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    backgroundColor: 'white',
+  },
   nameContainer: {
     flexDirection: 'row',
     alignItems: 'center',
