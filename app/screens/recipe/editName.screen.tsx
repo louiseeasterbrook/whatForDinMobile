@@ -7,6 +7,7 @@ import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {sharedStyles} from '../../index/constants';
 
 type EditNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -31,7 +32,7 @@ export const EditNameScreen = observer(
 
     return (
       <>
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Edit Name'} />
         </Appbar.Header>

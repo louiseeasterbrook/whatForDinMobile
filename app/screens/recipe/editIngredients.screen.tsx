@@ -8,6 +8,7 @@ import {useEditRecipe} from './context/editRecipeProvider';
 import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {sharedStyles} from '../../index/constants';
 
 type EditIngredientsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -70,7 +71,7 @@ export const EditIngredientsScreen = observer(
 
     return (
       <>
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Edit Ingredients'} />
         </Appbar.Header>

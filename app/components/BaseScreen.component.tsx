@@ -11,7 +11,7 @@ type BaseScreenProps = {
 
 export const BaseScreen = ({
   children,
-  statusBarColour = grey_background,
+  statusBarColour = '#FFFFFF',
   useSafeArea = false,
   noBottomPadding = false,
 }: BaseScreenProps) => {

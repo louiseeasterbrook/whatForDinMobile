@@ -8,6 +8,7 @@ import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {sharedStyles} from '../../index/constants';
 
 type EditStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -70,7 +71,7 @@ export const EditStepsScreen = observer(
 
     return (
       <>
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Edit Steps'} />
         </Appbar.Header>

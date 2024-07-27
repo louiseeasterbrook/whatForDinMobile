@@ -1,3 +1,5 @@
+import {StyleSheet} from 'react-native';
+
 export const CATEGORIES = [
   'Main meal',
   'Snack',
@@ -6,3 +8,9 @@ export const CATEGORIES = [
   'Sweet',
   'Savoury',
 ];
+
+export const sharedStyles = StyleSheet.create({
+  appBar: {
+    backgroundColor: 'white',
+  },
+});

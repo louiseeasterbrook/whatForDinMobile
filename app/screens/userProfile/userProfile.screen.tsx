@@ -8,6 +8,7 @@ import {HeaderCard} from '../../components/headerCard.component';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeListWithSearch} from './recipeListWithSearch.component';
+import {sharedStyles} from '../../index/constants';
 
 type UserProfileScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -61,7 +62,7 @@ export const UserProfileScreen = ({
 
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header style={sharedStyles.appBar}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={'Profile'} />
       </Appbar.Header>

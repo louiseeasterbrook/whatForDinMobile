@@ -22,6 +22,7 @@ import _ from 'lodash';
 import {useEffect, useState} from 'react';
 import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
 import KeepAwake from '@sayem314/react-native-keep-awake';
+import {sharedStyles} from '../../index/constants';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -173,7 +174,7 @@ export const ViewRecipeScreen = observer(
     return (
       <>
         {keepAwake && <KeepAwake />}
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title="Recipe" />
           {!loading && (

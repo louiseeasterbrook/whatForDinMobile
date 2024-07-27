@@ -13,6 +13,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour} from '../../index/theme';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../../store/mainStore';
+import {sharedStyles} from '../../index/constants';
 
 export const SignUpScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
@@ -57,7 +58,7 @@ export const SignUpScreen = ({navigation}): ReactNode => {
 
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header style={sharedStyles.appBar}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={'Sign up'} />
       </Appbar.Header>

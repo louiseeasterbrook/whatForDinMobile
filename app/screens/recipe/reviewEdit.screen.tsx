@@ -11,6 +11,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {sharedStyles} from '../../index/constants';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -44,7 +45,7 @@ export const ReviewEditScreen = observer(
     return (
       <>
         {saving && <ScreenDimmer />}
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Review Recipe'} />
         </Appbar.Header>

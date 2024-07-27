@@ -7,6 +7,7 @@ import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {SettingsRow} from '../../components/settingsRow.component';
 import {useEditRecipe} from './context/editRecipeProvider';
+import {sharedStyles} from '../../index/constants';
 
 type EditMenuScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -27,7 +28,7 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
 
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header style={sharedStyles.appBar}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={'Edit Recipe'} />
       </Appbar.Header>

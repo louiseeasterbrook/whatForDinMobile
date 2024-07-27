@@ -12,6 +12,7 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {sharedStyles} from '../../index/constants';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -42,7 +43,7 @@ export const AddRecipeNameScreen = observer(
 
     return (
       <>
-        <Appbar.Header>
+        <Appbar.Header style={sharedStyles.appBar}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Add Recipe'} />
           <Appbar.Action icon="close" onPress={() => openExitDialog()} />
