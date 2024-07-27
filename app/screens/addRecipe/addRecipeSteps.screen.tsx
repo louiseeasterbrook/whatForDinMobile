@@ -12,10 +12,10 @@ import {
 } from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/theme';
+import {light_red, main_colour, sharedStyles} from '../../index/theme';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -112,20 +112,39 @@ export const AddRecipeStepsScreen = observer(
                       }
                       autoFocus
                     />
-                    <TouchableOpacity
-                      style={styles.inputRemoveButton}
-                      onPress={() => removeInput(i)}>
-                      <Icon source="minus-circle-outline" size={20} />
-                    </TouchableOpacity>
+                    {numInputs > 1 ? (
+                      <TouchableOpacity
+                        style={styles.inputRemoveButton}
+                        onPress={() => removeInput(i)}>
+                        <Icon source="minus-circle-outline" size={20} />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.inputAddButton}
+                        onPress={addInput}>
+                        <Icon
+                          source="plus-circle-outline"
+                          size={20}
+                          color="white"
+                        />
+                      </TouchableOpacity>
+                    )}
                   </View>
                 ))}
               </>
-              <Button
-                mode="contained"
-                onPress={addInput}
-                style={styles.addButton}>
-                Add step
-              </Button>
+              {numInputs > 1 && (
+                <View style={styles.addButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.inputAddButton}
+                    onPress={addInput}>
+                    <Icon
+                      source="plus-circle-outline"
+                      size={20}
+                      color="white"
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
             </ScrollView>
 
             <PrimaryButton
@@ -166,16 +185,31 @@ const styles = StyleSheet.create({
   },
   inputButtonContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 10,
   },
   input: {
-    width: '90%',
+    width: '83%',
   },
   inputRemoveButton: {
-    width: '10%',
-    flex: 1,
+    width: 56,
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: light_red,
+    borderRadius: 12,
+  },
+  addButtonContainer: {
+    paddingTop: 10,
+    alignItems: 'flex-end',
+  },
+  inputAddButton: {
+    width: 56,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    backgroundColor: main_colour,
   },
   header: {
     paddingVertical: 12,

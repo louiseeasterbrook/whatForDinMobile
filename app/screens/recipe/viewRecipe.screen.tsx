@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Appbar,
@@ -199,7 +199,9 @@ export const ViewRecipeScreen = observer(
 
           <IconButton icon="minus" size={26} onPress={minusTextSize} /> */}
           {loading ? (
-            <ActivityIndicator animating={true}></ActivityIndicator>
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator animating={true}></ActivityIndicator>
+            </View>
           ) : (
             <ScrollView style={styles.main}>
               <RecipeDisplay
@@ -288,5 +290,9 @@ const styles = StyleSheet.create({
   dialogText: {
     textAlign: 'center',
     paddingTop: 22,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

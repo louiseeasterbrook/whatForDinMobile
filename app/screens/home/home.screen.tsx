@@ -187,9 +187,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
               <FlatList
                 contentContainerStyle={styles.flatList}
                 keyExtractor={(item, index) => index.toString()}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginBottom: 10}} />
-                )}
                 data={filteredRecipeList}
                 renderItem={({item}) => (
                   <SearchResultCard
@@ -214,6 +211,8 @@ export const HomeScreen = ({navigation}): ReactNode => {
 const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
+    backgroundColor: 'white',
+    paddingBottom: 18,
   },
   contentPadding: {
     paddingHorizontal: 18,
