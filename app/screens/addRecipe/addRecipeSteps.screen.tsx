@@ -14,6 +14,7 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useEffect, useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -126,12 +127,10 @@ export const AddRecipeStepsScreen = observer(
               </Button>
             </ScrollView>
 
-            <Button
-              mode="contained"
+            <PrimaryButton
+              text="Next"
               onPress={navToStepsScreen}
-              disabled={buttonDisabled}>
-              Next
-            </Button>
+              disabled={buttonDisabled}></PrimaryButton>
           </View>
         </BaseScreen>
         <Portal>

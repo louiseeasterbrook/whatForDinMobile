@@ -5,6 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useEditRecipe} from './context/editRecipeProvider';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type EditRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -44,9 +45,10 @@ export const EditRecipeCommentScreen = observer(
                 onChangeText={setInput}
               />
             </View>
-            <Button mode="contained" onPress={navToEditScreen}>
-              Done
-            </Button>
+
+            <PrimaryButton
+              text="Done"
+              onPress={navToEditScreen}></PrimaryButton>
           </View>
         </BaseScreen>
       </>

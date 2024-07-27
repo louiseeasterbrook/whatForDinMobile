@@ -10,6 +10,7 @@ import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {ScreenDimmer} from '../../components/ScreenDimmer.component';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -58,9 +59,11 @@ export const ReviewEditScreen = observer(
                 recipeName={name}
                 comments={comment}></RecipeDisplay>
             </ScrollView>
-            <Button mode="contained" onPress={save} loading={saving}>
-              Save Recipe
-            </Button>
+
+            <PrimaryButton
+              text="Save Recipe"
+              onPress={save}
+              loading={saving}></PrimaryButton>
           </View>
         </BaseScreen>
       </>

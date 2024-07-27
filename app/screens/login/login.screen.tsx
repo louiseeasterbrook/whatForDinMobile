@@ -6,6 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {main_colour} from '../../index/theme';
 import {isValidEmailFormat} from '../../models/validation';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 GoogleSignin.configure({
   webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
@@ -89,22 +90,18 @@ export const LoginScreen = ({navigation}): ReactNode => {
           secureTextEntry={true}
           onChangeText={(text: string) => setPassword(text)}
         />
-        <Button
-          mode="contained"
+
+        <PrimaryButton
+          text="Sign In"
           onPress={loginPress}
-          loading={loading}
-          style={styles.paddingBottom}>
-          Sign In
-        </Button>
+          loading={loading}></PrimaryButton>
 
         <Text style={styles.loginDivider}>or</Text>
-        <Button
-          mode="contained"
+
+        <PrimaryButton
+          text="Sign in with Google"
           onPress={onGoogleButtonPress}
-          loading={googleLoading}
-          style={styles.paddingBottom}>
-          Sign in with Google
-        </Button>
+          loading={googleLoading}></PrimaryButton>
       </View>
     );
   };

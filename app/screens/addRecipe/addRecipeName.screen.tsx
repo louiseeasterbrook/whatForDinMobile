@@ -11,6 +11,7 @@ import {
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -60,12 +61,11 @@ export const AddRecipeNameScreen = observer(
                 autoFocus
               />
             </View>
-            <Button
-              mode="contained"
+
+            <PrimaryButton
+              text="Next"
               onPress={navToIngedientScreen}
-              disabled={buttonDisabled}>
-              Next
-            </Button>
+              disabled={buttonDisabled}></PrimaryButton>
           </View>
         </BaseScreen>
         <Portal>

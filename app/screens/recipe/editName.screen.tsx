@@ -6,6 +6,7 @@ import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type EditNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -48,9 +49,11 @@ export const EditNameScreen = observer(
                 onChangeText={(text: string) => setTempName(text)}
               />
             </View>
-            <Button mode="contained" onPress={save} disabled={buttonDisabled}>
-              Done
-            </Button>
+
+            <PrimaryButton
+              text="Done"
+              onPress={save}
+              disabled={buttonDisabled}></PrimaryButton>
           </View>
         </BaseScreen>
       </>

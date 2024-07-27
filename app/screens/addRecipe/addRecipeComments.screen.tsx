@@ -12,6 +12,7 @@ import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type AddRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -59,9 +60,10 @@ export const AddRecipeCommentScreen = observer(
                 autoFocus
               />
             </View>
-            <Button mode="contained" onPress={navToStepsScreen}>
-              Next
-            </Button>
+
+            <PrimaryButton
+              text="Next"
+              onPress={navToStepsScreen}></PrimaryButton>
           </View>
         </BaseScreen>
         <Portal>

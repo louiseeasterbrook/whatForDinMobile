@@ -7,6 +7,7 @@ import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type EditIngredientsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -111,12 +112,10 @@ export const EditIngredientsScreen = observer(
               </Button>
             </ScrollView>
 
-            <Button
-              mode="contained"
+            <PrimaryButton
+              text="Done"
               onPress={navToEditScreen}
-              disabled={buttonDisabled}>
-              Done
-            </Button>
+              disabled={buttonDisabled}></PrimaryButton>
           </View>
         </BaseScreen>
       </>

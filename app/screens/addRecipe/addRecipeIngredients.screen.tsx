@@ -14,6 +14,7 @@ import {useAddRecipe} from './context/addRecipeProvider';
 import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
+import {PrimaryButton} from '../../components/PrimaryButton.component';
 
 type AddRecipeIngredientsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -131,12 +132,10 @@ export const AddRecipeIngredientsScreen = observer(
               </Button>
             </ScrollView>
 
-            <Button
-              mode="contained"
+            <PrimaryButton
+              text="Next"
               onPress={navToStepsScreen}
-              disabled={buttonDisabled}>
-              Next
-            </Button>
+              disabled={buttonDisabled}></PrimaryButton>
           </View>
         </BaseScreen>
         <Portal>

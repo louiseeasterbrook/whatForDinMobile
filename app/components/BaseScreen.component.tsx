@@ -1,5 +1,6 @@
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {grey_background} from '../index/theme';
 
 type BaseScreenProps = {
   children: any;
@@ -10,7 +11,7 @@ type BaseScreenProps = {
 
 export const BaseScreen = ({
   children,
-  statusBarColour = '#FFFFFF',
+  statusBarColour = grey_background,
   useSafeArea = false,
   noBottomPadding = false,
 }: BaseScreenProps) => {
@@ -40,7 +41,7 @@ export const BaseScreen = ({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: grey_background,
     paddingBottom: 0,
     marginBottom: 0,
   },
