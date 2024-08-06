@@ -23,6 +23,7 @@ import {useEffect, useState} from 'react';
 import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
 import KeepAwake from '@sayem314/react-native-keep-awake';
 import {sharedStyles} from '../../index/theme';
+import {SHADOW_BASE} from '../../index/theme';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -174,7 +175,7 @@ export const ViewRecipeScreen = observer(
     return (
       <>
         {keepAwake && <KeepAwake />}
-        <Appbar.Header style={sharedStyles.appBar}>
+        <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title="Recipe" />
           {!loading && (
@@ -256,17 +257,17 @@ export const ViewRecipeScreen = observer(
             <FAB.Group
               open={openFab}
               visible
-              icon={openFab ? 'emoticon-happy-outline' : 'pencil'}
+              icon={openFab ? 'chef-hat' : 'pencil'}
               actions={[
-                {
-                  icon: 'pencil',
-                  label: 'Edit',
-                  onPress: () => goToEditMenu(),
-                },
                 {
                   icon: 'delete',
                   label: 'Delete',
                   onPress: () => showDeleteDialog(),
+                },
+                {
+                  icon: 'pencil',
+                  label: 'Edit',
+                  onPress: () => goToEditMenu(),
                 },
               ]}
               onStateChange={onStateChange}

@@ -6,15 +6,6 @@ export const disabled_grey = '#c4c4c4';
 export const grey_background = '#F5F5F5';
 export const light_red = '#E0B4B4';
 
-export const sharedStyles = StyleSheet.create({
-  appBar: {
-    backgroundColor: 'white',
-  },
-  searchBar: {
-    borderRadius: 12,
-  },
-});
-
 export const SHADOW_BASE = {
   shadowColor: '#000',
   shadowOffset: {
@@ -23,6 +14,14 @@ export const SHADOW_BASE = {
   },
   shadowOpacity: 0.22,
   shadowRadius: 2.22,
-
   elevation: 3,
 };
+
+export const sharedStyles = StyleSheet.create({
+  appBar: {
+    backgroundColor: '#ffffff',
+  },
+  searchBar: {
+    borderRadius: 12,
+  },
+});

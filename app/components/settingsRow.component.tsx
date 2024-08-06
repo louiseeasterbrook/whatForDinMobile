@@ -2,7 +2,7 @@ import {ReactNode} from 'react';
 import {Icon, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {secondary_colour} from '../index/theme';
+import {SHADOW_BASE, secondary_colour} from '../index/theme';
 
 type SettingsRowProps = {
   title: string;
@@ -41,19 +41,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 14,
     paddingVertical: 16,
-    backgroundColor: secondary_colour,
-    borderBottomColor: 'white',
+    backgroundColor: 'white',
+    borderBottomColor: '#fefefe',
     borderBottomWidth: 2,
+    ...SHADOW_BASE,
   },
   mainTitle: {
     fontSize: 14,
   },
   topRow: {
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
   bottomRow: {
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
 });

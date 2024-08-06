@@ -58,7 +58,7 @@ export const SignUpScreen = ({navigation}): ReactNode => {
 
   return (
     <>
-      <Appbar.Header style={sharedStyles.appBar}>
+      <Appbar.Header style={sharedStyles.appBar} elevated={true}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={'Sign up'} />
       </Appbar.Header>

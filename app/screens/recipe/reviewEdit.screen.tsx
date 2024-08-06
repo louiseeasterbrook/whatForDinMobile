@@ -45,7 +45,7 @@ export const ReviewEditScreen = observer(
     return (
       <>
         {saving && <ScreenDimmer />}
-        <Appbar.Header style={sharedStyles.appBar}>
+        <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Review Recipe'} />
         </Appbar.Header>

@@ -15,6 +15,7 @@ import moment from 'moment';
 import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
 import {getUserSavedRecipes} from '../../services/recipeDB.service';
 import {sharedStyles} from '../../index/theme';
+import {SHADOW_BASE} from '../../index/theme';
 
 enum SegmentType {
   Mine = 'Mine',
@@ -213,6 +214,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     backgroundColor: 'white',
     paddingBottom: 18,
+    ...SHADOW_BASE,
   },
   contentPadding: {
     paddingHorizontal: 18,

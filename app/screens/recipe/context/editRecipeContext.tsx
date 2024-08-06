@@ -25,7 +25,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     const nameChange = recipe.Name !== name;
     const ingredientChange = stringArrayChange(recipe.Ingredients, ingredients);
     const stepsChange = stringArrayChange(recipe.Method, steps);
-    const commentChange = recipe.Comment && recipe.Comment !== comment;
+    const commentChange = recipe?.Comment !== comment;
 
     return nameChange || ingredientChange || stepsChange || commentChange;
   };
