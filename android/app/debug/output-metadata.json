@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.whatsfordin",
+  "applicationId": "com.weez.whatsfordin",
   "variantName": "debug",
   "elements": [
     {

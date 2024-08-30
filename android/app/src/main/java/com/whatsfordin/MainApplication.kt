@@ -1,4 +1,4 @@
-package com.whatsfordin
+package com.weez.whatsfordin
 
 import android.app.Application
 import com.facebook.react.PackageList

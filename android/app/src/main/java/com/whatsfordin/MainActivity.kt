@@ -1,4 +1,4 @@
-package com.whatsfordin
+package com.weez.whatsfordin
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
