@@ -8,26 +8,70 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:770166546922:android:64912cb92624e23432d293",
+        "mobilesdk_app_id": "1:770166546922:android:02f0229f41bc4c0932d293",
         "android_client_info": {
-          "package_name": "com.weez.whatsForDin"
+          "package_name": "com.weez.whatsfordin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "770166546922-2kmntfkopv1hbk23bmmfc0viqk58mdpu.apps.googleusercontent.com",
+          "client_id": "770166546922-c472t8me7cei8lb8pj3cke8cbfbu397s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.weez.whatsForDin",
+            "package_name": "com.weez.whatsfordin",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "770166546922-6rk358ubf1d7jfnse83hpediqa6031as.apps.googleusercontent.com",
+          "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ1tLM7XD_-lIYWlzFAw6cO2U_0P5bavo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "770166546922-k07c507ruo8usrg3hkt0cqcddupcij76.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weez.whatsfordinmobile.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770166546922:android:fa7cb461756010e832d293",
+        "android_client_info": {
+          "package_name": "com.whatsfordin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770166546922-87h6ej7h8jfch89p7a6eiuobc6gebqoo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.weez.whatsForDin",
+            "package_name": "com.whatsfordin",
             "certificate_hash": "ba9ddba1da07b177a36148316d285caaa6e8736c"
+          }
+        },
+        {
+          "client_id": "770166546922-nrb9039ivgp9ctsoofqk5tskgkr7trrd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.whatsfordin",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
