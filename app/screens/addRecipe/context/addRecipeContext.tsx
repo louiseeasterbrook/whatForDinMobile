@@ -4,6 +4,7 @@ import {Recipe} from '../../../models/searchResults';
 import {useStores} from '../../../store/mainStore';
 import {AddRecipeToCollection} from '../../../services/recipeDB.service';
 import {useNavigation} from '@react-navigation/native';
+import {Keyboard} from 'react-native';
 
 export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
@@ -59,11 +60,13 @@ export function AddRecipeProvider({children}: any): ReactNode {
 
   function exitFlow() {
     setShowExitDialog(false);
+    Keyboard.dismiss();
     nav.popToTop();
   }
 
   function exitFlowFullBack() {
     setShowExitDialog(false);
+    Keyboard.dismiss();
     nav.popToTop();
     nav.canGoBack();
   }

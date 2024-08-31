@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, View} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {
   Button,
   Text,
@@ -31,6 +31,7 @@ export const AddRecipeNameScreen = observer(
     const buttonDisabled = name?.length <= 0;
 
     const goBack = () => {
+      Keyboard.dismiss();
       navigation.goBack();
     };
 

@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
@@ -53,6 +53,7 @@ export const EditStepsScreen = observer(
     };
 
     const goBack = () => {
+      Keyboard.dismiss();
       navigation.goBack();
     };
 

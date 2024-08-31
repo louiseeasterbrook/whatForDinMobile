@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, View} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {Button, Text, Appbar, TextInput} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
@@ -22,6 +22,7 @@ export const EditNameScreen = observer(
     const [tempName, setTempName] = useState<string>(name);
 
     const goBack = (): void => {
+      Keyboard.dismiss();
       navigation.goBack();
     };
 

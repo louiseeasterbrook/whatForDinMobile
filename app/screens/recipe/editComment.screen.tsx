@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, View} from 'react-native';
-import {Button, Text, Appbar, TextInput} from 'react-native-paper';
+import {Keyboard, StyleSheet, View} from 'react-native';
+import {Text, Appbar, TextInput} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -22,6 +22,7 @@ export const EditRecipeCommentScreen = observer(
     };
 
     const navToEditScreen = async () => {
+      Keyboard.dismiss();
       setComment(input);
       goBack();
     };

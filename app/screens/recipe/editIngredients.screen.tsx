@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
@@ -57,6 +57,7 @@ export const EditIngredientsScreen = observer(
     };
 
     const navToEditScreen = async () => {
+      Keyboard.dismiss();
       setIngredients(refInputs.current);
       goBack();
     };
