@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
-export const main_colour = '#6750a4';
-export const secondary_colour = '#e9e4ef';
+export const main_colour = '#6750a4'; //dark purple
+export const secondary_colour = '#e9e4ef'; //light purple
 export const disabled_grey = '#c4c4c4';
 export const grey_background = '#F5F5F5';
 export const light_red = '#E0B4B4';

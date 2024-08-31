@@ -1,7 +1,6 @@
 import {ReactNode} from 'react';
 import {Icon, Text} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {StyleSheet, TouchableHighlight, View} from 'react-native';
 import {SHADOW_BASE, secondary_colour} from '../index/theme';
 
 type SettingsRowProps = {
@@ -20,7 +19,7 @@ export const SettingsRow = ({
   icon,
 }: SettingsRowProps): ReactNode => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableHighlight onPress={onPress} underlayColor={secondary_colour}>
       <View
         style={[
           styles.mainContainer,
@@ -30,7 +29,7 @@ export const SettingsRow = ({
         <Text style={styles.mainTitle}>{title}</Text>
         {icon && <Icon source={icon} size={18} />}
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

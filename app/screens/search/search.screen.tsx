@@ -9,6 +9,7 @@ import {UserResultCard} from './userResultCard';
 import {NullState} from '../../components/nullState.component copy';
 import {GetAllRecipeCollection} from '../../services/recipeDB.service';
 import {sharedStyles} from '../../index/theme';
+import {SHADOW_BASE} from '../../index/theme';
 
 export const SearchScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
     backgroundColor: 'white',
+    ...SHADOW_BASE,
   },
   contentPadding: {
     paddingHorizontal: 18,

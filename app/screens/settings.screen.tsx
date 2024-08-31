@@ -6,6 +6,7 @@ import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import DeviceInfo from 'react-native-device-info';
+import {SHADOW_BASE} from './../index/theme';
 
 const ToggleButton = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 12,
     backgroundColor: 'white',
+    ...SHADOW_BASE,
   },
   nameContainer: {
     flexDirection: 'row',
