@@ -77,7 +77,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
   const renderLogin = () => {
     return (
       <View style={{paddingHorizontal: 20}}>
-        <TextInput
+        {/* <TextInput
           style={styles.paddingBottom}
           label="Email"
           value={email}
@@ -96,7 +96,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
           onPress={loginPress}
           loading={loading}></PrimaryButton>
 
-        <Text style={styles.loginDivider}>or</Text>
+        <Text style={styles.loginDivider}>or</Text> */}
 
         <PrimaryButton
           text="Sign in with Google"
@@ -127,12 +127,12 @@ export const LoginScreen = ({navigation}): ReactNode => {
             </View>
           </View>
         </KeyboardAvoidingView>
-        <View>
+        {/* <View>
           <Text style={styles.bottomText} onPress={navToSignUp}>
             Don't have an account?
             <Text style={styles.colouredText}> Sign up here</Text>
           </Text>
-        </View>
+        </View> */}
       </BaseScreen>
       <Portal>
         <Dialog visible={dialogVisible} onDismiss={hideDialog}>

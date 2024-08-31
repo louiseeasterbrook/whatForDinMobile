@@ -5,6 +5,7 @@ import {Text, Switch, Avatar, IconButton} from 'react-native-paper';
 import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import DeviceInfo from 'react-native-device-info';
 
 const ToggleButton = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -42,7 +43,7 @@ export const SettingsScreen = (): ReactNode => {
           </List.Section> */}
         </View>
         <View>
-          <Text style={styles.version}>Version 1.0.0</Text>
+          <Text style={styles.version}>Version {DeviceInfo.getVersion()}</Text>
         </View>
       </View>
     </BaseScreen>

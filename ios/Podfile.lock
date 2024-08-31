@@ -2189,6 +2189,8 @@ PODS:
   - RecaptchaInterop (100.0.0)
   - RNCMaskedView (0.3.1):
     - React-Core
+  - RNDeviceInfo (11.1.0):
+    - React-Core
   - RNFBApp (19.3.0):
     - Firebase/CoreOnly (= 10.24.0)
     - React-Core
@@ -2279,6 +2281,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
@@ -2422,6 +2425,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -2518,6 +2523,7 @@ SPEC CHECKSUMS:
   ReactCommon: e168ee1704806f10f47ee8c7f825b5850b18eaea
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
+  RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
   RNFBApp: de81f7eb68c1e6107574f2b102b0dee92a9862fa
   RNFBAuth: 40b9953bc9a8e2e207843e424aa82aa84bf34057
   RNFBDatabase: 9ad39b966ad37f58297af83330b79e14c96914da
