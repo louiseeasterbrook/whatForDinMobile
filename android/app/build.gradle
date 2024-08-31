@@ -76,7 +76,7 @@ android {
 
     namespace "com.weez.whatsfordin"
     defaultConfig {
-        applicationId 'com.weez.whatsfordin'
+        applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

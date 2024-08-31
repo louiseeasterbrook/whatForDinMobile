@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "770166546922-cs39q2oh6bigv2dp7oocpdbvdagr5gm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weez.whatsfordin",
+            "certificate_hash": "ba9ddba1da07b177a36148316d285caaa6e8736c"
+          }
+        },
+        {
           "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
           "client_type": 3
         }
