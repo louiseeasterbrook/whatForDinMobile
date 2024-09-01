@@ -7,6 +7,7 @@ type BaseScreenProps = {
   statusBarColour?: string;
   useSafeArea?: boolean;
   noBottomPadding?: boolean;
+  backgroundColor?: string;
 };
 
 export const BaseScreen = ({
@@ -14,16 +15,17 @@ export const BaseScreen = ({
   statusBarColour = '#FFFFFF',
   useSafeArea = false,
   noBottomPadding = false,
+  backgroundColor = grey_background,
 }: BaseScreenProps) => {
   return (
-    <View style={styles.screen}>
+    <View style={styles(backgroundColor).screen}>
       <StatusBar
         backgroundColor={statusBarColour}
         translucent
         barStyle="dark-content"></StatusBar>
       {useSafeArea ? (
         <SafeAreaView
-          style={styles.screen}
+          style={styles(backgroundColor).screen}
           edges={
             noBottomPadding
               ? ['top', 'left', 'right']
@@ -32,17 +34,18 @@ export const BaseScreen = ({
           {children}
         </SafeAreaView>
       ) : (
-        <View style={styles.screen}>{children}</View>
+        <View style={styles(backgroundColor).screen}>{children}</View>
       )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: grey_background,
-    paddingBottom: 0,
-    marginBottom: 0,
-  },
-});
+const styles = (backgroundColor: string) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: backgroundColor,
+      paddingBottom: 0,
+      marginBottom: 0,
+    },
+  });

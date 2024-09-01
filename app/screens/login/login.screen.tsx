@@ -1,5 +1,11 @@
 import {ReactNode, useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {Button, Dialog, Portal, Text, TextInput} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -13,6 +19,7 @@ GoogleSignin.configure({
 });
 
 export const LoginScreen = ({navigation}): ReactNode => {
+  const logo = require('../../assets/wfd_logo.png');
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const loadingInProgress = loading || googleLoading;
@@ -74,41 +81,9 @@ export const LoginScreen = ({navigation}): ReactNode => {
     navigation.navigate('SignUpScreen');
   };
 
-  const renderLogin = () => {
-    return (
-      <View style={{paddingHorizontal: 20}}>
-        {/* <TextInput
-          style={styles.paddingBottom}
-          label="Email"
-          value={email}
-          onChangeText={(text: string) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.paddingBottom}
-          label="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={(text: string) => setPassword(text)}
-        />
-
-        <PrimaryButton
-          text="Sign In"
-          onPress={loginPress}
-          loading={loading}></PrimaryButton>
-
-        <Text style={styles.loginDivider}>or</Text> */}
-
-        <PrimaryButton
-          text="Sign in with Google"
-          onPress={onGoogleButtonPress}
-          loading={googleLoading}></PrimaryButton>
-      </View>
-    );
-  };
-
   return (
     <>
-      <BaseScreen useSafeArea={true}>
+      <BaseScreen useSafeArea={true} backgroundColor="white">
         <KeyboardAvoidingView
           style={{
             flex: 1,
@@ -120,19 +95,18 @@ export const LoginScreen = ({navigation}): ReactNode => {
           <View style={styles.mainContainer}>
             <View style={{flex: 1}}>
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>what's for din?</Text>
+                <Image source={logo} style={styles.logo}></Image>
               </View>
 
-              {renderLogin()}
+              <View style={{paddingHorizontal: 20}}>
+                <PrimaryButton
+                  text="Sign in with Google"
+                  onPress={onGoogleButtonPress}
+                  loading={googleLoading}></PrimaryButton>
+              </View>
             </View>
           </View>
         </KeyboardAvoidingView>
-        {/* <View>
-          <Text style={styles.bottomText} onPress={navToSignUp}>
-            Don't have an account?
-            <Text style={styles.colouredText}> Sign up here</Text>
-          </Text>
-        </View> */}
       </BaseScreen>
       <Portal>
         <Dialog visible={dialogVisible} onDismiss={hideDialog}>
@@ -158,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleContainer: {
-    height: '50%',
+    height: '70%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -182,5 +156,9 @@ const styles = StyleSheet.create({
   colouredText: {
     color: main_colour,
     fontWeight: '700',
+  },
+  logo: {
+    width: 260 * 0.7,
+    height: 260,
   },
 });
