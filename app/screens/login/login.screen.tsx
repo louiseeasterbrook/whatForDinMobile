@@ -55,6 +55,9 @@ export const LoginScreen = ({navigation}): ReactNode => {
       // Sign-in the user with the credential
       auth().signInWithCredential(googleCredential);
     } catch (err) {
+      console.log('==============');
+      console.log(err);
+      console.log('==============');
       showDialog();
       setGoogleLoading(false);
     }
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   logo: {
-    width: 260 * 0.7,
-    height: 260,
+    width: 210 * 0.7,
+    height: 210,
   },
 });

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>770166546922-utl8imd7ofhtjgeje3o15grfal31gja9.apps.googleusercontent.com</string>
+	<string>770166546922-tj2t7pagbva9ls7b5d78ptgfdgl2rd4f.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.770166546922-utl8imd7ofhtjgeje3o15grfal31gja9</string>
+	<string>com.googleusercontent.apps.770166546922-tj2t7pagbva9ls7b5d78ptgfdgl2rd4f</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>770166546922-2kmntfkopv1hbk23bmmfc0viqk58mdpu.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:770166546922:ios:45540268f8f6f02232d293</string>
+	<string>1:770166546922:ios:14269a31bca3640f32d293</string>
 	<key>DATABASE_URL</key>
 	<string>https://whats-for-din-83615-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>

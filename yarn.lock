@@ -1712,6 +1712,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-19.3.0.tgz#e10e8f043d5e3a574e9eac9d8846d4b6e7dc8c22"
   integrity sha512-fWRtMTPfAQAtrN0I4YuGZqVW1CSnqt0+vF0NYQl4e5qGhZ6AyUUmsEd3sFlSQX7M4JHJL7iozgUSpEffOA8opw==
 
+"@react-native-firebase/storage@^19.2.2":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-19.3.0.tgz#ecfc7072698fedce721be60678259c3ba7c202a4"
+  integrity sha512-ficwY+uUEDQaSlodpKLjFvF4l63EMvialF2EWpegHwPFDu8J6iJh/0pMaMZ8GijTVBfTt8QsDebC/lEhNyErLw==
+
 "@react-native-google-signin/google-signin@^11.0.1":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-11.0.1.tgz#1bff0c8f65d3b32eac1622f68293e94137b96360"
@@ -6010,6 +6015,11 @@ react-native-gesture-handler@^2.16.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-image-picker@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-7.1.2.tgz#383849d1953caf4578874a1f5e5dd11c737bd5cd"
+  integrity sha512-b5y5nP60RIPxlAXlptn2QwlIuZWCUDWa/YPUVjgHc0Ih60mRiOg1PSzf0IjHSLeOZShCpirpvSPGnDExIpTRUg==
 
 react-native-paper@^5.12.3:
   version "5.12.5"

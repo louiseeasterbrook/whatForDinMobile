@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
 import {Divider, Text} from 'react-native-paper';
+import {ImageSlider} from '../screens/recipe/ImageSlider.component';
 
 type RecipeDisplayProps = {
   ingredients: string[];
@@ -12,6 +13,7 @@ type RecipeDisplayProps = {
   comments: string;
   chefMode?: boolean;
   textSize?: number;
+  imageArray?: string[];
 };
 
 export const RecipeDisplay = ({
@@ -22,35 +24,41 @@ export const RecipeDisplay = ({
   comments,
   textSize = 14,
   chefMode = false,
+  imageArray = [],
 }: RecipeDisplayProps): ReactNode => {
   return (
     <View style={styles.fullContainer}>
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, styles.horizontalPadding]}>
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
       </View>
       <Divider />
-      <View style={styles.cardContainer}>
-        <DisplayListWithTitle
-          textSize={textSize}
-          title="Ingredients"
-          orderedList={false}
-          listSteps={ingredients}
-          chefMode={chefMode}></DisplayListWithTitle>
-      </View>
-      <View style={styles.cardContainer}>
-        <DisplayListWithTitle
-          textSize={textSize}
-          title="Method"
-          orderedList={true}
-          listSteps={steps}
-          chefMode={chefMode}></DisplayListWithTitle>
-      </View>
-      {comments && (
-        <View>
-          <Text style={styles.mainTitle}>Comments</Text>
-          <Text>{comments}</Text>
-        </View>
+      {imageArray?.length > 0 && (
+        <ImageSlider images={imageArray}></ImageSlider>
       )}
+      <View style={styles.horizontalPadding}>
+        <View style={styles.cardContainer}>
+          <DisplayListWithTitle
+            textSize={textSize}
+            title="Ingredients"
+            orderedList={false}
+            listSteps={ingredients}
+            chefMode={chefMode}></DisplayListWithTitle>
+        </View>
+        <View style={styles.cardContainer}>
+          <DisplayListWithTitle
+            textSize={textSize}
+            title="Method"
+            orderedList={true}
+            listSteps={steps}
+            chefMode={chefMode}></DisplayListWithTitle>
+        </View>
+        {comments && (
+          <View>
+            <Text style={styles.mainTitle}>Comments</Text>
+            <Text>{comments}</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -65,5 +73,8 @@ const styles = StyleSheet.create({
   },
   fullContainer: {
     paddingBottom: 20,
+  },
+  horizontalPadding: {
+    paddingHorizontal: 15,
   },
 });

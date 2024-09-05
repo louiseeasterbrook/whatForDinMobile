@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Recipe, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image, Platform} from 'react-native';
 import {
   Text,
   Appbar,
@@ -12,6 +12,13 @@ import {
   FAB,
 } from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
+import {
+  launchImageLibrary,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
+
+import storage from '@react-native-firebase/storage';
 
 import {observer} from 'mobx-react-lite';
 import {UpdateUser} from '../../services/userDBservice';
@@ -47,6 +54,8 @@ export const ViewRecipeScreen = observer(
     const [chefMode, setChefMode] = useState<boolean>(false);
     const [textSize, setTextSize] = useState<number>(14);
 
+    const [photoArray, setPhotoArray] = useState([]);
+
     const isOwnRecipe = recipe?.UserId === userStore.uid;
     const isFav = userStore.favourites.includes(recipe?.Id);
 
@@ -63,6 +72,10 @@ export const ViewRecipeScreen = observer(
       const res = await GetRecipe(recipeId);
       setRecipe(res);
       setLoading(false);
+      console.log('GET ', res.Id);
+      const p1 = await storage().ref(res.Id).getDownloadURL();
+
+      setPhotoArray([p1]);
     };
 
     const goBack = (): void => {
@@ -171,6 +184,26 @@ export const ViewRecipeScreen = observer(
     const [openFab, setOpenFab] = useState(false);
     const onStateChange = ({open}) => setOpenFab(open);
 
+    // const goCamera = async () => {
+    //   console.log('------');
+    //   const options: ImageLibraryOptions = {
+    //     selectionLimit: 1,
+    //     mediaType: 'photo',
+    //     includeBase64: true,
+    //   };
+    //   const result: ImagePickerResponse = await launchImageLibrary(options);
+
+    //   setPhotoUri(result.assets[0].uri);
+    //   setName(result.assets[0].fileName);
+    //   console.log(result.assets[0].uri);
+    // };
+
+    // const saveImage = async (): Promise<void> => {
+    //   console.log('save', `${recipeId}`);
+    //   const reference = storage().ref(`${recipeId}`);
+    //   await reference.putFile(photoUri).then();
+    // };
+
     return (
       <>
         {keepAwake && <KeepAwake />}
@@ -203,7 +236,7 @@ export const ViewRecipeScreen = observer(
               <ActivityIndicator animating={true}></ActivityIndicator>
             </View>
           ) : (
-            <ScrollView style={styles.main}>
+            <ScrollView>
               <RecipeDisplay
                 textSize={textSize}
                 ingredients={recipe.Ingredients}
@@ -211,7 +244,24 @@ export const ViewRecipeScreen = observer(
                 userName={recipe.UserName}
                 recipeName={recipe.Name}
                 comments={recipe.Comment}
-                chefMode={chefMode}></RecipeDisplay>
+                chefMode={chefMode}
+                imageArray={photoArray}></RecipeDisplay>
+
+              {/* HERE */}
+              {/* <PrimaryButton
+                text="Upload pic"
+                onPress={goCamera}></PrimaryButton>
+              {photoUri && (
+                <>
+                  <Image
+                    source={{uri: photoUri}}
+                    style={{width: 300, height: 300}}
+                  />
+                  <PrimaryButton
+                    text="Save pic"
+                    onPress={saveImage}></PrimaryButton>
+                </>
+              )} */}
             </ScrollView>
           )}
           <Portal>
@@ -280,10 +330,6 @@ export const ViewRecipeScreen = observer(
 );
 
 const styles = StyleSheet.create({
-  main: {
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
   cardContainer: {
     paddingVertical: 10,
   },

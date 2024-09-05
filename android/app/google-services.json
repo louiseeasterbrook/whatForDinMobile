@@ -31,55 +31,19 @@
           }
         },
         {
-          "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCJ1tLM7XD_-lIYWlzFAw6cO2U_0P5bavo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "770166546922-epl26nfqbpv9tsm1kbo2juv0q4i889o7.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "770166546922-k07c507ruo8usrg3hkt0cqcddupcij76.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.weez.whatsfordinmobile.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:770166546922:android:fa7cb461756010e832d293",
-        "android_client_info": {
-          "package_name": "com.whatsfordin"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "770166546922-87h6ej7h8jfch89p7a6eiuobc6gebqoo.apps.googleusercontent.com",
+          "client_id": "770166546922-g4h04ueni84ppdi4vj1sed55fdds0mnn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.whatsfordin",
-            "certificate_hash": "ba9ddba1da07b177a36148316d285caaa6e8736c"
+            "package_name": "com.weez.whatsfordin",
+            "certificate_hash": "c944b220c79b8a8fe5c15e5b809d5e95ce669935"
           }
         },
         {
-          "client_id": "770166546922-nrb9039ivgp9ctsoofqk5tskgkr7trrd.apps.googleusercontent.com",
+          "client_id": "770166546922-h91pjvonm97ts4q2uepbvdtuj5lpbgsj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.whatsfordin",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "package_name": "com.weez.whatsfordin",
+            "certificate_hash": "665f3229dec6e945252dfcbb26e293545ebf14db"
           }
         },
         {
