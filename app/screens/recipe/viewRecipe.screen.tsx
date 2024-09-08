@@ -69,7 +69,8 @@ export const ViewRecipeScreen = observer(
 
       if (res.PhotoName) {
         const recipePhoto = await storage().ref(res.PhotoName).getDownloadURL();
-        setPhotoArray([recipePhoto]);
+        const savedPhoto = recipePhoto ? [recipePhoto] : [];
+        setPhotoArray(savedPhoto);
       } else {
         setPhotoArray([]);
       }

@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour} from '../../index/theme';
 
 type ImageSliderProps = {
-  images;
+  images: string[];
 };
 
 export const ImageSlider = ({images}: ImageSliderProps): ReactNode => {
@@ -34,13 +34,15 @@ export const ImageSlider = ({images}: ImageSliderProps): ReactNode => {
             style={{width, height, resizeMode: 'cover'}}></Image>
         ))}
       </ScrollView>
-      <View style={styles.pagination}>
-        {images.map((i, k) => (
-          <Text key={k} style={k == active ? styles.activeDot : styles.dot}>
-            •
-          </Text>
-        ))}
-      </View>
+      {images?.length > 1 && (
+        <View style={styles.pagination}>
+          {images.map((i, k) => (
+            <Text key={k} style={k == active ? styles.activeDot : styles.dot}>
+              •
+            </Text>
+          ))}
+        </View>
+      )}
     </View>
   );
 };
