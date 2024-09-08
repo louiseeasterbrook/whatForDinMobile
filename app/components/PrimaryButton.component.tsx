@@ -45,5 +45,6 @@ const styles = (disabled: boolean) =>
     text: {
       color: 'white',
       letterSpacing: 1,
+      fontFamily: 'Quicksand-SemiBold',
     },
   });

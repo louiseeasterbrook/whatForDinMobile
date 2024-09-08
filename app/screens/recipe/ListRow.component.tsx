@@ -47,5 +47,6 @@ const styles = (textSize: number) =>
       flex: 1,
       flexWrap: 'wrap',
       fontSize: textSize || 10,
+      fontFamily: 'Quicksand-Regular',
     },
   });

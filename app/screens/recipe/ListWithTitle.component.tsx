@@ -60,7 +60,7 @@ export const DisplayListWithTitle = ({
 
 const styles = StyleSheet.create({
   mainTitle: {
-    fontWeight: '700',
     paddingBottom: 8,
+    fontFamily: 'Quicksand-Bold',
   },
 });

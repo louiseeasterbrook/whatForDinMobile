@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   mainTitle: {
-    fontWeight: '700',
     paddingBottom: 8,
+    fontFamily: 'Quicksand-SemiBold',
   },
   fullContainer: {
     paddingBottom: 20,

@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: 'center',
+    fontFamily: 'Quicksand-Regular',
   },
   bottomText: {
     width: '100%',

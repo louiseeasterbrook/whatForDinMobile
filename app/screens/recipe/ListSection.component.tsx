@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     paddingBottom: 8,
+    // fontFamily: 'Quicksand-SemiBold',
   },
 });

@@ -36,10 +36,12 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 16,
     paddingBottom: 4,
+    fontFamily: 'Quicksand-SemiBold',
   },
   subtitle: {
     fontSize: 12,
     color: 'grey',
+    fontFamily: 'Quicksand-Regular',
   },
   textContainer: {},
 });
