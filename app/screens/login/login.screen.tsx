@@ -107,7 +107,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
                 <Text style={styles.title}>What's for din?</Text>
               </View>
 
-              <View style={{paddingHorizontal: 20}}>
+              <View style={{paddingHorizontal: 20, paddingBottom: 20}}>
                 <PrimaryButton
                   text="Sign in with Google"
                   onPress={onGoogleButtonPress}
@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleContainer: {
-    height: '70%',
+    // height: '70%',
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
