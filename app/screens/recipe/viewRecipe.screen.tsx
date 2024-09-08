@@ -10,6 +10,7 @@ import {
   Button,
   ActivityIndicator,
   FAB,
+  IconButton,
 } from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
@@ -47,7 +48,6 @@ export const ViewRecipeScreen = observer(
       useState<boolean>(false);
     const [keepAwake, setKeepAwake] = useState<boolean>(false);
     const [chefMode, setChefMode] = useState<boolean>(false);
-    const [textSize, setTextSize] = useState<number>(14);
 
     const [photoArray, setPhotoArray] = useState([]);
 
@@ -164,24 +164,6 @@ export const ViewRecipeScreen = observer(
       setLoadingDialogVisible(text);
     const hideLoadingDialog = (): void => setLoadingDialogVisible('');
 
-    const minusTextSize = (): void => {
-      const calcValue = textSize - 2;
-      if (calcValue <= 12) {
-        return;
-      }
-
-      setTextSize(calcValue);
-    };
-
-    const plusTextSize = (): void => {
-      const calcValue = textSize + 2;
-      if (calcValue >= 24) {
-        return;
-      }
-
-      setTextSize(calcValue);
-    };
-
     const [openFab, setOpenFab] = useState(false);
     const onStateChange = ({open}) => setOpenFab(open);
 
@@ -219,7 +201,6 @@ export const ViewRecipeScreen = observer(
           ) : (
             <ScrollView>
               <RecipeDisplay
-                textSize={textSize}
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
                 userName={recipe.UserName}

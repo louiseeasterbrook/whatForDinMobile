@@ -6,6 +6,12 @@ export const disabled_grey = '#c4c4c4';
 export const grey_background = '#F5F5F5';
 export const light_red = '#E0B4B4';
 
+export const Font = {
+  Bold: 'Quicksand-Bold',
+  Regular: 'Quicksand-Regular',
+  SemiBold: 'Quicksand-SemiBold',
+};
+
 export const SHADOW_BASE = {
   shadowColor: '#000',
   shadowOffset: {

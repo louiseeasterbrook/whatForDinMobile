@@ -8,6 +8,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, sharedStyles} from '../../index/theme';
 import {openImagePicker} from '../../services/imagePicker.service';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type AddRecipeImageScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -54,7 +55,7 @@ export const AddRecipeImageScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Add an image to your recipe</Text>
+                <PrimaryText text="Add an image to your recipe" />
               </View>
               <PrimaryButton
                 text="Select Image"
@@ -87,9 +88,7 @@ export const AddRecipeImageScreen = observer(
         <Portal>
           <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
             <Dialog.Content>
-              <Text variant="bodyMedium">
-                Are you sure you want to exit the create recipe flow?
-              </Text>
+              <PrimaryText text="Are you sure you want to exit the create recipe flow?" />
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => closeExitDialog()}>Cancel</Button>

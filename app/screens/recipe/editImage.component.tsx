@@ -8,6 +8,7 @@ import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, sharedStyles} from '../../index/theme';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {openImagePicker} from '../../services/imagePicker.service';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type EditRecipeImageScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -47,7 +48,7 @@ export const EditRecipeImageScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Add an image to your recipe</Text>
+                <PrimaryText text="Add an image to your recipe" />
               </View>
               <PrimaryButton
                 text="Select Image"

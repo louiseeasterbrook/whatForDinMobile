@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {ListRow} from './ListRow.component';
 import {Text} from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type DisplayListWithTitleProps = {
   title: string;
@@ -38,7 +39,7 @@ export const DisplayListWithTitle = ({
 
   return (
     <>
-      <Text style={styles.mainTitle}>{title}</Text>
+      <PrimaryText addedStyles={styles.mainTitle} bold text={title} />
       {listSteps?.length &&
         listSteps.map((text: string, index: number) => (
           <TouchableWithoutFeedback
@@ -61,6 +62,5 @@ export const DisplayListWithTitle = ({
 const styles = StyleSheet.create({
   mainTitle: {
     paddingBottom: 8,
-    fontFamily: 'Quicksand-Bold',
   },
 });

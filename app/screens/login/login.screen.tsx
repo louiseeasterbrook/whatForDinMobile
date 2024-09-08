@@ -14,6 +14,7 @@ import {main_colour} from '../../index/theme';
 import {isValidEmailFormat} from '../../models/validation';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import LottieView from 'lottie-react-native';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 GoogleSignin.configure({
   webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
@@ -104,7 +105,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
                   autoPlay
                   loop
                 />
-                <Text style={styles.title}>What's for din?</Text>
+                <PrimaryText size={30} text="What's for din?" />
               </View>
 
               <View style={{paddingHorizontal: 20, paddingBottom: 20}}>
@@ -147,11 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 30,
-    textAlign: 'center',
-    fontFamily: 'Quicksand-Regular',
-  },
+
   bottomText: {
     width: '100%',
     textAlign: 'center',

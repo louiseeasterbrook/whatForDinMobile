@@ -1,12 +1,13 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BaseScreen} from '../components/BaseScreen.component';
-import {Text, Switch, Avatar, IconButton} from 'react-native-paper';
+import {Switch, Avatar, IconButton} from 'react-native-paper';
 import {useStores} from '../store/mainStore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import DeviceInfo from 'react-native-device-info';
 import {SHADOW_BASE} from './../index/theme';
+import {PrimaryText} from '../components/PrimaryText.component';
 
 const ToggleButton = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -33,7 +34,7 @@ export const SettingsScreen = (): ReactNode => {
           <View style={styles.headerContainer}>
             <View style={styles.nameContainer}>
               <Avatar.Icon size={44} icon="account" />
-              <Text style={styles.name}>{userStore.name}</Text>
+              <PrimaryText addedStyles={styles.name} text={userStore.name} />
             </View>
             <IconButton icon="logout" size={20} onPress={logout} />
           </View>
@@ -44,7 +45,10 @@ export const SettingsScreen = (): ReactNode => {
           </List.Section> */}
         </View>
         <View>
-          <Text style={styles.version}>Version {DeviceInfo.getVersion()}</Text>
+          <PrimaryText
+            addedStyles={styles.version}
+            text={`Version ${DeviceInfo.getVersion()}`}
+          />
         </View>
       </View>
     </BaseScreen>

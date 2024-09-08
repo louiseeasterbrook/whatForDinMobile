@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
-import {Avatar, Text} from 'react-native-paper';
+import {Avatar} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
+import {PrimaryText} from './PrimaryText.component';
 
 type HeaderCardProps = {
   title: string;
@@ -16,9 +17,9 @@ export const HeaderCard = ({
   return (
     <View style={styles.mainContainer}>
       <Avatar.Icon size={50} icon={icon} style={styles.icon} />
-      <View style={styles.textContainer}>
-        <Text style={styles.mainTitle}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+      <View>
+        <PrimaryText size={16} semiBold text={title} />
+        <PrimaryText size={12} textColour="grey" text={subtitle} />
       </View>
     </View>
   );
@@ -33,15 +34,4 @@ const styles = StyleSheet.create({
     marginRight: 12,
     fontSize: 12,
   },
-  mainTitle: {
-    fontSize: 16,
-    paddingBottom: 4,
-    fontFamily: 'Quicksand-SemiBold',
-  },
-  subtitle: {
-    fontSize: 12,
-    color: 'grey',
-    fontFamily: 'Quicksand-Regular',
-  },
-  textContainer: {},
 });

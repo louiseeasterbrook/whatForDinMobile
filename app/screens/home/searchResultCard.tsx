@@ -3,6 +3,7 @@ import {Text, Divider} from 'react-native-paper';
 import {Recipe} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type SearchResultCardProps = {
   recipe: Recipe;
@@ -16,7 +17,7 @@ export const SearchResultCard = ({
   return (
     <TouchableOpacity onPress={() => onPress(recipe)}>
       <View style={styles.main}>
-        <Text>{recipe.Name}</Text>
+        <PrimaryText text={recipe.Name}></PrimaryText>
       </View>
       <Divider></Divider>
     </TouchableOpacity>

@@ -7,6 +7,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {useEditRecipe} from './context/editRecipeProvider';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type EditRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -37,7 +38,7 @@ export const EditRecipeCommentScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Add a comment to your recipe</Text>
+                <PrimaryText text="Add a comment to your recipe" />
               </View>
               <TextInput
                 multiline

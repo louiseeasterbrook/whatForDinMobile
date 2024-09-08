@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text, Icon} from 'react-native-paper';
+import {Icon} from 'react-native-paper';
+import {PrimaryText} from './PrimaryText.component';
 
 type NullStateProps = {
   messageLine1?: string;
@@ -15,7 +16,9 @@ export const NullState = ({
     <View style={styles.nullResult}>
       <View style={styles.cardContainer}>
         <Icon source={icon} size={40} />
-        <Text style={styles.message}>{messageLine1}</Text>
+        <PrimaryText
+          addedStyles={styles.message}
+          text={messageLine1}></PrimaryText>
       </View>
     </View>
   );

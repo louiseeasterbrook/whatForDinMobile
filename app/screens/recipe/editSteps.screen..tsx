@@ -9,6 +9,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, main_colour, sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type EditStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -80,7 +81,7 @@ export const EditStepsScreen = observer(
         <BaseScreen>
           <View style={styles.main}>
             <View style={styles.header}>
-              <Text>Edit your recipe steps</Text>
+              <PrimaryText text="Edit your recipe steps" />
             </View>
             <ScrollView
               ref={scrollViewRef}

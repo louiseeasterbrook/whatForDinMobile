@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import {StyleSheet, TextBase, View} from 'react-native';
 import {Checkbox, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type ListRowProps = {
   orderedList: boolean;
@@ -18,10 +19,10 @@ export const ListRow = ({
   index,
   chefMode,
   checked,
-  textSize,
+  textSize = 10,
 }: ListRowProps): ReactNode => {
   return (
-    <View style={styles(textSize).rowContainer}>
+    <View style={styles.rowContainer}>
       {chefMode ? (
         <Checkbox status={checked ? 'checked' : 'unchecked'} />
       ) : orderedList ? (
@@ -29,24 +30,25 @@ export const ListRow = ({
       ) : (
         <Icon name="circle-small" size={20} color={'black'} />
       )}
-      <Text style={styles(textSize).wrapContainer}>{text}</Text>
+      <PrimaryText
+        addedStyles={styles.wrapContainer}
+        size={textSize}
+        text={text}
+      />
     </View>
   );
 };
 
-const styles = (textSize: number) =>
-  StyleSheet.create({
-    rowContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      paddingVertical: 5,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-    },
-    wrapContainer: {
-      flex: 1,
-      flexWrap: 'wrap',
-      fontSize: textSize || 10,
-      fontFamily: 'Quicksand-Regular',
-    },
-  });
+const styles = StyleSheet.create({
+  rowContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingVertical: 5,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  wrapContainer: {
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+});

@@ -1,9 +1,11 @@
-import {ReactNode} from 'react';
+import {ReactNode, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
-import {Divider, Text} from 'react-native-paper';
+import {Divider, IconButton} from 'react-native-paper';
 import {ImageSlider} from '../screens/recipe/ImageSlider.component';
+import {PrimaryText} from './PrimaryText.component';
+import {light_red} from '../index/theme';
 
 type RecipeDisplayProps = {
   ingredients: string[];
@@ -22,14 +24,36 @@ export const RecipeDisplay = ({
   userName,
   recipeName,
   comments,
-  textSize = 14,
   chefMode = false,
   imageArray = [],
 }: RecipeDisplayProps): ReactNode => {
+  const [textSize, setTextSize] = useState<number>(14);
+
+  const minusTextSize = (): void => {
+    const calcValue = textSize - 2;
+    if (calcValue <= 12) {
+      return;
+    }
+
+    setTextSize(calcValue);
+  };
+
+  const plusTextSize = (): void => {
+    const calcValue = textSize + 2;
+    if (calcValue >= 24) {
+      return;
+    }
+
+    setTextSize(calcValue);
+  };
   return (
     <View style={styles.fullContainer}>
       <View style={[styles.cardContainer, styles.horizontalPadding]}>
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
+        <View style={styles.textChangeContainer}>
+          <IconButton icon="plus" size={26} onPress={plusTextSize} />
+          <IconButton icon="minus" size={26} onPress={minusTextSize} />
+        </View>
       </View>
       <Divider />
       {imageArray?.length > 0 && (
@@ -54,8 +78,8 @@ export const RecipeDisplay = ({
         </View>
         {comments && (
           <View>
-            <Text style={styles.mainTitle}>Comments</Text>
-            <Text>{comments}</Text>
+            <PrimaryText addedStyles={styles.mainTitle} bold text="Comments" />
+            <PrimaryText text={comments} />
           </View>
         )}
       </View>
@@ -69,12 +93,18 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     paddingBottom: 8,
-    fontFamily: 'Quicksand-SemiBold',
   },
   fullContainer: {
     paddingBottom: 20,
   },
   horizontalPadding: {
     paddingHorizontal: 15,
+  },
+  textChangeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#cccccc',
+    borderRadius: 8,
+    // backgroundColor: 'red',
   },
 });

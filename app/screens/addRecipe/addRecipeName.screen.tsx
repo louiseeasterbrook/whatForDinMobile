@@ -13,6 +13,7 @@ import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -53,7 +54,7 @@ export const AddRecipeNameScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Enter your recipe name</Text>
+                <PrimaryText text="Enter your recipe name" />
               </View>
 
               <TextInput

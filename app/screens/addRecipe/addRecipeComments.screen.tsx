@@ -14,6 +14,7 @@ import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type AddRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -50,7 +51,7 @@ export const AddRecipeCommentScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Add a comment to your recipe</Text>
+                <PrimaryText text="Add a comment to your recipe" />
               </View>
               <TextInput
                 multiline
@@ -70,9 +71,7 @@ export const AddRecipeCommentScreen = observer(
         <Portal>
           <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
             <Dialog.Content>
-              <Text variant="bodyMedium">
-                Are you sure you want to exit the create recipe flow?
-              </Text>
+              <PrimaryText text="Are you sure you want to exit the create recipe flow?" />
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => closeExitDialog()}>Cancel</Button>

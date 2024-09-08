@@ -9,6 +9,7 @@ import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, main_colour, sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type EditIngredientsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -80,7 +81,7 @@ export const EditIngredientsScreen = observer(
         <BaseScreen>
           <View style={styles.main}>
             <View style={styles.header}>
-              <Text>Edit your ingredients</Text>
+              <PrimaryText text="Edit your ingredients" />
             </View>
             <ScrollView
               ref={scrollViewRef}

@@ -3,6 +3,7 @@ import {Text, Divider, Avatar} from 'react-native-paper';
 import {Recipe, SearchResultUser} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type UserResultCardProps = {
   user: SearchResultUser;
@@ -20,10 +21,11 @@ export const UserResultCard = ({
           <Avatar.Icon size={34} icon="account" />
         </View>
         <View>
-          <Text>{user.Name}</Text>
-          <Text style={styles.subTitle}>{`${
-            user.RecipeCount || 0
-          } Recipes`}</Text>
+          <PrimaryText text={user.Name} />
+          <PrimaryText
+            textColour="grey"
+            text={`${user.RecipeCount || 0} Recipes`}
+          />
         </View>
       </View>
       <Divider></Divider>
@@ -39,8 +41,5 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     paddingRight: 20,
-  },
-  subTitle: {
-    color: 'grey',
   },
 });

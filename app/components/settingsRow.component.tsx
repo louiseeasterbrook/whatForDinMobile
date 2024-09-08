@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import {Icon, Text} from 'react-native-paper';
 import {StyleSheet, TouchableHighlight, View} from 'react-native';
 import {SHADOW_BASE, secondary_colour} from '../index/theme';
+import {PrimaryText} from './PrimaryText.component';
 
 type SettingsRowProps = {
   title: string;
@@ -26,7 +27,7 @@ export const SettingsRow = ({
           topRow && styles.topRow,
           bottomRow && styles.bottomRow,
         ]}>
-        <Text style={styles.mainTitle}>{title}</Text>
+        <PrimaryText text={title} size={14} />
         {icon && <Icon source={icon} size={18} />}
       </View>
     </TouchableHighlight>
@@ -44,9 +45,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#fefefe',
     borderBottomWidth: 2,
     ...SHADOW_BASE,
-  },
-  mainTitle: {
-    fontSize: 14,
   },
   topRow: {
     borderTopLeftRadius: 8,

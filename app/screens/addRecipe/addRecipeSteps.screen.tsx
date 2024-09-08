@@ -16,6 +16,7 @@ import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, main_colour, sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -93,7 +94,7 @@ export const AddRecipeStepsScreen = observer(
         <BaseScreen>
           <View style={styles.main}>
             <View style={styles.header}>
-              <Text>Add your recipe steps</Text>
+              <PrimaryText text="Add your recipe steps" />
             </View>
             <ScrollView
               ref={scrollViewRef}

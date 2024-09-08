@@ -3,6 +3,7 @@ import {Text} from 'react-native-paper';
 import {ListWithTitle} from '../../models/searchResults';
 import {ListRow} from './ListRow.component';
 import {StyleSheet} from 'react-native';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type ListSectionProps = {
   listTitleArray: ListWithTitle;
@@ -16,7 +17,7 @@ export const ListSection = ({
   return (
     <>
       {listTitleArray?.Title && (
-        <Text style={styles.title}>{listTitleArray.Title}</Text>
+        <PrimaryText addedStyles={styles.title} text={listTitleArray.Title} />
       )}
       {listTitleArray?.List?.length &&
         listTitleArray.List.map((text: string, index: number) => (
@@ -32,8 +33,6 @@ export const ListSection = ({
 
 const styles = StyleSheet.create({
   title: {
-    fontWeight: '600',
     paddingBottom: 8,
-    // fontFamily: 'Quicksand-SemiBold',
   },
 });

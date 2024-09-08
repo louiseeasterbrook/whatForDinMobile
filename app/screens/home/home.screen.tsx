@@ -163,6 +163,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             style={[styles.searchBar, sharedStyles.searchBar]}
           />
           <SegmentedButtons
+            style={{fontFamily: 'QuickSand-Regular'}}
             value={segmentValue}
             onValueChange={changeSegmentValue}
             buttons={[
