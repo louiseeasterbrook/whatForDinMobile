@@ -29,6 +29,7 @@ export const AddRecipeReviewScreen = observer(
       showExitDialog,
       closeExitDialog,
       openExitDialog,
+      imageData,
     } = useAddRecipe();
     const userStore = useStores();
 
@@ -67,13 +68,16 @@ export const AddRecipeReviewScreen = observer(
                 steps={steps}
                 userName={userStore.name}
                 recipeName={name}
-                comments={comment}></RecipeDisplay>
+                comments={comment}
+                imageArray={imageData?.uri && [imageData.uri]}></RecipeDisplay>
             </ScrollView>
 
-            <PrimaryButton
-              text="Save Recipe"
-              onPress={navToHomeScreen}
-              loading={saving}></PrimaryButton>
+            <View style={styles.padding}>
+              <PrimaryButton
+                text="Save Recipe"
+                onPress={navToHomeScreen}
+                loading={saving}></PrimaryButton>
+            </View>
           </View>
         </BaseScreen>
         <Portal>
@@ -96,12 +100,14 @@ export const AddRecipeReviewScreen = observer(
 
 const styles = StyleSheet.create({
   main: {
-    paddingLeft: 15,
-    paddingRight: 15,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     paddingBottom: 26,
+  },
+  padding: {
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   cardContainer: {
     paddingVertical: 10,

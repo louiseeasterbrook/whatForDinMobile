@@ -5,6 +5,8 @@ import {useStores} from '../../../store/mainStore';
 import {AddRecipeToCollection} from '../../../services/recipeDB.service';
 import {useNavigation} from '@react-navigation/native';
 import {Keyboard} from 'react-native';
+import {PhotoData} from '../addRecipeImage.screen';
+import storage from '@react-native-firebase/storage';
 
 export function AddRecipeProvider({children}: any): ReactNode {
   const [name, setName] = useState<string>('');
@@ -13,6 +15,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
   const [category, setCategory] = useState<string[]>([]);
   const [comment, setComment] = useState<string>();
   const [showExitDialog, setShowExitDialog] = useState<boolean>(false);
+  const [imageData, setImageData] = useState<PhotoData>();
 
   const userStore = useStores();
   const nav = useNavigation();
@@ -27,8 +30,17 @@ export function AddRecipeProvider({children}: any): ReactNode {
       Id: '', //gets set up db
       UserName: userStore.name,
       Comment: comment ? comment : null,
+      PhotoName: imageData?.fileName ? imageData.fileName : null,
     };
     await AddRecipeToCollection(formattedRecipe);
+    await saveImage();
+  };
+
+  const saveImage = async (): Promise<void> => {
+    if (imageData?.fileName && imageData?.uri) {
+      const reference = storage().ref(`${imageData.fileName}`);
+      await reference.putFile(imageData?.uri).then();
+    }
   };
 
   const addRecipeState: AddRecipeContextValue = {
@@ -42,6 +54,8 @@ export function AddRecipeProvider({children}: any): ReactNode {
     setCategory,
     comment,
     setComment,
+    imageData,
+    setImageData,
     saveRecipe,
     showExitDialog,
     closeExitDialog,

@@ -31,7 +31,7 @@ export const EditRecipeCommentScreen = observer(
       <>
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Add Recipe'} />
+          <Appbar.Content title={'Edit comment'} />
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>

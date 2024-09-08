@@ -74,7 +74,7 @@ export const EditIngredientsScreen = observer(
       <>
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Edit Ingredients'} />
+          <Appbar.Content title={'Edit ingredients'} />
         </Appbar.Header>
 
         <BaseScreen>

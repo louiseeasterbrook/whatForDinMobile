@@ -26,6 +26,7 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
   const navToIngredients = (): void => navigation.navigate('EditIngredients');
   const navToSteps = (): void => navigation.navigate('EditSteps');
   const navToComment = (): void => navigation.navigate('EditComment');
+  const navToImage = (): void => navigation.navigate('EditImage');
 
   return (
     <>
@@ -63,6 +64,10 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
             <SettingsRow
               title="Comment"
               onPress={navToComment}
+              icon="pencil"></SettingsRow>
+            <SettingsRow
+              title="Image"
+              onPress={navToImage}
               bottomRow
               icon="pencil"></SettingsRow>
           </ScrollView>

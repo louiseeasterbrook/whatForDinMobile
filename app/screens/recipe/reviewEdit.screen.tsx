@@ -20,7 +20,8 @@ type ReviewEditScreenProps = {
 
 export const ReviewEditScreen = observer(
   ({navigation}: ReviewEditScreenProps) => {
-    const {name, steps, ingredients, updateRecipe, comment} = useEditRecipe();
+    const {name, steps, ingredients, updateRecipe, comment, imageData} =
+      useEditRecipe();
     const [saving, setSaving] = useState<boolean>(false);
     const userStore = useStores();
 
@@ -58,13 +59,16 @@ export const ReviewEditScreen = observer(
                 steps={steps}
                 userName={userStore.name}
                 recipeName={name}
-                comments={comment}></RecipeDisplay>
+                comments={comment}
+                imageArray={imageData?.uri && [imageData.uri]}></RecipeDisplay>
             </ScrollView>
 
-            <PrimaryButton
-              text="Save Recipe"
-              onPress={save}
-              loading={saving}></PrimaryButton>
+            <View style={styles.padding}>
+              <PrimaryButton
+                text="Save Recipe"
+                onPress={save}
+                loading={saving}></PrimaryButton>
+            </View>
           </View>
         </BaseScreen>
       </>
@@ -74,12 +78,14 @@ export const ReviewEditScreen = observer(
 
 const styles = StyleSheet.create({
   main: {
-    paddingLeft: 15,
-    paddingRight: 15,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     paddingBottom: 26,
+  },
+  padding: {
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   cardContainer: {
     paddingVertical: 10,

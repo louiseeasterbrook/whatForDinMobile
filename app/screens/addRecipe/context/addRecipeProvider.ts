@@ -1,4 +1,5 @@
 import {createContext, useContext} from 'react';
+import {PhotoData} from '../addRecipeImage.screen';
 
 export interface AddRecipeContextValue {
   name: string;
@@ -11,6 +12,8 @@ export interface AddRecipeContextValue {
   setCategory: Function;
   comment: string;
   setComment: Function;
+  imageData: PhotoData;
+  setImageData: Function;
   saveRecipe: Function;
   showExitDialog: boolean;
   openExitDialog: Function;

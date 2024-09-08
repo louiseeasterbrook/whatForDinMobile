@@ -1,29 +1,28 @@
 import {NavigationProp} from '@react-navigation/native';
-import {StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Text,
-  Appbar,
-  TextInput,
-  Portal,
-  Dialog,
-} from 'react-native-paper';
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {Button, Text, Appbar, Portal, Dialog, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
-import {sharedStyles} from '../../index/theme';
+import {light_red, sharedStyles} from '../../index/theme';
+import {openImagePicker} from '../../services/imagePicker.service';
 
-type AddRecipeCommentScreenProps = {
+type AddRecipeImageScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
-export const AddRecipeCommentScreen = observer(
-  ({navigation}: AddRecipeCommentScreenProps) => {
-    const [input, setInput] = useState<string>();
+export interface PhotoData {
+  uri: string;
+  fileName: string;
+}
+
+export const AddRecipeImageScreen = observer(
+  ({navigation}: AddRecipeImageScreenProps) => {
+    const [uploadedPhoto, setUploadedPhoto] = useState<PhotoData>();
     const {
-      setComment,
+      setImageData,
       exitFlowFullBack,
       showExitDialog,
       closeExitDialog,
@@ -35,8 +34,13 @@ export const AddRecipeCommentScreen = observer(
     };
 
     const navToStepsScreen = (): void => {
-      setComment(input);
-      navigation.navigate('AddImage');
+      setImageData(uploadedPhoto);
+      navigation.navigate('Review');
+    };
+
+    const selectImage = async () => {
+      const result = await openImagePicker();
+      setUploadedPhoto(result);
     };
 
     return (
@@ -50,16 +54,29 @@ export const AddRecipeCommentScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Add a comment to your recipe</Text>
+                <Text>Add an image to your recipe</Text>
               </View>
-              <TextInput
-                multiline
-                numberOfLines={2}
-                placeholder="Add comment..."
-                value={input}
-                onChangeText={setInput}
-                autoFocus
-              />
+              <PrimaryButton
+                text="Select Image"
+                disabled={Boolean(uploadedPhoto?.uri)}
+                onPress={selectImage}></PrimaryButton>
+
+              {uploadedPhoto?.uri && (
+                <>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={{uri: uploadedPhoto.uri}}
+                      style={styles.image}
+                    />
+
+                    <TouchableOpacity
+                      style={styles.removeButton}
+                      onPress={() => setUploadedPhoto(null)}>
+                      <Icon source="minus-circle-outline" size={20} />
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
             </View>
 
             <PrimaryButton
@@ -96,5 +113,21 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingVertical: 12,
+  },
+  image: {
+    marginTop: 20,
+    width: '80%',
+    aspectRatio: 3 / 2,
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  removeButton: {
+    zIndex: 1,
+    backgroundColor: light_red,
+    padding: 16,
+    borderRadius: 8,
   },
 });
