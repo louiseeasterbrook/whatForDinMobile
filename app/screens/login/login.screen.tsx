@@ -13,13 +13,13 @@ import auth from '@react-native-firebase/auth';
 import {main_colour} from '../../index/theme';
 import {isValidEmailFormat} from '../../models/validation';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import LottieView from 'lottie-react-native';
 
 GoogleSignin.configure({
   webClientId: process.env.ANDROID_GOOGLE_LOGIN_TOKEN,
 });
 
 export const LoginScreen = ({navigation}): ReactNode => {
-  const logo = require('../../assets/wfd_logo.png');
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const loadingInProgress = loading || googleLoading;
@@ -98,7 +98,13 @@ export const LoginScreen = ({navigation}): ReactNode => {
           <View style={styles.mainContainer}>
             <View style={{flex: 1}}>
               <View style={styles.titleContainer}>
-                <Image source={logo} style={styles.logo}></Image>
+                <LottieView
+                  style={{height: 300, width: 300}}
+                  source={require('./kitchen_lottie.json')}
+                  autoPlay
+                  loop
+                />
+                <Text style={styles.title}>What's for din?</Text>
               </View>
 
               <View style={{paddingHorizontal: 20}}>
