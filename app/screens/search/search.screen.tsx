@@ -112,7 +112,9 @@ export const SearchScreen = ({navigation}): ReactNode => {
         </View>
 
         {loading ? (
-          <ActivityIndicator animating={true} />
+          <View style={styles.loading}>
+            <ActivityIndicator animating={true} />
+          </View>
         ) : (
           <View style={styles.flex}>
             <View style={styles.contentPadding}>
@@ -172,5 +174,8 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 4,
     bottom: 4,
+  },
+  loading: {
+    paddingTop: 12,
   },
 });

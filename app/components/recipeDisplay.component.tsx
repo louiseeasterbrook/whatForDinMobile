@@ -50,10 +50,10 @@ export const RecipeDisplay = ({
     <View style={styles.fullContainer}>
       <View style={[styles.cardContainer, styles.horizontalPadding]}>
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
-        <View style={styles.textChangeContainer}>
+        {/* <View style={styles.textChangeContainer}>
           <IconButton icon="plus" size={26} onPress={plusTextSize} />
           <IconButton icon="minus" size={26} onPress={minusTextSize} />
-        </View>
+        </View> */}
       </View>
       <Divider />
       {imageArray?.length > 0 && (
@@ -103,8 +103,9 @@ const styles = StyleSheet.create({
   textChangeContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#cccccc',
+    backgroundColor: '#E9E9E9',
     borderRadius: 8,
+    marginTop: 12,
     // backgroundColor: 'red',
   },
 });

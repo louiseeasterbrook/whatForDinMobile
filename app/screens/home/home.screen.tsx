@@ -163,7 +163,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
             style={[styles.searchBar, sharedStyles.searchBar]}
           />
           <SegmentedButtons
-            style={{fontFamily: 'QuickSand-Regular'}}
             value={segmentValue}
             onValueChange={changeSegmentValue}
             buttons={[
@@ -180,14 +179,13 @@ export const HomeScreen = ({navigation}): ReactNode => {
         </View>
 
         {loading ? (
-          <View style={styles.flatList}>
+          <View style={styles.loading}>
             <ActivityIndicator animating={true} />
           </View>
         ) : (
           <View style={styles.contentPadding}>
             {filteredRecipeList.length > 0 ? (
               <FlatList
-                contentContainerStyle={styles.flatList}
                 keyExtractor={(item, index) => index.toString()}
                 data={filteredRecipeList}
                 renderItem={({item}) => (
@@ -224,8 +222,8 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  flatList: {
-    paddingTop: 18,
+  loading: {
+    paddingTop: 12,
   },
   button: {
     marginTop: 20,
