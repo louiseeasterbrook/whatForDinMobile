@@ -1,40 +1,30 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar, FAB, SegmentedButtons} from 'react-native-paper';
+import {Searchbar, FAB} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {
-  AddNewUser,
-  GetUser,
-  GetUserRecipeCollection,
-} from '../../services/userDBservice';
+import {AddNewUser, GetUser} from '../../services/userDBservice';
 import {NullState} from '../../components/nullState.component copy';
 import moment from 'moment';
 import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
-import {getUserSavedRecipes} from '../../services/recipeDB.service';
 import {sharedStyles} from '../../index/theme';
 import {SHADOW_BASE} from '../../index/theme';
-
-enum SegmentType {
-  Mine = 'Mine',
-  Saved = 'Saved',
-}
+import {getSortedRecipes} from '../../services/recipeDisplay.service';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [segmentValue, setSegmentValue] = useState<string>(SegmentType.Mine);
 
   const userStore = useStores();
 
   useEffect(() => {
     setLoading(true);
     (async function () {
-      await Promise.all([getUsers(), getRecipesForDisplay(), ,]).then(() =>
+      await Promise.all([getUsers(), getRecipesForDisplay()]).then(() =>
         setLoading(false),
       );
     })();
@@ -46,7 +36,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       await getRecipesForDisplay();
       setLoading(false);
     })();
-  }, [segmentValue]);
+  }, []);
 
   const getUsers = async (): Promise<void> => {
     if (!userStore.uid) {
@@ -57,23 +47,30 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   const getRecipesForDisplay = async () => {
-    const res =
-      segmentValue === SegmentType.Mine
-        ? await getRecipes()
-        : await getSavedRecipes();
-    if (res) {
-      setRecipeList(res);
-      setFilteredRecipeList(res);
-    }
+    const final = await getSortedRecipes(userStore.uid, userStore.favourites);
+    setRecipeList(final);
+    setFilteredRecipeList(final);
   };
 
-  const getRecipes = async (): Promise<Recipe[]> => {
-    return await GetUserRecipeCollection(userStore.uid);
-  };
+  // const sortIntoAlphabeticalOrder = (array: Recipe[]) => {
+  //   return array.sort((a, b) => {
+  //     if (a.Name.toLocaleUpperCase() < b.Name.toLocaleUpperCase()) {
+  //       return -1;
+  //     }
+  //     if (a.Name.toLocaleUpperCase() > b.Name.toLocaleUpperCase()) {
+  //       return 1;
+  //     }
+  //     return 0;
+  //   });
+  // };
 
-  const getSavedRecipes = async (): Promise<Recipe[]> => {
-    return await getUserSavedRecipes(userStore.favourites);
-  };
+  // const getRecipes = async (): Promise<Recipe[]> => {
+  //   return await GetUserRecipeCollection(userStore.uid);
+  // };
+
+  // const getSavedRecipes = async (): Promise<Recipe[]> => {
+  //   return await getUserSavedRecipes(userStore.favourites);
+  // };
 
   const processUserResult = async (response: RecipeUser): Promise<void> => {
     if (!response) {
@@ -81,7 +78,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       return;
     }
     userStore.setFavourites(response.Favourites);
-    await getSavedRecipes();
+    // await getSavedRecipes();
   };
 
   const addNewUser = async (): Promise<void> => {
@@ -89,6 +86,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       Name: userStore.name,
       DateCreated: moment().format(DATE_FORMAT_FOR_DISPLAY),
       Favourites: [],
+      Id: null,
     };
 
     await AddNewUser(userStore.uid, initUserData);
@@ -113,14 +111,15 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      screenFocus();
+      (async function () {
+        await getRecipesForDisplay();
+        if (searchInput) {
+          filterRecipesBySearchInput();
+        }
+      })();
     });
     return unsubscribe;
-  }, [navigation, segmentValue]);
-
-  const screenFocus = () => {
-    getRecipesForDisplay();
-  };
+  }, [navigation, searchInput]);
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {
@@ -138,18 +137,8 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const getNullStateMessageLine1 = (): string => {
     const searchMessage = `No search results`;
     const userRecipeMessage = 'No Recipes';
-    const noSavedRecipeMessage = 'No Saved recipes';
 
-    return searchInput
-      ? searchMessage
-      : segmentValue === SegmentType.Mine
-      ? userRecipeMessage
-      : noSavedRecipeMessage;
-  };
-
-  const changeSegmentValue = (val: SegmentType): void => {
-    setSearchInput('');
-    setSegmentValue(val);
+    return searchInput ? searchMessage : userRecipeMessage;
   };
 
   return (
@@ -161,20 +150,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
             onChangeText={setSearchInput}
             value={searchInput}
             style={[styles.searchBar, sharedStyles.searchBar]}
-          />
-          <SegmentedButtons
-            value={segmentValue}
-            onValueChange={changeSegmentValue}
-            buttons={[
-              {
-                value: SegmentType.Mine,
-                label: 'My Recipes ',
-              },
-              {
-                value: SegmentType.Saved,
-                label: 'Saved Recipes',
-              },
-            ]}
           />
         </View>
 
@@ -190,6 +165,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                 data={filteredRecipeList}
                 renderItem={({item}) => (
                   <SearchResultCard
+                    userId={userStore.uid}
                     recipe={item}
                     onPress={item => navToRecipeScreen(item)}
                   />
@@ -212,7 +188,6 @@ const styles = StyleSheet.create({
   sidePadding: {
     paddingHorizontal: 18,
     backgroundColor: 'white',
-    paddingBottom: 18,
     ...SHADOW_BASE,
   },
   contentPadding: {
@@ -225,15 +200,8 @@ const styles = StyleSheet.create({
   loading: {
     paddingTop: 12,
   },
-  button: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
   searchBar: {
     marginVertical: 20,
-  },
-  categoryContainer: {
-    paddingBottom: 20,
   },
   fab: {
     position: 'absolute',

@@ -1,21 +1,16 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {BaseScreen} from '../components/BaseScreen.component';
-import {Switch, Avatar, IconButton} from 'react-native-paper';
-import {useStores} from '../store/mainStore';
+import {BaseScreen} from '../../components/BaseScreen.component';
+import {Avatar, IconButton} from 'react-native-paper';
+import {useStores} from '../../store/mainStore';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import DeviceInfo from 'react-native-device-info';
-import {SHADOW_BASE} from './../index/theme';
-import {PrimaryText} from '../components/PrimaryText.component';
+import {SHADOW_BASE} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
+import {SettingsRow} from '../../components/settingsRow.component';
 
-const ToggleButton = () => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-  return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
-};
-
-export const SettingsScreen = (): ReactNode => {
+export const SettingsScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
 
   const logout = () => {
@@ -26,6 +21,8 @@ export const SettingsScreen = (): ReactNode => {
         console.log('User signed out!');
       });
   };
+
+  const navToMealPicker = (): void => navigation.navigate('MealPicker');
 
   return (
     <BaseScreen useSafeArea={true}>
@@ -39,10 +36,13 @@ export const SettingsScreen = (): ReactNode => {
             <IconButton icon="logout" size={20} onPress={logout} />
           </View>
 
-          {/* <List.Section>
-            <List.Subheader>Settings</List.Subheader>
-            <List.Item title="Dark mode" right={ToggleButton} />
-          </List.Section> */}
+          <View style={styles.sidePadding}>
+            <SettingsRow
+              title="Meal Picker"
+              onPress={navToMealPicker}
+              bottomRow
+              topRow></SettingsRow>
+          </View>
         </View>
         <View>
           <PrimaryText
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: 'white',
     ...SHADOW_BASE,
+    marginBottom: 12,
   },
   nameContainer: {
     flexDirection: 'row',
@@ -82,5 +83,8 @@ const styles = StyleSheet.create({
   version: {
     textAlign: 'center',
     paddingBottom: 20,
+  },
+  sidePadding: {
+    marginHorizontal: 20,
   },
 });

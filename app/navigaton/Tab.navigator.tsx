@@ -2,7 +2,7 @@ import {CommonActions} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigation} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {SettingsScreen} from '../screens/settings.screen';
+import {SettingsScreen} from '../screens/settings/settings.screen';
 import {HomeScreen} from '../screens/home/home.screen';
 import {SearchScreen} from '../screens/search/search.screen';
 import {StyleSheet} from 'react-native';

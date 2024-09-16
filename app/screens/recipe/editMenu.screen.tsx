@@ -37,7 +37,7 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
 
       <BaseScreen>
         <View style={styles.mainContainer}>
-          <ScrollView
+          {/* <ScrollView
             style={{
               overflow: 'visible',
               // padding: 10,
@@ -47,7 +47,8 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
               overflow: 'visible',
               // padding: 10,
               // margin: 10,
-            }}>
+            }}> */}
+          <View>
             <SettingsRow
               title="Name"
               onPress={navToName}
@@ -70,7 +71,8 @@ export const EditMenuScreen = observer(({navigation}: EditMenuScreenProps) => {
               onPress={navToImage}
               bottomRow
               icon="pencil"></SettingsRow>
-          </ScrollView>
+            {/* </ScrollView> */}
+          </View>
 
           {anyChanges() && (
             <PrimaryButton

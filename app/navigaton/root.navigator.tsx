@@ -13,6 +13,7 @@ import {EditRecipeStack} from './editRecipe.navigator';
 import {HORIZONTAL_ANIMATION} from './navigation.animation';
 import {UserProfileScreen} from '../screens/userProfile/userProfile.screen';
 import {BackHandler} from 'react-native';
+import {MealPickerScreen} from '../screens/settings/mealPicker.screen';
 
 export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review', 'ReviewEdit'];
 
@@ -102,6 +103,11 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="UserProfile"
         component={UserProfileScreen}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="MealPicker"
+        component={MealPickerScreen}
         options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>

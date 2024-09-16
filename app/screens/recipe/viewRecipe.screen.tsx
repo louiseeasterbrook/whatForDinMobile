@@ -208,6 +208,7 @@ export const ViewRecipeScreen = observer(
                 comments={recipe.Comment}
                 chefMode={chefMode}
                 imageArray={photoArray}></RecipeDisplay>
+              <View style={styles.screen}></View>
             </ScrollView>
           )}
           <Portal>
@@ -276,6 +277,9 @@ export const ViewRecipeScreen = observer(
 );
 
 const styles = StyleSheet.create({
+  screen: {
+    paddingBottom: 50,
+  },
   cardContainer: {
     paddingVertical: 10,
   },
