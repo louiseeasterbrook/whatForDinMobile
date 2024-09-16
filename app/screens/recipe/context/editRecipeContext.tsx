@@ -14,11 +14,13 @@ export function EditRecipeProvider({children}: any): ReactNode {
   const [comment, setComment] = useState<string>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [imageData, setImageData] = useState<PhotoData>();
+  const [originalPhotoURI, setOriginalPhotoURI] = useState<string>();
 
   const initRecipe = (recipe: Recipe, photoUri: string) => {
     if (!recipe) {
       return;
     }
+    setOriginalPhotoURI(photoUri);
     setName(recipe.Name);
     setIngredients(recipe.Ingredients);
     setSteps(recipe.Method);
@@ -31,8 +33,8 @@ export function EditRecipeProvider({children}: any): ReactNode {
     const nameChange = recipe.Name !== name;
     const ingredientChange = stringArrayChange(recipe.Ingredients, ingredients);
     const stepsChange = stringArrayChange(recipe.Method, steps);
-    const commentChange = Boolean(recipe?.Comment || '' !== comment);
-    const photoChange = Boolean(imageData?.fileName !== DEFAULT_IMAGE_NAME);
+    const commentChange = Boolean(recipe?.Comment !== comment);
+    const photoChange = Boolean(imageData?.uri != originalPhotoURI);
 
     console.log(
       '-- name: ',

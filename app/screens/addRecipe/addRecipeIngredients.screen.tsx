@@ -26,6 +26,7 @@ export const AddRecipeIngredientsScreen = observer(
   ({navigation}: AddRecipeIngredientsScreenProps) => {
     const scrollViewRef = useRef();
     const {
+      ingredients,
       setIngredients,
       exitFlowFullBack,
       showExitDialog,
@@ -39,8 +40,10 @@ export const AddRecipeIngredientsScreen = observer(
     const [text, setText] = useState<string>('');
     const [latestButtonPress, setLatestButtonPress] =
       useState<string>('remove');
-    const [numInputs, setNumInputs] = useState<number>(1);
-    const refInputs = useRef<string[]>([text]);
+    const [numInputs, setNumInputs] = useState<number>(
+      ingredients?.length || 1,
+    );
+    const refInputs = useRef<string[]>(ingredients);
     const buttonDisabled = Boolean(
       refInputs.current?.length && !everyRowIsPopulated(),
     );
@@ -68,18 +71,27 @@ export const AddRecipeIngredientsScreen = observer(
     };
 
     const goBack = (): void => {
+      setIngredients(refInputs.current);
       navigation.goBack();
     };
 
-    const navToStepsScreen = () => {
+    const getIngredientsWithNoBlankRows = () => {
       const ingredientArray = refInputs.current;
-      const ingredientsNoNull = ingredientArray.filter(
+      return ingredientArray.filter(
         (ingredient: string) => ingredient !== null || ingredient !== '',
       );
+    };
+
+    const saveIngredients = () => {
+      const ingredientsNoNull = getIngredientsWithNoBlankRows();
       if (ingredientsNoNull.length > 0) {
         setIngredients(ingredientsNoNull);
-        navigation.navigate('AddSteps');
       }
+    };
+
+    const navToStepsScreen = () => {
+      saveIngredients();
+      navigation.navigate('AddSteps');
     };
 
     const scrollViewControl = (

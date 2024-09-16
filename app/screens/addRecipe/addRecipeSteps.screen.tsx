@@ -26,6 +26,7 @@ export const AddRecipeStepsScreen = observer(
   ({navigation}: AddRecipeStepsScreenProps) => {
     const scrollViewRef = useRef();
     const {
+      steps,
       setSteps,
       showExitDialog,
       closeExitDialog,
@@ -36,8 +37,8 @@ export const AddRecipeStepsScreen = observer(
     const [text, setText] = useState<string>('');
     const [latestButtonPress, setLatestButtonPress] =
       useState<string>('remove');
-    const [numInputs, setNumInputs] = useState<number>(1);
-    const refInputs = useRef<string[]>([text]);
+    const [numInputs, setNumInputs] = useState<number>(steps?.length || 1);
+    const refInputs = useRef<string[]>(steps);
     const everyRowIsPopulated = (): boolean => {
       return refInputs.current.every(x => x.length > 0);
     };
@@ -67,12 +68,25 @@ export const AddRecipeStepsScreen = observer(
       setLatestButtonPress('remove');
     };
 
-    const goBack = () => {
+    const goBack = (): void => {
+      setSteps(refInputs.current);
       navigation.goBack();
     };
 
+    const getIngredientsWithNoBlankRows = () => {
+      const stepsArray = refInputs.current;
+      return stepsArray.filter((step: string) => step !== null || step !== '');
+    };
+
+    const saveSteps = () => {
+      const ingredientsNoNull = getIngredientsWithNoBlankRows();
+      if (ingredientsNoNull.length > 0) {
+        setSteps(ingredientsNoNull);
+      }
+    };
+
     const navToStepsScreen = async () => {
-      setSteps(refInputs.current);
+      saveSteps();
       navigation.navigate('AddComment');
     };
 

@@ -36,13 +36,13 @@ export const SettingsScreen = ({navigation}): ReactNode => {
             <IconButton icon="logout" size={20} onPress={logout} />
           </View>
 
-          <View style={styles.sidePadding}>
+          {/* <View style={styles.sidePadding}>
             <SettingsRow
               title="Meal Picker"
               onPress={navToMealPicker}
               bottomRow
               topRow></SettingsRow>
-          </View>
+          </View> */}
         </View>
         <View>
           <PrimaryText

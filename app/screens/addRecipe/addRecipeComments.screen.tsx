@@ -1,13 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Text,
-  Appbar,
-  TextInput,
-  Portal,
-  Dialog,
-} from 'react-native-paper';
+import {Button, Appbar, TextInput, Portal, Dialog} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
@@ -22,16 +15,18 @@ type AddRecipeCommentScreenProps = {
 
 export const AddRecipeCommentScreen = observer(
   ({navigation}: AddRecipeCommentScreenProps) => {
-    const [input, setInput] = useState<string>();
     const {
+      comment,
       setComment,
       exitFlowFullBack,
       showExitDialog,
       closeExitDialog,
       openExitDialog,
     } = useAddRecipe();
+    const [input, setInput] = useState<string>(comment);
 
     const goBack = (): void => {
+      setComment(input);
       navigation.goBack();
     };
 

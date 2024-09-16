@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {Button, Text, Appbar, Portal, Dialog, Icon} from 'react-native-paper';
+import {Button, Appbar, Portal, Dialog, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
@@ -21,16 +21,18 @@ export interface PhotoData {
 
 export const AddRecipeImageScreen = observer(
   ({navigation}: AddRecipeImageScreenProps) => {
-    const [uploadedPhoto, setUploadedPhoto] = useState<PhotoData>();
     const {
+      imageData,
       setImageData,
       exitFlowFullBack,
       showExitDialog,
       closeExitDialog,
       openExitDialog,
     } = useAddRecipe();
+    const [uploadedPhoto, setUploadedPhoto] = useState<PhotoData>(imageData);
 
     const goBack = (): void => {
+      setImageData(uploadedPhoto);
       navigation.goBack();
     };
 
