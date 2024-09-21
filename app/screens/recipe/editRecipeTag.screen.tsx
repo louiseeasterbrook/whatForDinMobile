@@ -1,8 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Appbar, Divider, Icon, Portal} from 'react-native-paper';
+import {Appbar, Divider, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
-import {useAddRecipe} from './context/addRecipeProvider';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
@@ -12,8 +11,8 @@ import {FlatList} from 'react-native-gesture-handler';
 import {useStores} from '../../store/mainStore';
 import {Tag} from '../../components/Tag.component';
 import {RecipeTag} from '../../models/searchResults';
-import {SharedDialog} from '../../components/sharedDialog.component';
-type AddRecipeTagScreenProps = {
+import {useEditRecipe} from './context/editRecipeProvider';
+type EditRecipeTagScreenProps = {
   navigation: NavigationProp<any, any>;
 };
 
@@ -22,16 +21,9 @@ export interface PhotoData {
   fileName: string;
 }
 
-export const AddRecipeTagScreen = observer(
-  ({navigation}: AddRecipeTagScreenProps) => {
-    const {
-      tagIds,
-      setTagIds,
-      exitFlowFullBack,
-      showExitDialog,
-      closeExitDialog,
-      openExitDialog,
-    } = useAddRecipe();
+export const EditRecipeTagScreen = observer(
+  ({navigation}: EditRecipeTagScreenProps) => {
+    const {tagIds, setTagIds} = useEditRecipe();
     const userStore = useStores();
 
     const getTagsFromIds = (): RecipeTag[] => {
@@ -46,8 +38,6 @@ export const AddRecipeTagScreen = observer(
     );
 
     const goBack = (): void => {
-      const ids = getIdsFromTags;
-      setTagIds(ids);
       navigation.goBack();
     };
 
@@ -55,10 +45,10 @@ export const AddRecipeTagScreen = observer(
       return selectedTags?.map(t => t.Id);
     };
 
-    const navToStepsScreen = (): void => {
+    const save = (): void => {
       const ids = getIdsFromTags;
       setTagIds(ids);
-      navigation.navigate('Review');
+      goBack();
     };
 
     const selectTag = async (newTag: RecipeTag) => {
@@ -86,8 +76,7 @@ export const AddRecipeTagScreen = observer(
       <>
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Add Recipe'} />
-          <Appbar.Action icon="close" onPress={() => openExitDialog()} />
+          <Appbar.Content title={'Edit Tags'} />
         </Appbar.Header>
         <BaseScreen>
           <View style={styles.main}>
@@ -125,21 +114,9 @@ export const AddRecipeTagScreen = observer(
               </TouchableOpacity>
             </View>
 
-            <PrimaryButton
-              text="Next"
-              onPress={navToStepsScreen}></PrimaryButton>
+            <PrimaryButton text="Next" onPress={save}></PrimaryButton>
           </View>
         </BaseScreen>
-        <Portal>
-          <SharedDialog
-            showDialog={showExitDialog}
-            exitDialog={() => closeExitDialog()}
-            text={'Are you sure you want to exit the create recipe flow?'}
-            leftButton="Cancel"
-            rightButton="Yes, exit"
-            leftButtonPress={() => closeExitDialog()}
-            rightButtonPress={() => exitFlowFullBack()}></SharedDialog>
-        </Portal>
       </>
     );
   },

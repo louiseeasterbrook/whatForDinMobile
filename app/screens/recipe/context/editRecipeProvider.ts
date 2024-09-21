@@ -15,6 +15,8 @@ export interface EditRecipeContextValue {
   setImageData: Function;
   initRecipe: Function;
   anyChanges: Function;
+  tagIds: string[];
+  setTagIds: Function;
 }
 
 export const EditRecipeContext = createContext<EditRecipeContextValue>(null);

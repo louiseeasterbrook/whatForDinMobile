@@ -14,6 +14,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
   const [comment, setComment] = useState<string>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [imageData, setImageData] = useState<PhotoData>();
+  const [tagIds, setTagIds] = useState<string[]>();
   const [originalPhotoURI, setOriginalPhotoURI] = useState<string>();
 
   const initRecipe = (recipe: Recipe, photoUri: string) => {
@@ -26,6 +27,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     setSteps(recipe.Method);
     setComment(recipe?.Comment || '');
     setImageData({uri: photoUri || null, fileName: DEFAULT_IMAGE_NAME});
+    setTagIds(recipe.TagIds);
     setRecipe({...recipe});
   };
 
@@ -33,6 +35,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     const nameChange = recipe.Name !== name;
     const ingredientChange = stringArrayChange(recipe.Ingredients, ingredients);
     const stepsChange = stringArrayChange(recipe.Method, steps);
+    const tagChange = stringArrayChange(recipe.TagIds, tagIds);
     const commentChange = Boolean(recipe?.Comment !== comment);
     const photoChange = Boolean(imageData?.uri != originalPhotoURI);
 
@@ -54,14 +57,15 @@ export function EditRecipeProvider({children}: any): ReactNode {
       ingredientChange ||
       stepsChange ||
       commentChange ||
-      photoChange
+      photoChange ||
+      tagChange
     );
   };
 
   const stringArrayChange = (array1: string[], array2: string[]): boolean => {
-    if (array1.length !== array2.length) return true;
+    if (array1?.length !== array2?.length) return true;
 
-    for (var i = 0; i < array1.length; i++) {
+    for (var i = 0; i < array1?.length; i++) {
       if (array1[i] !== array2[i]) {
         return true;
       }
@@ -77,6 +81,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     recipe.Ingredients = ingredients;
     recipe.Method = steps;
     recipe.Comment = comment;
+    recipe.TagIds = tagIds;
     recipe.PhotoName =
       photoChange && imageData?.fileName ? imageData.fileName : null;
 
@@ -105,6 +110,8 @@ export function EditRecipeProvider({children}: any): ReactNode {
     setImageData,
     initRecipe,
     anyChanges,
+    tagIds,
+    setTagIds,
   };
 
   return (

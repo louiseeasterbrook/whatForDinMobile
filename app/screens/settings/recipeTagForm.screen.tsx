@@ -29,7 +29,7 @@ import {RecipeTag} from '../../models/searchResults';
 import {FlatList} from 'react-native-gesture-handler';
 import {Option} from '../../components/Option.component';
 import {PrimaryText} from '../../components/PrimaryText.component';
-import {UpdateUser} from '../../services/userDBservice';
+import {GetUser, UpdateUser} from '../../services/userDBservice';
 
 type RecipeTagFormScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -116,8 +116,9 @@ export const RecipeTagFormScreen = observer(
       return [...userStore?.recipeTags].filter(t => t.Id !== id);
     };
 
-    const sendNewTagArrayToDB = (array: RecipeTag[]) => {
-      UpdateUser(userStore.uid, {RecipeTags: array});
+    const sendNewTagArrayToDB = async (array: RecipeTag[]) => {
+      await UpdateUser(userStore.uid, {RecipeTags: array});
+      await updateTagsInState();
     };
 
     const deleteTag = (): void => {
@@ -125,6 +126,14 @@ export const RecipeTagFormScreen = observer(
       sendNewTagArrayToDB(newTagArray);
       hideDialog();
       goBack();
+    };
+
+    const updateTagsInState = async (): Promise<void> => {
+      const user = await GetUser(userStore.uid);
+      const newTags = user?._data?.RecipeTags;
+      if (newTags) {
+        userStore.setRecipeTags(newTags);
+      }
     };
 
     return (
