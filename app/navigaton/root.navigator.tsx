@@ -14,6 +14,8 @@ import {HORIZONTAL_ANIMATION} from './navigation.animation';
 import {UserProfileScreen} from '../screens/userProfile/userProfile.screen';
 import {BackHandler} from 'react-native';
 import {MealPickerScreen} from '../screens/settings/mealPicker.screen';
+import {RecipeTagViewScreen} from '../screens/settings/recipeTagView.screen';
+import {RecipeTagFormScreen} from '../screens/settings/recipeTagForm.screen';
 
 export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review', 'ReviewEdit'];
 
@@ -108,6 +110,16 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="MealPicker"
         component={MealPickerScreen}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="RecipeTagView"
+        component={RecipeTagViewScreen}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="RecipeTagForm"
+        component={RecipeTagFormScreen}
         options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>

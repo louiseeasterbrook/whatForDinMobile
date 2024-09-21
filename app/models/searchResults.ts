@@ -19,7 +19,13 @@ export interface RecipeUser {
   Name: string;
   DateCreated: string;
   Favourites: string[];
+  RecipeTags: RecipeTag[];
   Id: string;
+}
+export interface RecipeTag {
+  Title: string;
+  Colour: string;
+  Icon: string;
 }
 
 export interface UserFavourites {

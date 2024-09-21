@@ -28,10 +28,12 @@ export async function AddNewUser(
   await firestore().collection('users').doc(userId).set(data);
 }
 
+//data needs to be in format = {Favourites: []} etc
 export async function UpdateUser(userId: string, data: any): Promise<void> {
   if (!userId) {
     return;
   }
+  console.log('UPDAYE ', userId, ' ', data);
   return await firestore().collection('users').doc(userId).update(data);
 }
 

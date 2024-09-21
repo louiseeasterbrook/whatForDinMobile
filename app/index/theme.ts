@@ -6,6 +6,13 @@ export const disabled_grey = '#c4c4c4';
 export const grey_background = '#F5F5F5';
 export const light_red = '#E0B4B4';
 
+export const light_green = '#9edbae';
+export const light_blue = '#81aad6';
+export const light_pink = '#e39dc8';
+export const light_purple = '#ae93ed';
+export const light_orange = '#de9e83';
+export const light_yellow = '#e8db92';
+
 export const Font = {
   Bold: 'Quicksand-Bold',
   Regular: 'Quicksand-Regular',

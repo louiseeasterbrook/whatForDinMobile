@@ -1,8 +1,15 @@
 import {createContext, useContext} from 'react';
 import {types, Instance} from 'mobx-state-tree';
 import {cast} from 'mobx-state-tree';
+import {RecipeTag} from '../models/searchResults';
 
 //STORE
+
+export const RecipeTagModel = types.model('RecipeTagModel').props({
+  Title: types.optional(types.string, ''),
+  Icon: types.optional(types.string, ''),
+  Colour: types.optional(types.string, ''),
+});
 
 export const MainStore = types
   .model('MainStore')
@@ -10,6 +17,7 @@ export const MainStore = types
     name: types.optional(types.string, ''),
     uid: types.optional(types.string, ''),
     favourites: types.array(types.string),
+    recipeTags: types.array(RecipeTagModel),
   })
 
   .actions(self => ({
@@ -22,6 +30,14 @@ export const MainStore = types
     },
     setFavourites: (fav: string[]): void => {
       self.favourites = cast(fav);
+    },
+    setRecipeTags: (tags: RecipeTag[]): void => {
+      if (!tags) {
+        return;
+      }
+      console.log('rec  ', tags);
+      self.recipeTags = cast(tags);
+      console.log('aftwr ', self.recipeTags);
     },
   }));
 

@@ -23,6 +23,7 @@ export const SettingsScreen = ({navigation}): ReactNode => {
   };
 
   const navToMealPicker = (): void => navigation.navigate('MealPicker');
+  const navToRecipeTag = (): void => navigation.navigate('RecipeTagView');
 
   return (
     <BaseScreen useSafeArea={true}>
@@ -36,13 +37,16 @@ export const SettingsScreen = ({navigation}): ReactNode => {
             <IconButton icon="logout" size={20} onPress={logout} />
           </View>
 
-          {/* <View style={styles.sidePadding}>
+          <View style={styles.sidePadding}>
+            <SettingsRow
+              title="Recipe tags"
+              onPress={navToRecipeTag}
+              topRow></SettingsRow>
             <SettingsRow
               title="Meal Picker"
               onPress={navToMealPicker}
-              bottomRow
-              topRow></SettingsRow>
-          </View> */}
+              bottomRow></SettingsRow>
+          </View>
         </View>
         <View>
           <PrimaryText

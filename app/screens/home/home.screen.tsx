@@ -78,6 +78,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       return;
     }
     userStore.setFavourites(response.Favourites);
+    userStore.setRecipeTags(response?.RecipeTags);
     // await getSavedRecipes();
   };
 
@@ -86,6 +87,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       Name: userStore.name,
       DateCreated: moment().format(DATE_FORMAT_FOR_DISPLAY),
       Favourites: [],
+      RecipeTags: [],
       Id: null,
     };
 
