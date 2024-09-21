@@ -26,6 +26,7 @@ export interface RecipeTag {
   Title: string;
   Colour: string;
   Icon: string;
+  Id: string;
 }
 
 export interface UserFavourites {

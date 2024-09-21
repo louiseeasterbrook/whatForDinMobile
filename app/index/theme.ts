@@ -4,14 +4,15 @@ export const main_colour = '#6750a4'; //dark purple
 export const secondary_colour = '#e9e4ef'; //light purple
 export const disabled_grey = '#c4c4c4';
 export const grey_background = '#F5F5F5';
-export const light_red = '#E0B4B4';
+export const light_red = '#f2c2c3';
 
-export const light_green = '#9edbae';
-export const light_blue = '#81aad6';
-export const light_pink = '#e39dc8';
-export const light_purple = '#ae93ed';
-export const light_orange = '#de9e83';
-export const light_yellow = '#e8db92';
+export const light_green = '#cdf7c6';
+export const light_blue = '#ade0ff';
+export const light_pink = '#f7c6e9';
+export const light_purple = '#e9e4ef';
+export const light_orange = '#fcd6c0';
+export const light_yellow = '#f2e6bb';
+export const light_greenYellow = '#e5f2c2';
 
 export const Font = {
   Bold: 'Quicksand-Bold',

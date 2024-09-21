@@ -1,24 +1,17 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Text,
-  Appbar,
-  TextInput,
-  Divider,
-  FAB,
-} from 'react-native-paper';
+import {Appbar, FAB} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {sharedStyles} from '../../index/theme';
 import {useStores} from '../../store/mainStore';
-import {Recipe, RecipeTag} from '../../models/searchResults';
 import {Tag} from '../../components/Tag.component';
 import {FlatList} from 'react-native-gesture-handler';
 import {NullState} from '../../components/nullState.component copy';
 import {GetUser} from '../../services/userDBservice';
+import {RecipeTag} from '../../models/searchResults';
 
 type RecipeTagViewScreen = {
   navigation: NavigationProp<any, any>;
@@ -39,16 +32,12 @@ export const RecipeTagViewScreen = observer(
       return unsubscribe;
     }, [navigation]);
 
-    const getUpdatedRecipeTags = async () => {
-      // setLoading(true)
+    const getUpdatedRecipeTags = async (): Promise<void> => {
       const user = await GetUser(userStore.uid);
       const newTags = user?._data?.RecipeTags;
       if (newTags) {
         userStore.setRecipeTags(newTags);
       }
-      console.log('BACVL ', user._data.RecipeTags);
-      // userStore.setRecipeTags(user.RecipeTags);
-      // setLoading(false);
     };
 
     const goBack = (): void => {
@@ -57,6 +46,10 @@ export const RecipeTagViewScreen = observer(
     };
 
     const navToRecipeTagForm = (): void => navigation.navigate('RecipeTagForm');
+    const navToEditTagScreen = (tag: RecipeTag): void =>
+      navigation.navigate('RecipeTagForm', {
+        tag,
+      });
 
     return (
       <>
@@ -82,7 +75,7 @@ export const RecipeTagViewScreen = observer(
                         title={item.item.Title}
                         colour={item.item.Colour}
                         icon={item.item.Icon}
-                        onPress={() => {}}
+                        onPress={() => navToEditTagScreen(item.item)}
                       />
                     );
                   }}

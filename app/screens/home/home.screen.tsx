@@ -12,6 +12,7 @@ import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
 import {sharedStyles} from '../../index/theme';
 import {SHADOW_BASE} from '../../index/theme';
 import {getSortedRecipes} from '../../services/recipeDisplay.service';
+import {Tag} from '../../components/Tag.component';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -153,6 +154,25 @@ export const HomeScreen = ({navigation}): ReactNode => {
             value={searchInput}
             style={[styles.searchBar, sharedStyles.searchBar]}
           />
+          <FlatList
+            style={styles.tags}
+            horizontal
+            // keyExtractor={(item, index) => index.toString()}
+            data={userStore.recipeTags}
+            ItemSeparatorComponent={() => <View style={{marginRight: 6}} />}
+            contentContainerStyle={{marginHorizontal: 18}}
+            renderItem={item => {
+              // console.log('gogogoog ', item);
+              return (
+                <Tag
+                  title={item.item.Title}
+                  colour={item.item.Colour}
+                  icon={item.item.Icon}
+                  onPress={() => {}}
+                />
+              );
+            }}
+          />
         </View>
 
         {loading ? (
@@ -188,7 +208,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
 const styles = StyleSheet.create({
   sidePadding: {
-    paddingHorizontal: 18,
     backgroundColor: 'white',
     ...SHADOW_BASE,
   },
@@ -203,7 +222,12 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   searchBar: {
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 18,
+  },
+  tags: {
+    marginBottom: 10,
   },
   fab: {
     position: 'absolute',

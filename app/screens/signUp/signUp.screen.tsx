@@ -1,19 +1,13 @@
 import {ReactNode, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Dialog,
-  Portal,
-  Text,
-  TextInput,
-  Appbar,
-} from 'react-native-paper';
+import {Button, Dialog, Portal, TextInput, Appbar} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {main_colour, sharedStyles} from '../../index/theme';
 import auth from '@react-native-firebase/auth';
 import {useStores} from '../../store/mainStore';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 export const SignUpScreen = ({navigation}): ReactNode => {
   const userStore = useStores();
@@ -104,9 +98,7 @@ export const SignUpScreen = ({navigation}): ReactNode => {
         <Dialog visible={dialogVisible} onDismiss={hideDialog}>
           <Dialog.Title>Opps, Something's gone wrong</Dialog.Title>
           <Dialog.Content>
-            <Text variant="bodyMedium">
-              We were unable to create a login for you, please try again.
-            </Text>
+            <PrimaryText text="We were unable to create a login for you, please try again."></PrimaryText>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Ok</Button>

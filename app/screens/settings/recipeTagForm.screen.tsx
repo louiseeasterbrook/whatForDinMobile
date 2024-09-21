@@ -1,17 +1,26 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {Button, Text, Appbar, TextInput, Divider} from 'react-native-paper';
+import {
+  Button,
+  Appbar,
+  TextInput,
+  Divider,
+  Portal,
+  Dialog,
+} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {
   light_blue,
   light_green,
+  light_greenYellow,
   light_orange,
   light_pink,
   light_purple,
+  light_red,
   light_yellow,
   sharedStyles,
 } from '../../index/theme';
@@ -30,11 +39,18 @@ type RecipeTagFormScreenProps = {
 export const RecipeTagFormScreen = observer(
   ({navigation, route}: RecipeTagFormScreenProps) => {
     const userStore = useStores();
+    const tag: RecipeTag = route.params?.tag;
+    const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [name, setName] = useState<string>();
-    const [selectedColour, setSelectedColour] = useState<string>();
-    const [selectedIcon, setSelectedIcon] = useState<string>();
-    const validForm = selectedColour && selectedIcon && name;
+    const [name, setName] = useState<string>(tag?.Title || null);
+    const [selectedColour, setSelectedColour] = useState<string>(
+      tag?.Colour || null,
+    );
+    const [selectedIcon, setSelectedIcon] = useState<string>(tag?.Icon || null);
+    const validForm: boolean =
+      Boolean(selectedColour) && Boolean(selectedIcon) && Boolean(name);
+    const showDialog: () => void = () => setShowDeleteDialog(true);
+    const hideDialog: () => void = () => setShowDeleteDialog(false);
     const colours = [
       light_green,
       light_blue,
@@ -42,8 +58,10 @@ export const RecipeTagFormScreen = observer(
       light_purple,
       light_orange,
       light_yellow,
+      light_greenYellow,
+      light_red,
     ];
-    const icons = [
+    const icons: string[] = [
       'pasta',
       'noodles',
       'hamburger',
@@ -62,20 +80,10 @@ export const RecipeTagFormScreen = observer(
       navigation.goBack();
     };
 
-    useEffect(() => {
-      console.log(selectedColour);
-    }, [selectedColour]);
-
-    const saveNewRecipeTag = () => {
-      if (!validForm) {
-        return;
-      }
+    const saveTag = (): void => {
       setLoading(true);
-      console.log(selectedColour);
-      const newTagList = getNewTagArray();
-      console.log('SAVE ', newTagList);
-
-      UpdateUser(userStore.uid, {RecipeTags: newTagList});
+      const newTagArray = tag ? editTagArray() : getNewTagArray();
+      sendNewTagArrayToDB(newTagArray);
       goBack();
     };
 
@@ -84,6 +92,7 @@ export const RecipeTagFormScreen = observer(
         Title: name,
         Icon: selectedIcon,
         Colour: selectedColour,
+        Id: Math.random().toString(16).slice(2),
       };
       const originalTagList: RecipeTag[] = userStore.recipeTags?.length
         ? userStore.recipeTags
@@ -91,18 +100,44 @@ export const RecipeTagFormScreen = observer(
       return [...originalTagList, newTag];
     };
 
+    const editTagArray = (): RecipeTag[] => {
+      const editTag = {
+        Title: name,
+        Icon: selectedIcon,
+        Colour: selectedColour,
+        Id: tag.Id,
+      };
+
+      const tagArray = removeTagFromArray(tag.Id);
+      return [...tagArray, editTag];
+    };
+
+    const removeTagFromArray = (id: string): RecipeTag[] => {
+      return [...userStore?.recipeTags].filter(t => t.Id !== id);
+    };
+
+    const sendNewTagArrayToDB = (array: RecipeTag[]) => {
+      UpdateUser(userStore.uid, {RecipeTags: array});
+    };
+
+    const deleteTag = (): void => {
+      const newTagArray = removeTagFromArray(tag.Id);
+      sendNewTagArrayToDB(newTagArray);
+      hideDialog();
+      goBack();
+    };
+
     return (
       <>
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
           <Appbar.Content title={'Create recipe tag'} />
+          {tag && <Appbar.Action icon="trash-can" onPress={showDialog} />}
         </Appbar.Header>
 
         <BaseScreen>
           <View style={styles.main}>
             <View>
-              {/*
-              <Tag title="dinner" colour="red" onPress={() => {}} /> */}
               <TextInput
                 label="Tag name"
                 value={name}
@@ -154,9 +189,21 @@ export const RecipeTagFormScreen = observer(
               text="Save"
               disabled={!validForm}
               loading={loading}
-              onPress={saveNewRecipeTag}></PrimaryButton>
+              onPress={saveTag}></PrimaryButton>
           </View>
         </BaseScreen>
+        <Portal>
+          <Dialog visible={showDeleteDialog} onDismiss={hideDialog}>
+            <Dialog.Content>
+              <PrimaryText text="Are you sure you want to delete this recipe tag?"></PrimaryText>
+            </Dialog.Content>
+
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>No</Button>
+              <Button onPress={deleteTag}>Yes, please delete</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </>
     );
   },

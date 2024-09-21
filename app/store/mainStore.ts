@@ -9,6 +9,7 @@ export const RecipeTagModel = types.model('RecipeTagModel').props({
   Title: types.optional(types.string, ''),
   Icon: types.optional(types.string, ''),
   Colour: types.optional(types.string, ''),
+  Id: types.optional(types.string, ''),
 });
 
 export const MainStore = types
