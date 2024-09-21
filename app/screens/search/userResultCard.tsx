@@ -1,6 +1,6 @@
-import {ReactNode, useEffect} from 'react';
-import {Text, Divider, Avatar} from 'react-native-paper';
-import {Recipe, SearchResultUser} from '../../models/searchResults';
+import {ReactNode} from 'react';
+import {Divider, Avatar} from 'react-native-paper';
+import {SearchResultUser} from '../../models/searchResults';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 import {PrimaryText} from '../../components/PrimaryText.component';

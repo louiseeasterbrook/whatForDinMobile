@@ -9,6 +9,7 @@ import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, sharedStyles} from '../../index/theme';
 import {openImagePicker} from '../../services/imagePicker.service';
 import {PrimaryText} from '../../components/PrimaryText.component';
+import {SharedDialog} from '../../components/sharedDialog.component';
 
 type AddRecipeImageScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -38,7 +39,7 @@ export const AddRecipeImageScreen = observer(
 
     const navToStepsScreen = (): void => {
       setImageData(uploadedPhoto);
-      navigation.navigate('Review');
+      navigation.navigate('AddTag');
     };
 
     const selectImage = async () => {
@@ -88,15 +89,14 @@ export const AddRecipeImageScreen = observer(
           </View>
         </BaseScreen>
         <Portal>
-          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
-            <Dialog.Content>
-              <PrimaryText text="Are you sure you want to exit the create recipe flow?" />
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => closeExitDialog()}>Cancel</Button>
-              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
-            </Dialog.Actions>
-          </Dialog>
+          <SharedDialog
+            showDialog={showExitDialog}
+            exitDialog={() => closeExitDialog()}
+            text={'Are you sure you want to exit the create recipe flow?'}
+            leftButton="Cancel"
+            rightButton="Yes, exit"
+            leftButtonPress={() => closeExitDialog()}
+            rightButtonPress={() => exitFlowFullBack()}></SharedDialog>
         </Portal>
       </>
     );

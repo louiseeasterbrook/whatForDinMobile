@@ -63,13 +63,12 @@ export const RecipeTagViewScreen = observer(
             <View>
               {userStore?.recipeTags?.length ? (
                 <FlatList
-                  // keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(item, index) => index.toString()}
                   data={userStore.recipeTags}
                   ItemSeparatorComponent={() => (
                     <View style={{marginBottom: 6}} />
                   )}
                   renderItem={item => {
-                    // console.log('gogogoog ', item);
                     return (
                       <Tag
                         title={item.item.Title}

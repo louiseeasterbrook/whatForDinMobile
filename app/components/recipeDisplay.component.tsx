@@ -2,10 +2,9 @@ import {ReactNode, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
-import {Divider, IconButton} from 'react-native-paper';
+import {Divider} from 'react-native-paper';
 import {ImageSlider} from '../screens/recipe/ImageSlider.component';
 import {PrimaryText} from './PrimaryText.component';
-import {light_red} from '../index/theme';
 
 type RecipeDisplayProps = {
   ingredients: string[];
@@ -61,21 +60,25 @@ export const RecipeDisplay = ({
       )}
       <View style={styles.horizontalPadding}>
         <View style={styles.cardContainer}>
-          <DisplayListWithTitle
-            textSize={textSize}
-            title="Ingredients"
-            orderedList={false}
-            listSteps={ingredients}
-            chefMode={chefMode}></DisplayListWithTitle>
+          {ingredients && (
+            <DisplayListWithTitle
+              textSize={textSize}
+              title="Ingredients"
+              orderedList={false}
+              listSteps={ingredients}
+              chefMode={chefMode}></DisplayListWithTitle>
+          )}
         </View>
-        <View style={styles.cardContainer}>
-          <DisplayListWithTitle
-            textSize={textSize}
-            title="Method"
-            orderedList={true}
-            listSteps={steps}
-            chefMode={chefMode}></DisplayListWithTitle>
-        </View>
+        {steps && (
+          <View style={styles.cardContainer}>
+            <DisplayListWithTitle
+              textSize={textSize}
+              title="Method"
+              orderedList={true}
+              listSteps={steps}
+              chefMode={chefMode}></DisplayListWithTitle>
+          </View>
+        )}
         {comments && (
           <View>
             <PrimaryText addedStyles={styles.mainTitle} bold text="Comments" />
@@ -106,6 +109,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#E9E9E9',
     borderRadius: 8,
     marginTop: 12,
-    // backgroundColor: 'red',
   },
 });

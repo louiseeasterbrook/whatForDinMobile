@@ -131,8 +131,10 @@ export const RecipeTagFormScreen = observer(
       <>
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Create recipe tag'} />
-          {tag && <Appbar.Action icon="trash-can" onPress={showDialog} />}
+          <Appbar.Content
+            title={tag ? 'Edit recipe tag' : 'Create recipe tag'}
+          />
+          {tag && <Appbar.Action icon="delete" onPress={showDialog} />}
         </Appbar.Header>
 
         <BaseScreen>

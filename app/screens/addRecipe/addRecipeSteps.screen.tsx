@@ -3,7 +3,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Button,
-  Text,
   Appbar,
   TextInput,
   Icon,
@@ -17,6 +16,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {light_red, main_colour, sharedStyles} from '../../index/theme';
 import {PrimaryText} from '../../components/PrimaryText.component';
+import {SharedDialog} from '../../components/sharedDialog.component';
 
 type AddRecipeStepsScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -169,17 +169,14 @@ export const AddRecipeStepsScreen = observer(
           </View>
         </BaseScreen>
         <Portal>
-          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
-            <Dialog.Content>
-              <Text variant="bodyMedium">
-                Are you sure you want to exit the create recipe flow?
-              </Text>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => closeExitDialog()}>Cancel</Button>
-              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
-            </Dialog.Actions>
-          </Dialog>
+          <SharedDialog
+            showDialog={showExitDialog}
+            exitDialog={() => closeExitDialog()}
+            text={'Are you sure you want to exit the create recipe flow?'}
+            leftButton="Cancel"
+            rightButton="Yes, exit"
+            leftButtonPress={() => closeExitDialog()}
+            rightButtonPress={() => exitFlowFullBack()}></SharedDialog>
         </Portal>
       </>
     );

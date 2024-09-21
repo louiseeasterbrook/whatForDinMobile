@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Button, Dialog, Portal, Text, TextInput} from 'react-native-paper';
+import {Button, Dialog, Portal, Text} from 'react-native-paper';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -122,9 +122,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
         <Dialog visible={dialogVisible} onDismiss={hideDialog}>
           <Dialog.Title>Opps, Something's gone wrong</Dialog.Title>
           <Dialog.Content>
-            <Text variant="bodyMedium">
-              We were unable to sign you in, please try again.
-            </Text>
+            <PrimaryText text="We were unable to sign you in, please try again." />
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Ok</Button>

@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
-import {Icon, Text} from 'react-native-paper';
+import {Icon} from 'react-native-paper';
 import {StyleSheet, TouchableHighlight, View} from 'react-native';
-import {SHADOW_BASE, secondary_colour} from '../index/theme';
+import {SHADOW_BASE, main_colour, secondary_colour} from '../index/theme';
 import {PrimaryText} from './PrimaryText.component';
 
 type TagProps = {
@@ -9,6 +9,7 @@ type TagProps = {
   colour: string;
   icon?: string;
   onPress: () => void;
+  selected?: boolean;
 };
 
 export const Tag = ({
@@ -16,10 +17,14 @@ export const Tag = ({
   onPress,
   colour = 'white',
   icon = 'food-variant',
+  selected = false,
 }: TagProps): ReactNode => {
   return (
     <TouchableHighlight
-      style={[styles(colour).mainContainer]}
+      style={[
+        styles(colour).mainContainer,
+        selected && styles(colour).selected,
+      ]}
       onPress={onPress}
       underlayColor={secondary_colour}>
       <View style={[styles(colour).innerContainer]}>
@@ -42,6 +47,8 @@ const styles = (colour: string) =>
       paddingVertical: 10,
       backgroundColor: colour,
       borderRadius: 12,
+      borderWidth: 3,
+      borderColor: 'transparent',
       ...SHADOW_BASE,
     },
     innerContainer: {
@@ -49,5 +56,8 @@ const styles = (colour: string) =>
     },
     icon: {
       paddingRight: 10,
+    },
+    selected: {
+      borderColor: main_colour,
     },
   });

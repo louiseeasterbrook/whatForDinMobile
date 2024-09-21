@@ -14,6 +14,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
   const [steps, setSteps] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
   const [comment, setComment] = useState<string>();
+  const [tagIds, setTagIds] = useState<string[]>();
   const [showExitDialog, setShowExitDialog] = useState<boolean>(false);
   const [imageData, setImageData] = useState<PhotoData>();
 
@@ -30,6 +31,7 @@ export function AddRecipeProvider({children}: any): ReactNode {
       Id: '', //gets set up db
       UserName: userStore.name,
       Comment: comment ? comment : null,
+      TagIds: tagIds,
       PhotoName: imageData?.fileName ? imageData.fileName : null,
     };
     await AddRecipeToCollection(formattedRecipe);
@@ -62,6 +64,8 @@ export function AddRecipeProvider({children}: any): ReactNode {
     exitFlow,
     openExitDialog,
     exitFlowFullBack,
+    tagIds,
+    setTagIds,
   };
 
   function openExitDialog() {

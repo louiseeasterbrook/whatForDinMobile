@@ -1,19 +1,13 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {
-  Button,
-  Text,
-  Appbar,
-  TextInput,
-  Portal,
-  Dialog,
-} from 'react-native-paper';
+import {Button, Appbar, TextInput, Portal, Dialog} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
 import {PrimaryText} from '../../components/PrimaryText.component';
+import {SharedDialog} from '../../components/sharedDialog.component';
 
 type AddRecipeNameScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -72,17 +66,14 @@ export const AddRecipeNameScreen = observer(
           </View>
         </BaseScreen>
         <Portal>
-          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
-            <Dialog.Content>
-              <Text variant="bodyMedium">
-                Are you sure you want to exit the create recipe flow?
-              </Text>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => closeExitDialog()}>Cancel</Button>
-              <Button onPress={() => exitFlow()}>Yes, exit</Button>
-            </Dialog.Actions>
-          </Dialog>
+          <SharedDialog
+            showDialog={showExitDialog}
+            exitDialog={() => closeExitDialog()}
+            text={'Are you sure you want to exit the create recipe flow?'}
+            leftButton="Cancel"
+            rightButton="Yes, exit"
+            leftButtonPress={() => closeExitDialog()}
+            rightButtonPress={() => exitFlow()}></SharedDialog>
         </Portal>
       </>
     );

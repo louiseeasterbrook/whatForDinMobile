@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, Text, Appbar, TextInput, Icon} from 'react-native-paper';
+import {Appbar, TextInput, Icon} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';

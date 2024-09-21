@@ -20,6 +20,8 @@ export interface AddRecipeContextValue {
   closeExitDialog: Function;
   exitFlow: Function;
   exitFlowFullBack: Function;
+  tagIds: string[];
+  setTagIds: Function;
 }
 
 export const AddRecipeContext = createContext<AddRecipeContextValue>(null);

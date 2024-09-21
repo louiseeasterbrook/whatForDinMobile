@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {Text, Appbar, Icon} from 'react-native-paper';
+import {Appbar, Icon} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';

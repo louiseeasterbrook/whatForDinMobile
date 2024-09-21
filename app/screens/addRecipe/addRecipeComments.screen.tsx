@@ -8,6 +8,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
 import {PrimaryText} from '../../components/PrimaryText.component';
+import {SharedDialog} from '../../components/sharedDialog.component';
 
 type AddRecipeCommentScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -64,15 +65,14 @@ export const AddRecipeCommentScreen = observer(
           </View>
         </BaseScreen>
         <Portal>
-          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
-            <Dialog.Content>
-              <PrimaryText text="Are you sure you want to exit the create recipe flow?" />
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => closeExitDialog()}>Cancel</Button>
-              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
-            </Dialog.Actions>
-          </Dialog>
+          <SharedDialog
+            showDialog={showExitDialog}
+            exitDialog={() => closeExitDialog()}
+            text={'Are you sure you want to exit the create recipe flow?'}
+            leftButton="Cancel"
+            rightButton="Yes, exit"
+            leftButtonPress={() => closeExitDialog()}
+            rightButtonPress={() => exitFlowFullBack()}></SharedDialog>
         </Portal>
       </>
     );

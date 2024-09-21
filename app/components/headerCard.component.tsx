@@ -18,8 +18,10 @@ export const HeaderCard = ({
     <View style={styles.mainContainer}>
       <Avatar.Icon size={50} icon={icon} style={styles.icon} />
       <View>
-        <PrimaryText size={16} semiBold text={title} />
-        <PrimaryText size={12} textColour="grey" text={subtitle} />
+        {title && <PrimaryText size={16} semiBold text={title} />}
+        {subtitle && (
+          <PrimaryText size={12} textColour="grey" text={subtitle} />
+        )}
       </View>
     </View>
   );

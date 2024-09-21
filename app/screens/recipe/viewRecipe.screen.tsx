@@ -10,7 +10,6 @@ import {
   Button,
   ActivityIndicator,
   FAB,
-  IconButton,
 } from 'react-native-paper';
 import {useStores} from '../../store/mainStore';
 
@@ -26,6 +25,7 @@ import {useEffect, useState} from 'react';
 import {DeleteRecipe, GetRecipe} from '../../services/recipeDB.service';
 import KeepAwake from '@sayem314/react-native-keep-awake';
 import {sharedStyles} from '../../index/theme';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type ViewRecipeScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -214,9 +214,7 @@ export const ViewRecipeScreen = observer(
           <Portal>
             <Dialog visible={deleteDialogVisible} onDismiss={hideDeleteDialog}>
               <Dialog.Content>
-                <Text variant="bodyMedium">
-                  Are you sure you want to delete this recipe?
-                </Text>
+                <PrimaryText text="Are you sure you want to delete this recipe?" />
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={hideDeleteDialog}>Cancel</Button>
@@ -228,9 +226,7 @@ export const ViewRecipeScreen = observer(
               visible={AlwaysOnDialogVisible}
               onDismiss={hideDeleteDialog}>
               <Dialog.Content>
-                <Text variant="bodyMedium">
-                  Would you like to activate 'always on' display?
-                </Text>
+                <PrimaryText text="Would you like to activate 'always on' display?" />
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={hideAlwaysOnDialog}>Cancel</Button>

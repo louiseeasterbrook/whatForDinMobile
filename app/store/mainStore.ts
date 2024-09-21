@@ -36,11 +36,21 @@ export const MainStore = types
       if (!tags) {
         return;
       }
-      console.log('rec  ', tags);
-      self.recipeTags = cast(tags);
-      console.log('aftwr ', self.recipeTags);
+      self.recipeTags = cast(sortIntoAlphabeticalOrder(tags));
     },
   }));
+
+const sortIntoAlphabeticalOrder = (array: RecipeTag[]) => {
+  return array.sort((a, b) => {
+    if (a.Title.toLocaleUpperCase() < b.Title.toLocaleUpperCase()) {
+      return -1;
+    }
+    if (a.Title.toLocaleUpperCase() > b.Title.toLocaleUpperCase()) {
+      return 1;
+    }
+    return 0;
+  });
+};
 
 //ROOT STORE
 // for multiple stores

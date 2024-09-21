@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {Button, Text, Appbar, TextInput, Divider} from 'react-native-paper';
+import {Text, Appbar, Divider} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -10,6 +10,7 @@ import {sharedStyles} from '../../index/theme';
 import {getSortedRecipes} from '../../services/recipeDisplay.service';
 import {useStores} from '../../store/mainStore';
 import {Recipe} from '../../models/searchResults';
+import {PrimaryText} from '../../components/PrimaryText.component';
 
 type MealPickerScreen = {
   navigation: NavigationProp<any, any>;
@@ -49,7 +50,7 @@ export const MealPickerScreen = observer(
           <View style={styles.main}>
             <View>
               <View style={styles.header}>
-                <Text>Select how many meal idea you would like:</Text>
+                <PrimaryText text="Select how many meal idea you would like:" />
               </View>
               <Divider />
             </View>

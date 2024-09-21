@@ -1,7 +1,6 @@
-import {ReactNode, useEffect, useRef, useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {ListRow} from './ListRow.component';
-import {Text} from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {PrimaryText} from '../../components/PrimaryText.component';
 
@@ -39,8 +38,10 @@ export const DisplayListWithTitle = ({
 
   return (
     <>
-      <PrimaryText addedStyles={styles.mainTitle} bold text={title} />
-      {listSteps?.length &&
+      {title && (
+        <PrimaryText addedStyles={styles.mainTitle} bold text={title} />
+      )}
+      {listSteps?.length > 0 &&
         listSteps.map((text: string, index: number) => (
           <TouchableWithoutFeedback
             key={index}

@@ -11,6 +11,7 @@ import {useState} from 'react';
 import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
+import {SharedDialog} from '../../components/sharedDialog.component';
 
 type AddRecipeReviewScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -81,17 +82,14 @@ export const AddRecipeReviewScreen = observer(
           </View>
         </BaseScreen>
         <Portal>
-          <Dialog visible={showExitDialog} onDismiss={() => closeExitDialog()}>
-            <Dialog.Content>
-              <Text variant="bodyMedium">
-                Are you sure you want to exit the create recipe flow?
-              </Text>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={() => closeExitDialog()}>Cancel</Button>
-              <Button onPress={() => exitFlowFullBack()}>Yes, exit</Button>
-            </Dialog.Actions>
-          </Dialog>
+          <SharedDialog
+            showDialog={showExitDialog}
+            exitDialog={() => closeExitDialog()}
+            text={'Are you sure you want to exit the create recipe flow?'}
+            leftButton="Cancel"
+            rightButton="Yes, exit"
+            leftButtonPress={() => closeExitDialog()}
+            rightButtonPress={() => exitFlowFullBack()}></SharedDialog>
         </Portal>
       </>
     );
