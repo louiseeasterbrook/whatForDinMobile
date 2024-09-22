@@ -19,14 +19,14 @@ export const ListRow = ({
   index,
   chefMode,
   checked,
-  textSize = 10,
+  textSize = 14,
 }: ListRowProps): ReactNode => {
   return (
     <View style={styles.rowContainer}>
       {chefMode ? (
         <Checkbox status={checked ? 'checked' : 'unchecked'} />
       ) : orderedList ? (
-        <Text>{`${index + 1}.   `}</Text>
+        <PrimaryText size={textSize} text={`${index + 1}.   `} />
       ) : (
         <Icon name="circle-small" size={20} color={'black'} />
       )}

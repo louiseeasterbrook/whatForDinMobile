@@ -57,8 +57,6 @@ export const RootNavigator = () => {
       const currentRouteName = getCurrentRouteName(state);
       const noGoingBack = NO_GO_BACK_SCREENS.includes(currentRouteName);
 
-      console.log(currentRouteName, ' ', noGoingBack);
-
       if (noGoingBack) {
         return true;
       }

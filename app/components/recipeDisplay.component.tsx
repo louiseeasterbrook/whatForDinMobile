@@ -38,17 +38,18 @@ export const RecipeDisplay = ({
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
       </View>
       <Divider />
-      {imageArray?.length > 0 && (
-        <ImageSlider images={imageArray}></ImageSlider>
-      )}
-      {tags && (
+      {Boolean(tags?.length) && (
         <FlatList
           style={styles.tags}
           horizontal
           keyExtractor={(item, index) => index.toString()}
           data={tags}
           ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
-          contentContainerStyle={{marginHorizontal: 18}}
+          contentContainerStyle={{
+            paddingHorizontal: 18,
+            paddingBottom: 12,
+            marginTop: 10,
+          }}
           renderItem={item => {
             return (
               <Tag
@@ -60,6 +61,10 @@ export const RecipeDisplay = ({
           }}
         />
       )}
+      {Boolean(imageArray?.length) && (
+        <ImageSlider images={imageArray}></ImageSlider>
+      )}
+
       <View style={styles.horizontalPadding}>
         <View style={styles.cardContainer}>
           {ingredients && (
@@ -71,7 +76,7 @@ export const RecipeDisplay = ({
               chefMode={chefMode}></DisplayListWithTitle>
           )}
         </View>
-        {steps && (
+        {!!steps && (
           <View style={styles.cardContainer}>
             <DisplayListWithTitle
               textSize={fontSize}
@@ -81,7 +86,7 @@ export const RecipeDisplay = ({
               chefMode={chefMode}></DisplayListWithTitle>
           </View>
         )}
-        {comments && (
+        {!!comments && (
           <View>
             <PrimaryText
               size={fontSize}
@@ -118,6 +123,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   tags: {
-    marginBottom: 10,
+    // marginBottom: 10,
   },
 });

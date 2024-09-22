@@ -58,7 +58,8 @@ export const DisplayListWithTitle = ({
               chefMode={chefMode}
               checked={checkBoxArray[index]}
               textSize={textSize}
-              index={index}></ListRow>
+              index={index}
+              textSize={textSize}></ListRow>
           </TouchableWithoutFeedback>
         ))}
     </>

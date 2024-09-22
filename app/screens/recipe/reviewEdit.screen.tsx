@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import {Button, Appbar} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 
 import {observer} from 'mobx-react-lite';
 import {useEditRecipe} from './context/editRecipeProvider';
@@ -12,6 +12,7 @@ import {useState} from 'react';
 import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
+import {RecipeTag} from '../../models/searchResults';
 
 type ReviewEditScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -20,7 +21,7 @@ type ReviewEditScreenProps = {
 
 export const ReviewEditScreen = observer(
   ({navigation}: ReviewEditScreenProps) => {
-    const {name, steps, ingredients, updateRecipe, comment, imageData} =
+    const {name, steps, ingredients, updateRecipe, comment, imageData, tagIds} =
       useEditRecipe();
     const [saving, setSaving] = useState<boolean>(false);
     const userStore = useStores();
@@ -43,6 +44,14 @@ export const ReviewEditScreen = observer(
       return new Promise(resolve => setTimeout(resolve, milliseconds));
     };
 
+    const getRecipeTagsFromIds = (): RecipeTag[] => {
+      return (
+        tagIds &&
+        userStore.recipeTags &&
+        userStore.recipeTags.filter(t => tagIds.includes(t.Id))
+      );
+    };
+
     return (
       <>
         {saving && <ScreenDimmer />}
@@ -55,6 +64,7 @@ export const ReviewEditScreen = observer(
           <View style={styles.main}>
             <ScrollView>
               <RecipeDisplay
+                tags={getRecipeTagsFromIds()}
                 ingredients={ingredients}
                 steps={steps}
                 userName={userStore.name}

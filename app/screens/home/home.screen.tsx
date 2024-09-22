@@ -26,15 +26,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   useEffect(() => {
     setLoading(true);
     (async function () {
-      await Promise.all([getUsers(), getRecipesForDisplay()]).then(() =>
-        setLoading(false),
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    (async function () {
+      await getUsers();
       await getRecipesForDisplay();
       setLoading(false);
     })();
@@ -48,7 +40,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     await processUserResult(res._data);
   };
 
-  const getRecipesForDisplay = async () => {
+  const getRecipesForDisplay = async (): Promise<void> => {
     const final = await getSortedRecipes(userStore.uid, userStore.favourites);
     setRecipeList(final);
     setFilteredRecipeList(final);
@@ -167,7 +159,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             keyExtractor={(item, index) => index.toString()}
             data={userStore.recipeTags}
             ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
-            contentContainerStyle={{marginHorizontal: 18}}
+            contentContainerStyle={{paddingHorizontal: 18, paddingBottom: 4}}
             renderItem={item => {
               return (
                 <Tag

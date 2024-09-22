@@ -82,15 +82,19 @@ export function EditRecipeProvider({children}: any): ReactNode {
     recipe.Method = steps;
     recipe.Comment = comment;
     recipe.TagIds = tagIds;
-    recipe.PhotoName =
-      photoChange && imageData?.fileName ? imageData.fileName : null;
+    recipe.PhotoName = photoChange ? getNewPhotoName() : recipe.PhotoName;
 
     await UpdateRecipeInCollection(recipe);
     await saveImage();
   };
 
+  const getNewPhotoName = (): string => {
+    return imageData?.fileName ? imageData.fileName : null;
+  };
+
   const saveImage = async (): Promise<void> => {
-    if (imageData?.fileName && imageData?.uri) {
+    const photoChange = imageData?.fileName !== DEFAULT_IMAGE_NAME;
+    if (photoChange && imageData?.fileName && imageData?.uri) {
       const reference = storage().ref(`${imageData.fileName}`);
       await reference.putFile(imageData?.uri).then();
     }

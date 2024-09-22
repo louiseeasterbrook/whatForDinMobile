@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Recipe, UserFavourites} from '../../models/searchResults';
+import {Recipe, RecipeTag, UserFavourites} from '../../models/searchResults';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 import {
@@ -177,6 +177,14 @@ export const ViewRecipeScreen = observer(
       setTextSize(newSize);
     };
 
+    const getRecipeTagsFromIds = (): RecipeTag[] => {
+      return (
+        recipe?.TagIds &&
+        userStore.recipeTags &&
+        userStore.recipeTags.filter(t => recipe.TagIds.includes(t.Id))
+      );
+    };
+
     return (
       <>
         {keepAwake && <KeepAwake />}
@@ -212,7 +220,7 @@ export const ViewRecipeScreen = observer(
           ) : (
             <ScrollView>
               <RecipeDisplay
-                tags={[]}
+                tags={isOwnRecipe ? getRecipeTagsFromIds() : []}
                 fontSize={textSize}
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}

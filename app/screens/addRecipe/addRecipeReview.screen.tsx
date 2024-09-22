@@ -1,7 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
-import {Button, Appbar, Portal, Dialog, Text} from 'react-native-paper';
+import {Appbar, Portal} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
 import {RecipeDisplay} from '../../components/recipeDisplay.component';
@@ -12,6 +12,7 @@ import {ScreenDimmer} from '../../components/ScreenDimmer.component';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {sharedStyles} from '../../index/theme';
 import {SharedDialog} from '../../components/sharedDialog.component';
+import {RecipeTag} from '../../models/searchResults';
 
 type AddRecipeReviewScreenProps = {
   navigation: NavigationProp<any, any>;
@@ -26,6 +27,7 @@ export const AddRecipeReviewScreen = observer(
       ingredients,
       name,
       comment,
+      tagIds,
       exitFlowFullBack,
       showExitDialog,
       closeExitDialog,
@@ -33,6 +35,14 @@ export const AddRecipeReviewScreen = observer(
       imageData,
     } = useAddRecipe();
     const userStore = useStores();
+
+    const getRecipeTagsFromIds = (): RecipeTag[] => {
+      return (
+        tagIds &&
+        userStore.recipeTags &&
+        userStore.recipeTags.filter(t => tagIds.includes(t.Id))
+      );
+    };
 
     const goBack = () => {
       navigation.goBack();
@@ -65,6 +75,7 @@ export const AddRecipeReviewScreen = observer(
           <View style={styles.main}>
             <ScrollView>
               <RecipeDisplay
+                tags={getRecipeTagsFromIds()}
                 ingredients={ingredients}
                 steps={steps}
                 userName={userStore.name}
