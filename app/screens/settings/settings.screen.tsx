@@ -41,11 +41,12 @@ export const SettingsScreen = ({navigation}): ReactNode => {
             <SettingsRow
               title="Recipe tags"
               onPress={navToRecipeTag}
+              bottomRow
               topRow></SettingsRow>
-            <SettingsRow
+            {/* <SettingsRow
               title="Meal Picker"
               onPress={navToMealPicker}
-              bottomRow></SettingsRow>
+              bottomRow></SettingsRow> */}
           </View>
         </View>
         <View>

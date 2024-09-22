@@ -43,8 +43,8 @@ const styles = (colour: string) =>
   StyleSheet.create({
     mainContainer: {
       alignSelf: 'flex-start',
-      paddingHorizontal: 14,
-      paddingVertical: 10,
+      paddingHorizontal: 8,
+      paddingVertical: 5,
       backgroundColor: colour,
       borderRadius: 12,
       borderWidth: 3,
@@ -53,9 +53,10 @@ const styles = (colour: string) =>
     },
     innerContainer: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     icon: {
-      paddingRight: 10,
+      paddingRight: 5,
     },
     selected: {
       borderColor: main_colour,

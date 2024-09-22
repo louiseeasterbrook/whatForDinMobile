@@ -43,7 +43,7 @@ export const AddRecipeStepsScreen = observer(
       return refInputs.current.every(x => x.length > 0);
     };
     const buttonDisabled = Boolean(
-      refInputs.current?.length && !everyRowIsPopulated(),
+      refInputs.current?.length === 0 || !everyRowIsPopulated(),
     );
 
     const setInputValue = (index: number, value: string) => {

@@ -14,7 +14,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
   const [comment, setComment] = useState<string>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [imageData, setImageData] = useState<PhotoData>();
-  const [tagIds, setTagIds] = useState<string[]>();
+  const [tagIds, setTagIds] = useState<string[]>([]);
   const [originalPhotoURI, setOriginalPhotoURI] = useState<string>();
 
   const initRecipe = (recipe: Recipe, photoUri: string) => {

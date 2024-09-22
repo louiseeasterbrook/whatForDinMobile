@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Searchbar, FAB} from 'react-native-paper';
-import {Recipe, RecipeUser} from '../../models/searchResults';
+import {Recipe, RecipeTag, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -19,6 +19,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
   const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const userStore = useStores();
 
@@ -53,26 +54,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
     setFilteredRecipeList(final);
   };
 
-  // const sortIntoAlphabeticalOrder = (array: Recipe[]) => {
-  //   return array.sort((a, b) => {
-  //     if (a.Name.toLocaleUpperCase() < b.Name.toLocaleUpperCase()) {
-  //       return -1;
-  //     }
-  //     if (a.Name.toLocaleUpperCase() > b.Name.toLocaleUpperCase()) {
-  //       return 1;
-  //     }
-  //     return 0;
-  //   });
-  // };
-
-  // const getRecipes = async (): Promise<Recipe[]> => {
-  //   return await GetUserRecipeCollection(userStore.uid);
-  // };
-
-  // const getSavedRecipes = async (): Promise<Recipe[]> => {
-  //   return await getUserSavedRecipes(userStore.favourites);
-  // };
-
   const processUserResult = async (response: RecipeUser): Promise<void> => {
     if (!response) {
       await addNewUser();
@@ -97,7 +78,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
 
   useEffect(() => {
     filterRecipesBySearchInput();
-  }, [searchInput]);
+  }, [searchInput, selectedTags]);
 
   const filterRecipesBySearchInput = (): void => {
     const inputNoSpace = searchInput.trim().toLowerCase();
@@ -108,7 +89,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const getRecipesThatMatchInput = (input: string): Recipe[] => {
     return recipeList.filter((recipe: Recipe) => {
       const lowerCaseName = recipe.Name.toLowerCase();
-      return lowerCaseName.includes(input);
+      return (
+        (!input || lowerCaseName.includes(input)) &&
+        selectedTagsMatchRecipeTags(recipe.TagIds)
+      );
     });
   };
 
@@ -122,7 +106,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       })();
     });
     return unsubscribe;
-  }, [navigation, searchInput]);
+  }, [navigation, searchInput, selectedTags]);
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {
@@ -131,6 +115,29 @@ export const HomeScreen = ({navigation}): ReactNode => {
         recipeId: selectedRecipe.Id,
       },
     });
+  };
+
+  const getNewTagArray = (tagId: string) => {
+    const existingIndex = selectedTags?.findIndex(t => t === tagId);
+    if (existingIndex >= 0) {
+      return selectedTags.filter(t => t !== tagId);
+    }
+    return [...selectedTags, tagId];
+  };
+
+  const tagSelected = (tagId: string) => {
+    const tags = getNewTagArray(tagId);
+    setSelectedTags(tags);
+  };
+
+  const selectedTagsMatchRecipeTags = (arr1: string[]): boolean => {
+    return (
+      !selectedTags.length || arr1?.some(item => selectedTags?.includes(item))
+    );
+  };
+
+  const isTagSelected = (id: string): boolean => {
+    return selectedTags.findIndex(t => t === id) >= 0;
   };
 
   const navToAddRecipeScreen = (): void => {
@@ -157,18 +164,18 @@ export const HomeScreen = ({navigation}): ReactNode => {
           <FlatList
             style={styles.tags}
             horizontal
-            // keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index.toString()}
             data={userStore.recipeTags}
-            ItemSeparatorComponent={() => <View style={{marginRight: 6}} />}
+            ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
             contentContainerStyle={{marginHorizontal: 18}}
             renderItem={item => {
-              // console.log('gogogoog ', item);
               return (
                 <Tag
                   title={item.item.Title}
                   colour={item.item.Colour}
                   icon={item.item.Icon}
-                  onPress={() => {}}
+                  onPress={() => tagSelected(item.item.Id)}
+                  selected={isTagSelected(item.item.Id)}
                 />
               );
             }}

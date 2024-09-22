@@ -157,11 +157,11 @@ export const RecipeTagFormScreen = observer(
               <View style={styles.header}>
                 <PrimaryText text="Select a colour"></PrimaryText>
               </View>
-              <Divider />
               <FlatList
                 horizontal
                 keyExtractor={(item, index) => index.toString()}
                 data={colours}
+                contentContainerStyle={{paddingBottom: 12}}
                 ItemSeparatorComponent={() => (
                   <View style={{marginRight: 10, paddingVertical: 4}} />
                 )}
@@ -177,11 +177,11 @@ export const RecipeTagFormScreen = observer(
               <View style={styles.header}>
                 <PrimaryText text="Select an icon"></PrimaryText>
               </View>
-              <Divider />
               <FlatList
                 horizontal
                 keyExtractor={(item, index) => index.toString()}
                 data={icons}
+                contentContainerStyle={{paddingBottom: 12}}
                 ItemSeparatorComponent={() => (
                   <View style={{marginRight: 10, paddingVertical: 4}} />
                 )}

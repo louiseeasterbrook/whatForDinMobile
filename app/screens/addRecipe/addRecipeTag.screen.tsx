@@ -102,7 +102,7 @@ export const AddRecipeTagScreen = observer(
                   keyExtractor={(item, index) => index.toString()}
                   data={userStore.recipeTags}
                   ItemSeparatorComponent={() => (
-                    <View style={{marginBottom: 6}} />
+                    <View style={{marginBottom: 10}} />
                   )}
                   contentContainerStyle={{marginBottom: 10}}
                   renderItem={item => {
