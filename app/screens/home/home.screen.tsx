@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
 import {Searchbar, FAB} from 'react-native-paper';
-import {Recipe, RecipeTag, RecipeUser} from '../../models/searchResults';
+import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -91,7 +91,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
       const lowerCaseName = recipe.Name.toLowerCase();
       return (
         (!input || lowerCaseName.includes(input)) &&
-        selectedTagsMatchRecipeTags(recipe.TagIds)
+        selectedTagsMatchRecipeTags(recipe.TagIds || [])
       );
     });
   };
@@ -100,7 +100,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     const unsubscribe = navigation.addListener('focus', () => {
       (async function () {
         await getRecipesForDisplay();
-        if (searchInput) {
+        if (searchInput || selectedTags?.length) {
           filterRecipesBySearchInput();
         }
       })();

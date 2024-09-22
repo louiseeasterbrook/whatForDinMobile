@@ -1,4 +1,4 @@
-import {ReactNode, useState} from 'react';
+import {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {DisplayListWithTitle} from '../screens/recipe/ListWithTitle.component';
 import {HeaderCard} from './headerCard.component';
@@ -55,8 +55,6 @@ export const RecipeDisplay = ({
                 title={item.item.Title}
                 colour={item.item.Colour}
                 icon={item.item.Icon}
-                // onPress={() => tagSelected(item.item.Id)}
-                // selected={isTagSelected(item.item.Id)}
               />
             );
           }}
@@ -85,8 +83,13 @@ export const RecipeDisplay = ({
         )}
         {comments && (
           <View>
-            <PrimaryText addedStyles={styles.mainTitle} bold text="Comments" />
-            <PrimaryText text={comments} />
+            <PrimaryText
+              size={fontSize}
+              addedStyles={styles.mainTitle}
+              bold
+              text="Comments"
+            />
+            <PrimaryText size={fontSize} text={comments} />
           </View>
         )}
       </View>

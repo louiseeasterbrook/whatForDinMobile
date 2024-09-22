@@ -39,7 +39,12 @@ export const DisplayListWithTitle = ({
   return (
     <>
       {title && (
-        <PrimaryText addedStyles={styles.mainTitle} bold text={title} />
+        <PrimaryText
+          size={textSize}
+          addedStyles={styles.mainTitle}
+          bold
+          text={title}
+        />
       )}
       {listSteps?.length > 0 &&
         listSteps.map((text: string, index: number) => (

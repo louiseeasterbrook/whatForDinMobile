@@ -85,10 +85,6 @@ export function EditRecipeProvider({children}: any): ReactNode {
     recipe.PhotoName =
       photoChange && imageData?.fileName ? imageData.fileName : null;
 
-    console.log('================');
-    console.log('================');
-    console.log('================');
-    console.log(recipe);
     await UpdateRecipeInCollection(recipe);
     await saveImage();
   };

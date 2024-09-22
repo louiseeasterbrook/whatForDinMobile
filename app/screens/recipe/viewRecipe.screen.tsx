@@ -182,7 +182,7 @@ export const ViewRecipeScreen = observer(
         {keepAwake && <KeepAwake />}
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          {/* <Appbar.Content title="Recipe" /> */}
+          <Appbar.Content title="Recipe" />
           {!loading && (
             <>
               <Appbar.Action
