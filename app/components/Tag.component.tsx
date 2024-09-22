@@ -8,7 +8,7 @@ type TagProps = {
   title: string;
   colour: string;
   icon?: string;
-  onPress: () => void;
+  onPress?: () => void;
   selected?: boolean;
 };
 

@@ -27,7 +27,7 @@ export function EditRecipeProvider({children}: any): ReactNode {
     setSteps(recipe.Method);
     setComment(recipe?.Comment || '');
     setImageData({uri: photoUri || null, fileName: DEFAULT_IMAGE_NAME});
-    setTagIds(recipe.TagIds);
+    setTagIds(recipe.TagIds || []);
     setRecipe({...recipe});
   };
 
@@ -85,6 +85,10 @@ export function EditRecipeProvider({children}: any): ReactNode {
     recipe.PhotoName =
       photoChange && imageData?.fileName ? imageData.fileName : null;
 
+    console.log('================');
+    console.log('================');
+    console.log('================');
+    console.log(recipe);
     await UpdateRecipeInCollection(recipe);
     await saveImage();
   };

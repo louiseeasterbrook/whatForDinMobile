@@ -5,6 +5,9 @@ import {HeaderCard} from './headerCard.component';
 import {Divider} from 'react-native-paper';
 import {ImageSlider} from '../screens/recipe/ImageSlider.component';
 import {PrimaryText} from './PrimaryText.component';
+import {FlatList} from 'react-native-gesture-handler';
+import {Tag} from './Tag.component';
+import {RecipeTag} from '../models/searchResults';
 
 type RecipeDisplayProps = {
   ingredients: string[];
@@ -13,8 +16,9 @@ type RecipeDisplayProps = {
   recipeName: string;
   comments: string;
   chefMode?: boolean;
-  textSize?: number;
   imageArray?: string[];
+  tags: RecipeTag[];
+  fontSize?: number;
 };
 
 export const RecipeDisplay = ({
@@ -23,46 +27,46 @@ export const RecipeDisplay = ({
   userName,
   recipeName,
   comments,
+  tags,
+  fontSize = 14,
   chefMode = false,
   imageArray = [],
 }: RecipeDisplayProps): ReactNode => {
-  const [textSize, setTextSize] = useState<number>(14);
-
-  const minusTextSize = (): void => {
-    const calcValue = textSize - 2;
-    if (calcValue <= 12) {
-      return;
-    }
-
-    setTextSize(calcValue);
-  };
-
-  const plusTextSize = (): void => {
-    const calcValue = textSize + 2;
-    if (calcValue >= 24) {
-      return;
-    }
-
-    setTextSize(calcValue);
-  };
   return (
     <View style={styles.fullContainer}>
       <View style={[styles.cardContainer, styles.horizontalPadding]}>
         <HeaderCard title={recipeName} subtitle={userName}></HeaderCard>
-        {/* <View style={styles.textChangeContainer}>
-          <IconButton icon="plus" size={26} onPress={plusTextSize} />
-          <IconButton icon="minus" size={26} onPress={minusTextSize} />
-        </View> */}
       </View>
       <Divider />
       {imageArray?.length > 0 && (
         <ImageSlider images={imageArray}></ImageSlider>
       )}
+      {tags && (
+        <FlatList
+          style={styles.tags}
+          horizontal
+          keyExtractor={(item, index) => index.toString()}
+          data={tags}
+          ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
+          contentContainerStyle={{marginHorizontal: 18}}
+          renderItem={item => {
+            return (
+              <Tag
+                title={item.item.Title}
+                colour={item.item.Colour}
+                icon={item.item.Icon}
+                // onPress={() => tagSelected(item.item.Id)}
+                // selected={isTagSelected(item.item.Id)}
+              />
+            );
+          }}
+        />
+      )}
       <View style={styles.horizontalPadding}>
         <View style={styles.cardContainer}>
           {ingredients && (
             <DisplayListWithTitle
-              textSize={textSize}
+              textSize={fontSize}
               title="Ingredients"
               orderedList={false}
               listSteps={ingredients}
@@ -72,7 +76,7 @@ export const RecipeDisplay = ({
         {steps && (
           <View style={styles.cardContainer}>
             <DisplayListWithTitle
-              textSize={textSize}
+              textSize={fontSize}
               title="Method"
               orderedList={true}
               listSteps={steps}
@@ -109,5 +113,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E9E9E9',
     borderRadius: 8,
     marginTop: 12,
+  },
+  tags: {
+    marginBottom: 10,
   },
 });

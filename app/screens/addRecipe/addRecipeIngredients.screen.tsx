@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Appbar, TextInput, Icon, Portal} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {useAddRecipe} from './context/addRecipeProvider';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {BaseScreen} from '../../components/BaseScreen.component';
 import {ScrollView} from 'react-native-gesture-handler';
 import {PrimaryButton} from '../../components/PrimaryButton.component';

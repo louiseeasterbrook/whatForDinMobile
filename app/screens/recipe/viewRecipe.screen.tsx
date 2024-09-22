@@ -36,6 +36,8 @@ export const ViewRecipeScreen = observer(
   ({navigation, route}: ViewRecipeScreenProps) => {
     const userStore = useStores();
     const {recipeId} = route.params;
+    const DEFAULT_TEXT_SIZE = 14;
+    const MAX_TEXT_SIZE = 26;
 
     const [recipe, setRecipe] = useState<Recipe>();
     const [loading, setLoading] = useState<boolean>(true);
@@ -165,16 +167,28 @@ export const ViewRecipeScreen = observer(
     const hideLoadingDialog = (): void => setLoadingDialogVisible('');
 
     const [openFab, setOpenFab] = useState(false);
+    const [textSize, setTextSize] = useState(14);
     const onStateChange = ({open}) => setOpenFab(open);
+
+    const changeFontSize = (): void => {
+      const newSize =
+        textSize < MAX_TEXT_SIZE ? textSize + 4 : DEFAULT_TEXT_SIZE;
+
+      setTextSize(newSize);
+    };
 
     return (
       <>
         {keepAwake && <KeepAwake />}
         <Appbar.Header style={sharedStyles.appBar} elevated={true}>
           <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title="Recipe" />
+          {/* <Appbar.Content title="Recipe" /> */}
           {!loading && (
             <>
+              <Appbar.Action
+                icon={'format-letter-case'}
+                onPress={changeFontSize}
+              />
               <Appbar.Action icon={'chef-hat'} onPress={pressChefMode} />
               <Appbar.Action
                 icon={keepAwake ? 'lightbulb-on' : 'lightbulb'}
@@ -191,9 +205,6 @@ export const ViewRecipeScreen = observer(
         </Appbar.Header>
 
         <BaseScreen>
-          {/* <IconButton icon="plus" size={26} onPress={plusTextSize} />
-
-          <IconButton icon="minus" size={26} onPress={minusTextSize} /> */}
           {loading ? (
             <View style={styles.loadingContainer}>
               <ActivityIndicator animating={true}></ActivityIndicator>
@@ -201,6 +212,8 @@ export const ViewRecipeScreen = observer(
           ) : (
             <ScrollView>
               <RecipeDisplay
+                tags={[]}
+                fontSize={textSize}
                 ingredients={recipe.Ingredients}
                 steps={recipe.Method}
                 userName={recipe.UserName}
