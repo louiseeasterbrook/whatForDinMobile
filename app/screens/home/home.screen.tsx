@@ -159,7 +159,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             keyExtractor={(item, index) => index.toString()}
             data={userStore.recipeTags}
             ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
-            contentContainerStyle={{paddingHorizontal: 18, paddingBottom: 4}}
+            contentContainerStyle={{paddingHorizontal: 18, paddingBottom: 8}}
             renderItem={item => {
               return (
                 <Tag
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
   },
   tags: {
-    marginBottom: 10,
+    marginBottom: 6,
   },
   fab: {
     position: 'absolute',

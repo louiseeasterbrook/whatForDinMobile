@@ -82,8 +82,13 @@ export function EditRecipeProvider({children}: any): ReactNode {
     recipe.Method = steps;
     recipe.Comment = comment;
     recipe.TagIds = tagIds;
-    recipe.PhotoName = photoChange ? getNewPhotoName() : recipe.PhotoName;
+    recipe.PhotoName = photoChange
+      ? getNewPhotoName()
+      : recipe?.PhotoName
+      ? recipe?.PhotoName
+      : null;
 
+    console.log('Saving recipe: ', recipe);
     await UpdateRecipeInCollection(recipe);
     await saveImage();
   };

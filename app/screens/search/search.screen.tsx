@@ -64,7 +64,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
     });
 
     setFormattedUsers(formattedUsers);
-    setFilteredUsers(formattedUsers);
+    // setFilteredUsers(formattedUsers);
     setLoading(false);
   };
 
@@ -86,11 +86,17 @@ export const SearchScreen = ({navigation}): ReactNode => {
   const onSearch = (): void => {
     const inputNoSpace = searchInput.trim().toLowerCase();
     const newList = getUsersThatMatchSearchInput(inputNoSpace);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1200);
     setFilteredUsers(newList);
   };
 
   useEffect(() => {
-    onSearch();
+    if (!searchInput) {
+      setFilteredUsers([]);
+    } else {
+      onSearch();
+    }
   }, [searchInput]);
 
   const getUsersThatMatchSearchInput = (searchInput: string) => {
@@ -135,7 +141,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
                 />
               ) : (
                 <NullState
-                  messageLine1={'No users'}
+                  messageLine1={searchInput ? 'No users' : 'Search for a user'}
                   icon="account-group"></NullState>
               )}
             </View>

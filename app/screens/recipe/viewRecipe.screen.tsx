@@ -45,6 +45,7 @@ export const ViewRecipeScreen = observer(
       useState<string>('');
     const [deleteDialogVisible, setDeleteDialogVisible] =
       useState<boolean>(false);
+    const [error, setError] = useState(false);
 
     const [AlwaysOnDialogVisible, setAlwaysOnDialogVisible] =
       useState<boolean>(false);
@@ -67,10 +68,17 @@ export const ViewRecipeScreen = observer(
 
     const getRecipeFromDB = async (): Promise<void> => {
       const res = await GetRecipe(recipeId);
+      console.log('.......... . . . . . . .ERROR 2 ', res);
+      if (!res) {
+        console.log('.......... . . . . . . .ERROR');
+        setError(true);
+        return;
+      }
       setRecipe(res);
 
       if (res.PhotoName) {
         const recipePhoto = await storage().ref(res.PhotoName).getDownloadURL();
+        console.log('REC ', recipePhoto);
         const savedPhoto = recipePhoto ? [recipePhoto] : [];
         setPhotoArray(savedPhoto);
       } else {

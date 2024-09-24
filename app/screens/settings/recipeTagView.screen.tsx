@@ -45,6 +45,7 @@ export const RecipeTagViewScreen = observer(
                 <FlatList
                   keyExtractor={(item, index) => index.toString()}
                   data={userStore.recipeTags}
+                  contentContainerStyle={{padding: 5}}
                   ItemSeparatorComponent={() => (
                     <View style={{marginBottom: 12}} />
                   )}

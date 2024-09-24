@@ -14,6 +14,7 @@ import {BaseScreen} from '../../components/BaseScreen.component';
 import {useState} from 'react';
 import {PrimaryButton} from '../../components/PrimaryButton.component';
 import {
+  aqua,
   light_blue,
   light_green,
   light_greenYellow,
@@ -22,6 +23,7 @@ import {
   light_purple,
   light_red,
   light_yellow,
+  purple_blue,
   sharedStyles,
 } from '../../index/theme';
 import {useStores} from '../../store/mainStore';
@@ -54,12 +56,14 @@ export const RecipeTagFormScreen = observer(
     const colours = [
       light_green,
       light_blue,
+      // purple_blue,
       light_pink,
       light_purple,
       light_orange,
       light_yellow,
-      light_greenYellow,
+      // light_greenYellow,
       light_red,
+      // aqua,
     ];
     const icons: string[] = [
       'pasta',
