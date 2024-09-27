@@ -106,7 +106,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
   };
 
   return (
-    <BaseScreen useSafeArea={true} noBottomPadding={true}>
+    <BaseScreen noStatusBar={false} noBottomPadding={true}>
       <View style={styles.flex}>
         <View style={styles.sidePadding}>
           <Searchbar

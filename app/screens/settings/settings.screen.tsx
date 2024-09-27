@@ -26,7 +26,7 @@ export const SettingsScreen = ({navigation}): ReactNode => {
   const navToRecipeTag = (): void => navigation.navigate('RecipeTagView');
 
   return (
-    <BaseScreen useSafeArea={true}>
+    <BaseScreen noStatusBar={false}>
       <View style={styles.fullScreenContainer}>
         <View>
           <View style={styles.headerContainer}>

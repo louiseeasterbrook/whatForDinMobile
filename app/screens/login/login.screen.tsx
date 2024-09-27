@@ -87,7 +87,7 @@ export const LoginScreen = ({navigation}): ReactNode => {
 
   return (
     <>
-      <BaseScreen useSafeArea={true} backgroundColor="white">
+      <BaseScreen noStatusBar={false} backgroundColor="white">
         <KeyboardAvoidingView
           style={{
             flex: 1,
