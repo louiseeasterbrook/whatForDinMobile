@@ -26,11 +26,11 @@ export const SHADOW_BASE = {
   shadowColor: '#000',
   shadowOffset: {
     width: 0,
-    height: 1,
+    height: 0.5,
   },
-  shadowOpacity: 0.22,
-  shadowRadius: 2.22,
-  elevation: 3,
+  shadowOpacity: 0.2,
+  shadowRadius: 0.5,
+  elevation: 2,
 };
 
 export const sharedStyles = StyleSheet.create({
