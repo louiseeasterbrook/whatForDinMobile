@@ -7,7 +7,7 @@ type BaseScreenProps = {
   statusBarColour?: string;
   noBottomPadding?: boolean;
   backgroundColor?: string;
-  noStatusBar: boolean;
+  noStatusBar?: boolean;
 };
 
 export const BaseScreen = ({

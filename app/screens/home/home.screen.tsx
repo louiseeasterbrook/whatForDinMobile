@@ -160,6 +160,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
             data={userStore.recipeTags}
             ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
             contentContainerStyle={{paddingHorizontal: 18, paddingBottom: 8}}
+            showsHorizontalScrollIndicator={false}
             renderItem={item => {
               return (
                 <Tag
@@ -191,6 +192,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
                     onPress={item => navToRecipeScreen(item)}
                   />
                 )}
+                showsVerticalScrollIndicator={false}
               />
             ) : (
               <NullState

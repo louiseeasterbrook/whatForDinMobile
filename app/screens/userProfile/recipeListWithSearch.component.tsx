@@ -50,6 +50,7 @@ export const RecipeListWithSearch = ({
       />
       {filteredRecipeList.length > 0 ? (
         <FlatList
+          showsVerticalScrollIndicator={false}
           style={styles.flex}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => <View style={{marginBottom: 10}} />}

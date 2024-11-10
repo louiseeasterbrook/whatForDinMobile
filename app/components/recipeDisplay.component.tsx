@@ -40,6 +40,7 @@ export const RecipeDisplay = ({
       <Divider />
       {Boolean(tags?.length) && (
         <FlatList
+          showsHorizontalScrollIndicator={false}
           style={styles.tags}
           horizontal
           keyExtractor={(item, index) => index.toString()}

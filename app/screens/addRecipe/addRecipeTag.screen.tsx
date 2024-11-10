@@ -99,6 +99,7 @@ export const AddRecipeTagScreen = observer(
 
               {userStore?.recipeTags?.length > 0 && (
                 <FlatList
+                  showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
                   data={userStore.recipeTags}
                   ItemSeparatorComponent={() => (

@@ -162,6 +162,7 @@ export const RecipeTagFormScreen = observer(
                 <PrimaryText text="Select a colour"></PrimaryText>
               </View>
               <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal
                 keyExtractor={(item, index) => index.toString()}
                 data={colours}
@@ -182,6 +183,7 @@ export const RecipeTagFormScreen = observer(
                 <PrimaryText text="Select an icon"></PrimaryText>
               </View>
               <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal
                 keyExtractor={(item, index) => index.toString()}
                 data={icons}

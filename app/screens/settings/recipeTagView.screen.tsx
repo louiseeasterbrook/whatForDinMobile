@@ -43,6 +43,7 @@ export const RecipeTagViewScreen = observer(
             <View>
               {userStore?.recipeTags?.length ? (
                 <FlatList
+                  showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
                   data={userStore.recipeTags}
                   contentContainerStyle={{padding: 5}}

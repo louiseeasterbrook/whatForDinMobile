@@ -25,7 +25,7 @@ export const ImageSlider = ({images}: ImageSliderProps): ReactNode => {
         pagingEnabled
         horizontal
         onScroll={change}
-        showsHorizontalScrollIndicator
+        showsHorizontalScrollIndicator={false}
         style={{width, height}}>
         {images.map((image, index) => (
           <Image

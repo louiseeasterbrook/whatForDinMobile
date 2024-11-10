@@ -126,6 +126,7 @@ export const SearchScreen = ({navigation}): ReactNode => {
             <View style={styles.contentPadding}>
               {filteredUsers.length > 0 ? (
                 <FlatList
+                  showsVerticalScrollIndicator={false}
                   style={styles.flex}
                   keyExtractor={(item, index) => index.toString()}
                   ItemSeparatorComponent={() => (
