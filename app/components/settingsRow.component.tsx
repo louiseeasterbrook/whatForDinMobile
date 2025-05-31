@@ -19,6 +19,7 @@ export const SettingsRow = ({
   bottomRow = false,
   icon,
 }: SettingsRowProps): ReactNode => {
+  const isMiddleRow = !topRow && !bottomRow;
   return (
     <TouchableHighlight onPress={onPress} underlayColor={secondary_colour}>
       <View
@@ -26,6 +27,7 @@ export const SettingsRow = ({
           styles.mainContainer,
           topRow && styles.topRow,
           bottomRow && styles.bottomRow,
+          isMiddleRow && styles.middleRow,
         ]}>
         <PrimaryText text={title} size={14} />
         {icon && <Icon source={icon} size={18} />}
@@ -53,5 +55,8 @@ const styles = StyleSheet.create({
   bottomRow: {
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+  },
+  middleRow: {
+    borderRadius: 0,
   },
 });

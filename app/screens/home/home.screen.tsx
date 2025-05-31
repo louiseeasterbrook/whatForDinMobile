@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar, FAB} from 'react-native-paper';
+import {Searchbar, FAB, Appbar} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
@@ -146,6 +146,21 @@ export const HomeScreen = ({navigation}): ReactNode => {
   return (
     <BaseScreen noStatusBar={false} noBottomPadding={true}>
       <View style={styles.flex}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            paddingTop: 8,
+            paddingRight: 8,
+          }}>
+          <Appbar.Action
+            icon="cog"
+            onPress={() => navigation.navigate('Settings')}
+            style={{margin: 0}}
+          />
+        </View>
         <View style={styles.sidePadding}>
           <Searchbar
             placeholder="Search for a recipe..."

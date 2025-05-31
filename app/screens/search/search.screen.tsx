@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar} from 'react-native-paper';
+import {Searchbar, IconButton} from 'react-native-paper';
 import {Recipe, RecipeUser, SearchResultUser} from '../../models/searchResults';
 import {useStores} from '../../store/mainStore';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -108,6 +108,20 @@ export const SearchScreen = ({navigation}): ReactNode => {
   return (
     <BaseScreen noStatusBar={false} noBottomPadding={true}>
       <View style={styles.flex}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingTop: 8,
+            paddingLeft: 4,
+            backgroundColor: 'white',
+          }}>
+          <IconButton
+            icon="arrow-left"
+            size={24}
+            onPress={() => navigation.goBack()}
+          />
+        </View>
         <View style={styles.sidePadding}>
           <Searchbar
             placeholder="Search for a user..."

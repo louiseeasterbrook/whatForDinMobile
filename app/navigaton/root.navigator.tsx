@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import TabNavigator from './Tab.navigator';
+// import TabNavigator from './Tab.navigator';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -16,6 +16,9 @@ import {BackHandler} from 'react-native';
 import {MealPickerScreen} from '../screens/settings/mealPicker.screen';
 import {RecipeTagViewScreen} from '../screens/settings/recipeTagView.screen';
 import {RecipeTagFormScreen} from '../screens/settings/recipeTagForm.screen';
+import {HomeScreen} from '../screens/home/home.screen';
+import {SettingsScreen} from '../screens/settings/settings.screen';
+import {SearchScreen} from '../screens/search/search.screen';
 
 export const NO_GO_BACK_SCREENS = ['Recipe book', 'Review', 'ReviewEdit'];
 
@@ -86,8 +89,13 @@ export const LoggedInStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
+        name="Home"
+        component={HomeScreen}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
         options={HORIZONTAL_ANIMATION}
       />
       <Stack.Screen
@@ -118,6 +126,11 @@ export const LoggedInStack = () => {
       <Stack.Screen
         name="RecipeTagForm"
         component={RecipeTagFormScreen}
+        options={HORIZONTAL_ANIMATION}
+      />
+      <Stack.Screen
+        name="SearchUsers"
+        component={SearchScreen}
         options={HORIZONTAL_ANIMATION}
       />
     </Stack.Navigator>

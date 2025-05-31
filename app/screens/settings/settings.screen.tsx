@@ -30,7 +30,12 @@ export const SettingsScreen = ({navigation}): ReactNode => {
       <View style={styles.fullScreenContainer}>
         <View>
           <View style={styles.headerContainer}>
-            <View style={styles.nameContainer}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <IconButton
+                icon="arrow-left"
+                size={24}
+                onPress={() => navigation.goBack()}
+              />
               <Avatar.Icon size={44} icon="account" />
               <PrimaryText addedStyles={styles.name} text={userStore.name} />
             </View>
@@ -38,11 +43,12 @@ export const SettingsScreen = ({navigation}): ReactNode => {
           </View>
 
           <View style={styles.sidePadding}>
+            <SettingsRow title="Recipe tags" onPress={navToRecipeTag} topRow />
             <SettingsRow
-              title="Recipe tags"
-              onPress={navToRecipeTag}
+              title="Search users"
+              onPress={() => navigation.navigate('SearchUsers')}
               bottomRow
-              topRow></SettingsRow>
+            />
             {/* <SettingsRow
               title="Meal Picker"
               onPress={navToMealPicker}

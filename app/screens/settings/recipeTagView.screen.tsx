@@ -1,6 +1,7 @@
 import {NavigationProp} from '@react-navigation/native';
-import {Keyboard, StyleSheet, View} from 'react-native';
-import {Appbar, FAB} from 'react-native-paper';
+import {Keyboard, StyleSheet, View, SafeAreaView} from 'react-native';
+import {FAB} from 'react-native-paper';
+import React from 'react';
 
 import {observer} from 'mobx-react-lite';
 import {BaseScreen} from '../../components/BaseScreen.component';
@@ -10,6 +11,8 @@ import {Tag} from '../../components/Tag.component';
 import {FlatList} from 'react-native-gesture-handler';
 import {NullState} from '../../components/nullState.component copy';
 import {RecipeTag} from '../../models/searchResults';
+import {PrimaryText} from '../../components/PrimaryText.component';
+import {IconButton} from 'react-native-paper';
 
 type RecipeTagViewScreen = {
   navigation: NavigationProp<any, any>;
@@ -33,10 +36,25 @@ export const RecipeTagViewScreen = observer(
 
     return (
       <>
-        <Appbar.Header style={sharedStyles.appBar} elevated={true}>
-          <Appbar.BackAction onPress={goBack} />
-          <Appbar.Content title={'Recipe Tags'} />
-        </Appbar.Header>
+        <SafeAreaView style={{backgroundColor: 'white'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingTop: 8,
+              paddingLeft: 4,
+              backgroundColor: 'white',
+              marginBottom: 8,
+            }}>
+            <IconButton icon="arrow-left" size={24} onPress={goBack} />
+            <PrimaryText
+              text="Recipe Tags"
+              size={18}
+              bold
+              addedStyles={{marginLeft: 4}}
+            />
+          </View>
+        </SafeAreaView>
 
         <BaseScreen>
           <View style={styles.main}>
