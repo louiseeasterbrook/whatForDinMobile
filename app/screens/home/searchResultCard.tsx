@@ -19,21 +19,33 @@ export const SearchResultCard = ({
   return (
     <TouchableOpacity onPress={() => onPress(recipe)}>
       <View style={styles.main}>
-        <PrimaryText text={recipe.Name}></PrimaryText>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{marginRight: 8, backgroundColor:'rgba(255, 255, 255, 0.2)', borderRadius: 12, padding: 8}}>
+      <PrimaryText text={'🌮'}></PrimaryText>
+      </View>
+        <PrimaryText text={recipe.Name} textColour='white'></PrimaryText>
+        </View>
         {userId && userId !== recipe.UserId && (
           <Icon source={'bookmark'} size={20} color="grey" />
         )}
       </View>
-      <Divider></Divider>
+
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   main: {
-    paddingVertical: 20,
+
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    backgroundColor:'rgba(255, 255, 255, 0.2)',
+    paddingVertical:12,
+    paddingHorizontal: 12,
+    borderRadius:12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    marginBottom: 14,
   },
 });

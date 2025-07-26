@@ -14,7 +14,7 @@ export const BaseScreen = ({
   children,
   statusBarColour = '#FFFFFF',
   noBottomPadding = false,
-  backgroundColor = grey_background,
+  backgroundColor = '#FFFFFF',
   noStatusBar = true,
 }: BaseScreenProps) => {
   const insets = useSafeAreaInsets();

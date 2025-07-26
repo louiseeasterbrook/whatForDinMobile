@@ -1,25 +1,22 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Searchbar, FAB, Appbar} from 'react-native-paper';
 import {Recipe, RecipeUser} from '../../models/searchResults';
 import {SearchResultCard} from './searchResultCard';
 import {useStores} from '../../store/mainStore';
-import {BaseScreen} from '../../components/BaseScreen.component';
 import {AddNewUser, GetUser} from '../../services/userDBservice';
 import {NullState} from '../../components/nullState.component copy';
 import moment from 'moment';
 import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
-import {sharedStyles} from '../../index/theme';
+
 import {SHADOW_BASE} from '../../index/theme';
 import {getSortedRecipes} from '../../services/recipeDisplay.service';
-import {Tag} from '../../components/Tag.component';
+import { Screen } from '../../components/Screen';
+import {SearchBar}  from '../../components/SearchBar.component';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipeList, setRecipeList] = useState<Recipe[]>([]);
-  const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const userStore = useStores();
 
@@ -43,7 +40,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
   const getRecipesForDisplay = async (): Promise<void> => {
     const final = await getSortedRecipes(userStore.uid, userStore.favourites);
     setRecipeList(final);
-    setFilteredRecipeList(final);
   };
 
   const processUserResult = async (response: RecipeUser): Promise<void> => {
@@ -53,7 +49,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     }
     userStore.setFavourites(response.Favourites);
     userStore.setRecipeTags(response?.RecipeTags);
-    // await getSavedRecipes();
+
   };
 
   const addNewUser = async (): Promise<void> => {
@@ -69,36 +65,14 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   useEffect(() => {
-    filterRecipesBySearchInput();
-  }, [searchInput, selectedTags]);
-
-  const filterRecipesBySearchInput = (): void => {
-    const inputNoSpace = searchInput.trim().toLowerCase();
-    const newList = getRecipesThatMatchInput(inputNoSpace);
-    setFilteredRecipeList(newList);
-  };
-
-  const getRecipesThatMatchInput = (input: string): Recipe[] => {
-    return recipeList.filter((recipe: Recipe) => {
-      const lowerCaseName = recipe.Name.toLowerCase();
-      return (
-        (!input || lowerCaseName.includes(input)) &&
-        selectedTagsMatchRecipeTags(recipe.TagIds || [])
-      );
-    });
-  };
-
-  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       (async function () {
         await getRecipesForDisplay();
-        if (searchInput || selectedTags?.length) {
-          filterRecipesBySearchInput();
-        }
+       
       })();
     });
     return unsubscribe;
-  }, [navigation, searchInput, selectedTags]);
+  }, [navigation, searchInput]);
 
   const navToRecipeScreen = (selectedRecipe: Recipe): void => {
     navigation.navigate('ViewRecipe', {
@@ -109,28 +83,6 @@ export const HomeScreen = ({navigation}): ReactNode => {
     });
   };
 
-  const getNewTagArray = (tagId: string) => {
-    const existingIndex = selectedTags?.findIndex(t => t === tagId);
-    if (existingIndex >= 0) {
-      return selectedTags.filter(t => t !== tagId);
-    }
-    return [...selectedTags, tagId];
-  };
-
-  const tagSelected = (tagId: string) => {
-    const tags = getNewTagArray(tagId);
-    setSelectedTags(tags);
-  };
-
-  const selectedTagsMatchRecipeTags = (arr1: string[]): boolean => {
-    return (
-      !selectedTags.length || arr1?.some(item => selectedTags?.includes(item))
-    );
-  };
-
-  const isTagSelected = (id: string): boolean => {
-    return selectedTags.findIndex(t => t === id) >= 0;
-  };
 
   const navToAddRecipeScreen = (): void => {
     navigation.navigate('AddRecipe', {screen: 'AddName'});
@@ -144,62 +96,31 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   return (
-    <BaseScreen noStatusBar={false} noBottomPadding={true}>
-      <View style={styles.flex}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            paddingTop: 8,
-            paddingRight: 8,
-          }}>
-          <Appbar.Action
-            icon="cog"
-            onPress={() => navigation.navigate('Settings')}
-            style={{margin: 0}}
-          />
-        </View>
-        <View style={styles.sidePadding}>
-          <Searchbar
-            placeholder="Search for a recipe..."
-            onChangeText={setSearchInput}
-            value={searchInput}
-            style={[styles.searchBar, sharedStyles.searchBar]}
-          />
-          <FlatList
-            style={styles.tags}
-            horizontal
-            keyExtractor={(item, index) => index.toString()}
-            data={userStore.recipeTags}
-            ItemSeparatorComponent={() => <View style={{marginRight: 16}} />}
-            contentContainerStyle={{paddingHorizontal: 18, paddingBottom: 8}}
-            showsHorizontalScrollIndicator={false}
-            renderItem={item => {
-              return (
-                <Tag
-                  title={item.item.Title}
-                  colour={item.item.Colour}
-                  icon={item.item.Icon}
-                  onPress={() => tagSelected(item.item.Id)}
-                  selected={isTagSelected(item.item.Id)}
-                />
-              );
-            }}
-          />
-        </View>
-
+    <Screen >
+      {/* <Screen.Header title='hello'/> */}
+      <Screen.Content>
+      <SearchBar
+  placeholder="Search recipes..."
+  onSearch={(text) => console.log('Searching for:', text)}
+  onChangeText={(text) => console.log('Text changed:', text)}
+/>
+      {/* <SearchBar
+  theme="lavender"
+  placeholder="Search users or recipes..."
+  onSearch={()=>{}}
+  autoFocus={true}
+  showCancel={true}
+/> */}
         {loading ? (
           <View style={styles.loading}>
             <ActivityIndicator animating={true} />
           </View>
         ) : (
           <View style={styles.contentPadding}>
-            {filteredRecipeList.length > 0 ? (
+            {recipeList.length > 0 ? (
               <FlatList
                 keyExtractor={(item, index) => index.toString()}
-                data={filteredRecipeList}
+                data={recipeList}
                 renderItem={({item}) => (
                   <SearchResultCard
                     userId={userStore.uid}
@@ -216,9 +137,10 @@ export const HomeScreen = ({navigation}): ReactNode => {
             )}
           </View>
         )}
-      </View>
-      <FAB icon="plus" style={styles.fab} onPress={navToAddRecipeScreen} />
-    </BaseScreen>
+    
+ 
+    </Screen.Content>
+    </Screen>
   );
 };
 
@@ -230,6 +152,7 @@ const styles = StyleSheet.create({
   contentPadding: {
     paddingHorizontal: 18,
     flex: 1,
+    
   },
   flex: {
     flex: 1,
