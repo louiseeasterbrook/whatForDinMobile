@@ -1,17 +1,18 @@
-import {ReactNode, useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, View, FlatList} from 'react-native';
-import {Recipe, RecipeUser} from '../../models/searchResults';
-import {SearchResultCard} from './searchResultCard';
-import {useStores} from '../../store/mainStore';
-import {AddNewUser, GetUser} from '../../services/userDBservice';
-import {NullState} from '../../components/nullState.component copy';
 import moment from 'moment';
-import {DATE_FORMAT_FOR_DISPLAY} from '../../constants';
+import { ReactNode, useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { NullState } from '../../components/nullState.component copy';
+import { DATE_FORMAT_FOR_DISPLAY } from '../../constants';
+import { Recipe, RecipeUser } from '../../models/searchResults';
+import { AddNewUser, GetUser } from '../../services/userDBservice';
+import { useStores } from '../../store/mainStore';
+import { SearchResultCard } from './searchResultCard';
 
-import {SHADOW_BASE} from '../../index/theme';
-import {getSortedRecipes} from '../../services/recipeDisplay.service';
 import { Screen } from '../../components/Screen';
-import {SearchBar}  from '../../components/SearchBar.component';
+import { SearchBar } from '../../components/SearchBar.component';
+import { SHADOW_BASE } from '../../index/theme';
+import { getSortedRecipes } from '../../services/recipeDisplay.service';
 
 export const HomeScreen = ({navigation}): ReactNode => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -68,7 +69,7 @@ export const HomeScreen = ({navigation}): ReactNode => {
     const unsubscribe = navigation.addListener('focus', () => {
       (async function () {
         await getRecipesForDisplay();
-       
+
       })();
     });
     return unsubscribe;
@@ -96,14 +97,22 @@ export const HomeScreen = ({navigation}): ReactNode => {
   };
 
   return (
-    <Screen >
-      {/* <Screen.Header title='hello'/> */}
-      <Screen.Content>
+    <LinearGradient
+      colors={['#606c88', '#3f4c6b']} // Purple to Pink gradient
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      style={{flex: 1}}
+    >
+      <Screen style={{backgroundColor: 'transparent'}}>
+        {/* <Screen.Header title='hello'/> */}
+        <Screen.Content>
+          <View style={{paddingTop:16, paddingBottom:28}}>
       <SearchBar
   placeholder="Search recipes..."
   onSearch={(text) => console.log('Searching for:', text)}
   onChangeText={(text) => console.log('Text changed:', text)}
 />
+</View>
       {/* <SearchBar
   theme="lavender"
   placeholder="Search users or recipes..."
@@ -137,10 +146,11 @@ export const HomeScreen = ({navigation}): ReactNode => {
             )}
           </View>
         )}
-    
- 
+
+
     </Screen.Content>
     </Screen>
+    </LinearGradient>
   );
 };
 
@@ -150,9 +160,9 @@ const styles = StyleSheet.create({
     ...SHADOW_BASE,
   },
   contentPadding: {
-    paddingHorizontal: 18,
+
     flex: 1,
-    
+
   },
   flex: {
     flex: 1,
@@ -160,18 +170,5 @@ const styles = StyleSheet.create({
   loading: {
     paddingTop: 12,
   },
-  searchBar: {
-    marginTop: 20,
-    marginBottom: 10,
-    marginHorizontal: 18,
-  },
-  tags: {
-    marginBottom: 6,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 4,
-    bottom: 4,
-  },
+
 });

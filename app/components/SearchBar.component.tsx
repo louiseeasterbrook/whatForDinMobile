@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
+  Animated,
+  Keyboard,
+  StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  Animated,
-  Text,
-  Keyboard,
-  Platform,
+  View
 } from 'react-native';
 
 // Functional Search Bar Component - You CAN type in this one!
@@ -41,7 +40,7 @@ export const SearchBar = ({
 
   const handleFocus = () => {
     setIsFocused(true);
-    
+
     // Subtle scale animation on focus
     Animated.timing(scaleAnim, {
       toValue: 1.02,
@@ -54,7 +53,7 @@ export const SearchBar = ({
 
   const handleBlur = () => {
     setIsFocused(false);
-    
+
     // Scale back on blur
     Animated.timing(scaleAnim, {
       toValue: 1,
@@ -95,11 +94,11 @@ export const SearchBar = ({
   const themeStyles = getThemeStyles();
 
   return (
-    <Animated.View 
+    <Animated.View
       style={[
         styles.container,
         style,
-        { 
+        {
           opacity: fadeAnim,
           transform: [{ scale: scaleAnim }]
         }
@@ -130,7 +129,7 @@ export const SearchBar = ({
 
         {/* Clear Button */}
         {showClearButton && searchText.length > 0 && (
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.clearButton}
             onPress={handleClear}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -229,16 +228,18 @@ const SearchBarWithHistory = ({
 // Styles
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 32,
+
+
   },
   searchBar: {
-    borderRadius: 16,
-    paddingVertical: Platform.OS === 'ios' ? 16 : 12,
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    minHeight: 48,
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
   },
   iconContainer: {
     marginRight: 12,
@@ -404,7 +405,7 @@ const lightThemeStyles = StyleSheet.create({
 
 
 
-/* 
+/*
 USAGE EXAMPLES:
 
 // Basic functional search bar - YOU CAN TYPE!
